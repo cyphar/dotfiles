@@ -38,8 +38,9 @@ endif
 let mapleader = ","
 
 set hidden
+set cul
 set autoread		" Reload the file
-set number			" Line numbers
+set number		" Line numbers
 set noerrorbells	" No error beep
 set tabstop=8		" Size of hard tabs
 set shiftwidth=8	" Number of spaces for autoindent
@@ -48,6 +49,10 @@ set smartcase		" ... as long as it doesn't contain a capital
 
 set nobackup		" I can track my own changes,
 set noswapfile		" ... thanks.
+
+" Completion
+set complete+=i		" Scan included files
+
 
 " Quick-save and close
 nmap <leader>w :w!<cr>
