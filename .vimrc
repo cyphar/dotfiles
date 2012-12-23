@@ -50,6 +50,13 @@ set smartcase		" ... as long as it doesn't contain a capital
 set nobackup		" I can track my own changes,
 set noswapfile		" ... thanks.
 
+" Syntastic setup
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_enable_signs=1
+let g:syntastic_auto_loc_list=1
+
 " Completion
 set complete+=i		" Scan included files
 
