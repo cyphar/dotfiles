@@ -38,7 +38,7 @@ endif
 let mapleader = ","
 
 set hidden
-set cul
+" set cul
 set autoread		" Reload the file
 set number		" Line numbers
 set noerrorbells	" No error beep
