@@ -1,4 +1,10 @@
-"Ensure that this config is only used with Vim and not with Vi
+" Cyphar's .vimrc
+"
+" N.B. Opening vim < 7.3 with this config will cause it to print errors
+" You need to have a version of vim installed WITH gui support (+gui when
+" compiled)
+
+" Ensure that this config is only used with Vim and not with Vi
 set nocompatible
 
 " Activate pathogen and include all bundles in the .vim/bundle directory
@@ -10,6 +16,10 @@ if has("autocmd")
 else
 	" Else use the standard smart indent
 	set smartindent
+endif
+
+if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
+	set t_Co=256
 endif
 
 " Enable syntax
