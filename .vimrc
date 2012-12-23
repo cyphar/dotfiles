@@ -29,9 +29,9 @@ endif
 
 if &t_Co >= 256 || has("gui_running")
 	set background=dark
-	colorscheme ir_black
+	colorscheme solarizeddark
 else
-	colorscheme ir_black
+	colorscheme solarizeddark
 endif
 
 " Rebind the mapleader
