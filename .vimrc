@@ -1,4 +1,4 @@
-" Cyphar's .vimrc
+" cyphar's .vimrc
 "
 " N.B. Opening vim < 7.3 with this config will cause it to print errors
 " You need to have a version of vim installed WITH gui support (+gui when
@@ -53,6 +53,21 @@ set noswapfile		" ... thanks.
 " Completion
 set complete+=i		" Scan included files
 
+" Ctrl-mappings
+nnoremap <c-c> yy
+nnoremap <c-x> dd
+nnoremap <c-v> p
+nnoremap <c-u> lbveU<esc>
+nnoremap <c-l> lbveu<esc>
+
+vmap <c-c> y
+vmap <c-x> dd
+vmap <c-v> p
+
+imap <c-d> <esc>ddi
+imap <c-z> <esc>ui
+imap <c-u> <esc>llbveU<esc>i
+imap <c-l> <esc>llbveu<esc>i
 
 " Quick-save and close
 nmap <leader>w :w!<cr>
