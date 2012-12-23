@@ -1,0 +1,12 @@
+# ls colours
+alias ls='ls --color=auto'
+
+# ls shortcuts
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# grep colours
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'

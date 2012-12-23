@@ -1,0 +1,20 @@
+# My gitconfig.
+
+[user]
+	name	=	cyphar
+	email	=	public@cyphar.com
+
+[credential]
+
+	helper	=	cache
+
+[color]
+	ui	=	true
+	diff	=	auto
+	status	=	auto
+	branch	=	auto
+
+[alias]
+	up	=	"pull --rebase"
+	wu	=	"log --stat origin..@{0}"
+	wup	=	"log -p origin..@{0}"
