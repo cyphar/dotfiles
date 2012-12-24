@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/codecomplete"]
 	path = .vim/bundle/codecomplete
 	url = git://github.com/mbbill/code_complete.git
+[submodule ".vim/bundle/cvim"]
+	path = .vim/bundle/cvim
+	url = git://github.com/vim-scripts/c.vim.git
