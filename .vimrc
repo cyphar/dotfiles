@@ -2,7 +2,8 @@
 "
 " N.B. Opening vim < 7.3 with this config will cause it to print errors
 " You need to have a version of vim installed WITH gui support (+gui when
-" compiled)
+" compiled). Also note that, even if you have vim +gui, it still will not
+" work if you use the "linux" terminal (without Xorg).
 
 " Ensure that this config is only used with Vim and not with Vi
 set nocompatible
@@ -10,7 +11,7 @@ set nocompatible
 " Activate pathogen and include all bundles in the .vim/bundle directory
 call pathogen#infect()
 
-if has("autocmd")
+if has('autocmd')
 	" Do correct indenting based on file 
 	filetype plugin indent on
 else
@@ -23,14 +24,15 @@ if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
 endif
 
 " Enable syntax
-if &t_Co > 2 || has("gui_running")
+if &t_Co > 2 || has('gui_running')
 	syntax enable
 endif
 
-if &t_Co >= 256 || has("gui_running")
+if &t_Co >= 256 || has('gui_running')
 	set background=dark
 	colorscheme solarizeddark
-else
+elseif $TERM != 'linux'
+	set background=dark	
 	colorscheme solarizeddark
 endif
 
@@ -87,4 +89,4 @@ vnoremap > >gv
 
 " Stop your shift-finger from falling off
 nore ; :
-nore , ;
+nore , ;	
