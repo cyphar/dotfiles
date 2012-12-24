@@ -32,8 +32,7 @@ if [ -f ~/.bash_alias ]; then
 fi
 
 # Print a banner
-cat ./.bashbanner
-echo "`uname -o` (`uname -s` `uname -r`) on `date`"
-
+cat .bashbanner
+echo "`uname -o` (`uname -sr`) `date`"
 
 fi #interactive?
