@@ -10,3 +10,6 @@
 [submodule ".vim/bundle/csapprox"]
 	path = .vim/bundle/csapprox
 	url = git://github.com/vim-scripts/CSApprox
+[submodule ".vim/bundle/codecomplete"]
+	path = .vim/bundle/codecomplete
+	url = git://github.com/mbbill/code_complete.git
