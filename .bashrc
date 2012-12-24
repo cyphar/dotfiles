@@ -32,6 +32,9 @@ if [ -f ~/.bash_alias ]; then
 fi
 
 # Print a banner
+if [ -n "`figlet -v`" ]; then
+	figlet "<< `uname -s` >>" > .bashbanner # If figlet is installed, generate the banner, otherwise use the one in the git repos
+fi
 cat .bashbanner
 echo "`uname -o` (`uname -sr`) `date`"
 
