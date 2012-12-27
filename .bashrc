@@ -19,9 +19,20 @@ if [ -n "$force_colour" ]; then
 fi
 
 if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
-	PS1="$(if [[ ${EUID} == 0 ]]; then echo '\[\e[01;31m\]\h\[\e[m\]'; else echo '\[\e[01;32m\]\u@\h\[\e[m\]'; fi):\[\e[1;34m\]\w\[\e[m\]\$ "
+	if [ ${EUID} == 0 ]; then
+		PS1="\[\e[1;31m\]\h\[\e[m\]"
+	else 
+		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\]"
+	fi
+	
+	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]\$ "
 else
-	PS1="$(if [[ ${EUID} == 0 ]]; then echo '\h'; else echo '\u@\h'; fi):\w\$ " # keep it in this form in case of root-specific additions later
+	if [ ${EUID} == 0 ]; then
+		PS1="\h"
+	else
+		PS1="\u@\h"
+       	fi
+		PS1="$PS1:\w\$ " # keep it in this form in case of root-specific additions later
 fi
 
 unset colour_prompt force_colour
