@@ -18,3 +18,4 @@
 	up	=	"pull --rebase"
 	wu	=	"log --stat origin..@{0}"
 	wup	=	"log -p origin..@{0}"
+	stat	=	"status"
