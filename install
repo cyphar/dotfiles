@@ -20,30 +20,30 @@ function option () {
 }
 
 echo "Choose what to install ($YES/$NO)." 1>&2
-option "CLEANUP"	"Clean up old files [$YES]? "	$YES
-option "VIMCONFIG"	"Install vim configs [$YES]? "	$YES
-option "GITCONFIG"	"Install git configs [$NO]? "	$NO
-option "BASHCONFIG"	"Install bash configs [$YES]? " $YES
-option "GENSSH"		"Generate a new set of SSH keys [$NO]? " $NO
+option "CLEANUP"	"Clean up old files [$YES]? "			"$YES"
+option "VIMCONFIG"	"Install vim configs [$YES]? "			"$YES"
+option "GITCONFIG"	"Install git configs [$NO]? "			"$NO"
+option "BASHCONFIG"	"Install bash configs [$YES]? " 		"$YES"
+option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 
 # clean up any old files
-if [ $CLEANUP == $YES ]; then
+if [ "$CLEANUP" == "$YES" ]; then
 	echo "*** Cleaning old files ***" 1>&2
 	if [ $BASHCONFIG == $YES ]; then
 		rm -f ~/.bashrc ~/.bash_alias ~/.profile ~/.bashbanner
 		rm -f ~/.bash_profile ~/.bash_login # These stuff up the .profile script
 	fi
 
-	if [ $VIMCONFIG == $YES ]; then
+	if [ "$VIMCONFIG" == "$YES" ]; then
 		rm -rf ~/.vim/
 		rm -f ~/.vimrc
 	fi
 
-	if [ $GITCONFIG == $YES ]; then
+	if [ "$GITCONFIG" == "$YES" ]; then
 		rm -f ~/.gitconfig
 	fi
 
-	if [ $GENSSH == $YES ]; then
+	if [ "$GENSSH" == "$YES" ]; then
 		rm -f ~/.ssh/id_rsa ~/.ssh/id_rsa.pub # Delete RSAv2 keys
 		rm -f ~/.ssh/identity ~/.ssh/identity.pub # Delete RSAv1 keys
 		rm -f ~/.ssh/id_dsa ~/.ssh/id_dsa.pub # Delete DSA keys
@@ -54,7 +54,7 @@ fi
 
 # install bash configs
 
-if [ $BASHCONFIG == $YES ]; then
+if [ "$BASHCONFIG" == "$YES" ]; then
 	echo "*** Installing bash config ***" 1>&2
 	cp .bashrc ~/
 	cp .bash_alias ~/
@@ -65,7 +65,7 @@ else
 fi
 
 # install vim configs
-if [ $VIMCONFIG == $YES ]; then
+if [ "$VIMCONFIG" == "$YES" ]; then
 	echo "*** Installing vim configs ***" 1>&2
 	cp .vimrc ~/
 	cp -r .vim ~/
@@ -74,19 +74,19 @@ else
 fi
 
 # install gitconfig
-if [ $GITCONFIG == $YES ]; then
+if [ "$GITCONFIG" == "$YES" ]; then
 	echo "*** Installing gitconfig ***" 1>&2
 	cp .gitconfig ~/
 else
 	echo "*** Skipped gitconfig ***" 2>&1
 fi
 
-if [ $GENSSH == $YES ]; then
+if [ "$GENSSH" == "$YES" ]; then
 	echo "*** Generating ssh keys ***" 2>&1
-	option "SSHCOMMENT" "Do you want to add your own comment to the key [$NO]?" $NO
-	if [ $SSHCOMMENT == $YES ]; then
+	option "SSHCOMMENT" "Do you want to add your own comment to the key [$NO]?" "$NO"
+	if [ "$SSHCOMMENT" == "$YES" ]; then
 		read -p "Enter comment: " COMMENT
-		ssh-keygen -t rsa -b 4096 -C $COMMENT
+		ssh-keygen -t rsa -b 4096 -C "$COMMENT"
 	else
 		ssh-keygen -t rsa -b 4096
 	fi
