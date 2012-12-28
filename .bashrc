@@ -1,5 +1,5 @@
 # only if running interactively
-if [[ -n $PS1 ]]; then
+[ -n $PS1 ] || return
 
 # Comment this line to allow the script to automatically decide whether to use colours
 force_colour=yes
@@ -48,5 +48,3 @@ if [ -n "`figlet -v`" ]; then
 fi
 cat .bashbanner
 echo "`uname -o` (`uname -sr`) `date`"
-
-fi #interactive?
