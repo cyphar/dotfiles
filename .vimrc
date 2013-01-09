@@ -8,6 +8,31 @@
 " Ensure that this config is only used with Vim and not with Vi
 set nocompatible
 
+" Make backspace work.
+set backspace=indent,eol,start
+
+" Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+
+" Middle click usually pastes selected text inside a terminal.
+" Make it accessible from the keyboard
+if has('gui_running')
+	" Make shift-insert work like in Xterm
+	map <S-Insert> <MiddleMouse>
+	map! <S-Insert> <MiddleMouse>
+endif
+
+" Add mouse integration
+set mouse=a
+
+" Now we set some defaults for the editor
+set history=50          " keep 50 lines of command line history
+set ruler               " show the cursor position all the time
+
+" Remove the low-hanging fruit, security wise
+set nomodeline
+
 " Activate pathogen and include all bundles in the .vim/bundle directory
 call pathogen#infect()
 
