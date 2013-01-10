@@ -23,9 +23,6 @@ if has('gui_running')
 	map! <S-Insert> <MiddleMouse>
 endif
 
-" Add mouse integration
-set mouse=a
-
 " Now we set some defaults for the editor
 set history=50          " keep 50 lines of command line history
 set ruler               " show the cursor position all the time
