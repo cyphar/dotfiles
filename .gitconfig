@@ -16,6 +16,7 @@
 
 [alias]
 	up	=	"pull --rebase"
+	sup	=	"submodule foreach git pull origin master"
 	wu	=	"log --stat origin..@{0}"
 	wup	=	"log -p origin..@{0}"
 	st	=	"status"
