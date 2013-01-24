@@ -6,3 +6,9 @@ if [ -n "$BASH_VERSION" ]; then
 		. "$HOME/.bashrc"
 	fi
 fi
+
+# ensure that no history is saved for root
+if [ ${EUID} == 0 ]; then
+	echo > $HISTFILE
+	history -c
+fi
