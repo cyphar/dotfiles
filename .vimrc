@@ -62,7 +62,6 @@ endif
 let mapleader = ","
 
 set hidden
-" set cul
 set autoread		" Reload the file
 set number		" Line numbers
 set noerrorbells	" No error beep
@@ -114,6 +113,9 @@ imap <c-l> <esc>llbveu<esc>i
 nmap <leader>w :w!<cr>
 nmap <leader>q :wq!<cr>
 nmap <leader>x :q!<cr>
+
+" Toggle Column Marking
+nmap <leader>m <esc>:set cuc!<cr>
 
 " Reselect the deselected blocks in visual mode
 vnoremap < <gv
