@@ -1,5 +1,7 @@
 # only if running interactively
-[ -n $PS1 ] || return
+# if [ -n "$PS1" ]; then return; fi
+
+# ^ doesn't work in some distros ^
 
 # Comment this line to allow the script to automatically decide whether to use colours
 force_colour=yes
@@ -48,7 +50,7 @@ if [ -n "`figlet -v`" ]; then
 fi
 
 # eradicate all history
-if [ ${EUID} == 0 ]; then
+if [ ${EUID} = 0 ]; then
 	echo > $HISTFILE
 	history -c
 fi
