@@ -13,3 +13,7 @@ alias egrep='egrep --color=auto'
 
 # do. not. use. nano.
 alias nano="echo Seriously? Why don\'t you just use Notepad.exe, MS Paint or Edlin?"
+
+# super user do = please do?
+alias please='sudo'
+alias pls='sudo'
