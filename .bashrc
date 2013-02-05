@@ -27,14 +27,14 @@ if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
 		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\]"
 	fi
 	
-	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]\$ "
+	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]\\$ "
 else
 	if [ ${EUID} == 0 ]; then
 		PS1="\h"
 	else
 		PS1="\u@\h"
        	fi
-		PS1="$PS1:\w\$ " # keep it in this form in case of root-specific additions later
+		PS1="$PS1:\w\\$ " # keep it in this form in case of root-specific additions later
 fi
 
 unset colour_prompt force_colour
