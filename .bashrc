@@ -6,6 +6,9 @@
 # Comment this line to allow the script to automatically decide whether to use colours
 force_colour=yes
 
+# Commend this line in order to disable the colour/smiley feedback
+colour_feedback=yes
+
 if [ "$TERM" = "xterm-color" ]; then
 	colour_prompt=yes
 fi
@@ -27,14 +30,25 @@ if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
 		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\]"
 	fi
 	
-	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]\\$ "
+	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]"
+	
+	if [ "$colour_feedback" == yes ]; then
+		PS1="$PS1\`if [ \$? = 0 ]; then echo -e ''; else echo -e '\e[01;31m'; fi\`\\$\[\e[m\] "
+	else
+		PS1="$PS1\\$ "
+	fi
 else
 	if [ ${EUID} == 0 ]; then
 		PS1="\h"
 	else
 		PS1="\u@\h"
        	fi
-		PS1="$PS1:\w\\$ " # keep it in this form in case of root-specific additions later
+
+	if [ "$colour_feedback" == yes ]; then
+		PS1="$PS1:\w \`if [ \$? = 0 ]; then echo -e ':)'; else echo -e ':('; fi\` \\$ " # keep it in this form in case of root-specific additions later
+	else
+		PS1="$PS1:\w\\$ "
+	fi
 fi
 
 unset colour_prompt force_colour
