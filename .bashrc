@@ -1,7 +1,5 @@
 # only if running interactively
-# if [ -n "$PS1" ]; then return; fi
-
-# ^ doesn't work in some distros ^
+if [ -z "$PS1" -o -v "$PS1" ]; then return; fi
 
 # Comment this line to allow the script to automatically decide whether to use colours
 force_colour=yes
