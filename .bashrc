@@ -58,7 +58,7 @@ fi
 
 # Print a banner
 if [ -n "`figlet -v`" ]; then
-	figlet "<< `uname -s` >>" > .bashbanner # If figlet is installed, generate the banner, otherwise use the one in the git repos
+	figlet "<< `uname -s` >>" > .bash_banner # If figlet is installed, generate the banner, otherwise use the one in the git repos
 fi
 
 # eradicate all history
@@ -67,5 +67,5 @@ if [ ${EUID} = 0 ]; then
 	history -c
 fi
 
-cat .bashbanner
+cat .bash_banner
 echo "`uname -o` (`uname -sr`) `date`"

@@ -30,7 +30,7 @@ option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 if [ $CLEANUP = $YES ]; then
 	echo "*** Cleaning old files ***" 1>&2
 	if [ $BASHCONFIG = $YES ]; then
-		rm -f ~/.bashrc ~/.bash_alias ~/.profile ~/.bashbanner
+		rm -f ~/.bashrc ~/.bash_alias ~/.profile ~/.bash_banner
 		rm -f ~/.bash_profile ~/.bash_login # These stuff up the .profile script
 	fi
 
@@ -58,7 +58,7 @@ if [ $BASHCONFIG = $YES ]; then
 	cp .bashrc ~/
 	cp .bash_alias ~/
 	cp .profile ~/
-	cp .bashbanner ~/
+	cp .bash_banner ~/
 else
 	echo "*** Skipped bash config ***" 1>&2
 fi
