@@ -1,6 +1,8 @@
 # only if running interactively
 if [ -z "$PS1" -o -v "$PS1" ]; then return; fi
 
+export EDITOR="vim"
+
 # Comment this line to allow the script to automatically decide whether to use colours
 force_colour=yes
 
