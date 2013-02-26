@@ -117,6 +117,21 @@ nmap <leader>x :q!<cr>
 " Toggle Column Marking
 nmap <leader>m <esc>:set cuc!<cr>
 
+" Tab management
+map <leader><left> <esc>:tabprev<cr>
+map <leader><right> <esc>:tabnext<cr>
+map <leader><up> <esc>:tabfirst<cr>
+map <leader><down> <esc>:tablast<cr>
+map <leader>tn <esc>:tabnew<cr>
+map <leader>td <esc>:tabclose<cr>
+
+imap <leader><left> <esc>:tabprev<cr>
+imap <leader><right> <esc>:tabnext<cr>
+imap <leader><up> <esc>:tabfirst<cr>
+imap <leader><down> <esc>:tablast<cr>
+imap <leader>tn <esc>:tabnew<cr>
+imap <leader>td <esc>:tabclose<cr>
+
 " Reselect the deselected blocks in visual mode
 vnoremap < <gv
 vnoremap > >gv
