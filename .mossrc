@@ -1,0 +1,10 @@
+" This file is used to configure moss (https://github.com/cyphar/moss).
+
+" The default configuration for moss (without any .mossrc) is:
+" colours = on
+" linenumbers = off
+" pagewidth = 65
+
+colours = on
+linenumbers = off
+pagewidth = 65

@@ -23,6 +23,7 @@ echo "Choose what to install ($YES/$NO)." 1>&2
 option "CLEANUP"	"Clean up old files [$YES]? "			"$YES"
 option "BASHCONFIG"	"Install bash configs [$YES]? " 		"$YES"
 option "VIMCONFIG"	"Install vim configs [$YES]? "			"$YES"
+option "MOSSCONFIG"	"Install moss configs [$NO]? "			"$NO"
 option "GITCONFIG"	"Install git configs [$NO]? "			"$NO"
 option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 
@@ -70,6 +71,14 @@ if [ $VIMCONFIG = $YES ]; then
 	cp -r .vim ~/
 else
 	echo "*** Skipped vim configs ***" 1>&2
+fi
+
+# install moss configs
+if [ $VIMCONFIG = $YES ]; then
+	echo "*** Installing moss configs ***" 1>&2
+	cp .mossrc ~/
+else
+	echo "*** Skipped moss configs ***" 1>&2
 fi
 
 # install gitconfig
