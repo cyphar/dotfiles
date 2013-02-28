@@ -1,4 +1,4 @@
-# .files #
+# dotfiles #
 These are my personal configuration files. Feel free to use them yourself if you wish.
 
 ## Download ##
