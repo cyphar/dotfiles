@@ -5,6 +5,15 @@
 " linenumbers = off
 " pagewidth = 65
 
+" colour-text = -1,-1
+" colour-linenumbers = 3,-1
+" colour-tilde = 6,-1
+" colour-statusbar = -1,-1
+" colour-error = 1,-1
+
 colours = on
 linenumbers = off
 pagewidth = 65
+
+colour-linenumbers = 4,-1
+colour-tilde = 1,-1
