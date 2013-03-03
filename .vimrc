@@ -59,7 +59,7 @@ elseif $TERM != 'linux'
 endif
 
 " Rebind the mapleader
-let mapleader = ","
+let mapleader = "\\"
 
 set hidden
 set autoread		" Reload the file
