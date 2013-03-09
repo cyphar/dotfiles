@@ -56,6 +56,9 @@ if &t_Co >= 256 || has('gui_running')
 elseif $TERM != 'linux'
 	set background=dark	
 	colorscheme solarizeddark
+else
+	set background=dark
+	colorscheme Tommorow-Night-Eighties
 endif
 
 " Rebind the mapleader
