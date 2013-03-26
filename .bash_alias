@@ -17,3 +17,6 @@ alias nano="echo Seriously? Why don\'t you just use Notepad.exe, MS Paint or Edl
 # super user do = please do?
 alias please='sudo'
 alias pls='sudo'
+
+# clear history
+alias clrh="history -c && echo > $HISTFILE"
