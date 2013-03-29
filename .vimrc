@@ -135,6 +135,13 @@ imap <leader><down> <esc>:tablast<cr>
 imap <leader>tn <esc>:tabnew<cr>
 imap <leader>td <esc>:tabclose<cr>
 
+" Shortcuts for end and home
+map <s-right> <end>
+imap <s-right> <end>
+
+map <s-left> <home>
+imap <s-left> <home>
+
 " Reselect the deselected blocks in visual mode
 vnoremap < <gv
 vnoremap > >gv
