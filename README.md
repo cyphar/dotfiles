@@ -4,7 +4,7 @@ These are my personal configuration files. Feel free to use them yourself if you
 ## Download ##
 When cloning my git, ensure that you:
 ```
-git clone --recursive <the git url>
+git clone --recursive git://github.com/cyphar/dotfiles.git
 ```
 
 ## Install ##
