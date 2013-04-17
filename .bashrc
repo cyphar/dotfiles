@@ -7,7 +7,7 @@ export EDITOR="vim"
 force_colour=yes
 
 # Commend this line in order to disable the colour/smiley feedback
-colour_feedback=yes
+feedback=yes
 
 if [ "$TERM" = "xterm-color" ]; then
 	colour_prompt=yes
@@ -25,33 +25,33 @@ fi
 
 if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
 	if [ ${EUID} == 0 ]; then
-		PS1="\[\e[1;31m\]\h\[\e[m\]"
+		PS1="\[\e[1;31m\]\h\[\e[m\] "
 	else 
-		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\]"
+		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\] "
 	fi
 	
-	PS1="$PS1:\[\e[1;34m\]\w\[\e[m\]"
+	PS1="$PS1\[\e[1;34m\]\w\[\e[m\]"
 	
-	if [ "$colour_feedback" == yes ]; then
-		PS1="$PS1\`if [ \$? = 0 ]; then echo -e ''; else echo -e '\e[01;31m'; fi\`\\$\[\e[m\] "
+	if [ "$feedback" == yes ]; then
+		PS1="$PS1\`if [ \$? = 0 ]; then echo -e ''; else echo -e '\e[01;31m'; fi\` \\$\[\e[m\] "
 	else
-		PS1="$PS1\\$ "
+		PS1="$PS1 \\$ "
 	fi
 else
 	if [ ${EUID} == 0 ]; then
-		PS1="\h"
+		PS1="\h "
 	else
-		PS1="\u@\h"
+		PS1="\u@\h "
        	fi
 
-	if [ "$colour_feedback" == yes ]; then
-		PS1="$PS1:\w \`if [ \$? = 0 ]; then echo -e ':)'; else echo -e ':('; fi\` \\$ " # keep it in this form in case of root-specific additions later
+	if [ "$feedback" == yes ]; then
+		PS1="$PS1\w \`if [ \$? = 0 ]; then echo -e ':)'; else echo -e ':('; fi\` \\$ " # keep it in this form in case of root-specific additions later
 	else
-		PS1="$PS1:\w\\$ "
+		PS1="$PS1\w \\$ "
 	fi
 fi
 
-unset colour_prompt force_colour
+unset colour_prompt force_colour feedback
 
 # Read aliases from ~/.bash_alias
 if [ -f ~/.bash_alias ]; then
