@@ -5,6 +5,9 @@
 " compiled). Also note that, even if you have vim +gui, it still will not
 " work if you use the "linux" terminal (without Xorg).
 
+" Activate pathogen and include all bundles in the .vim/bundle directory
+call pathogen#infect()
+
 " Ensure that this config is only used with Vim and not with Vi
 set nocompatible
 
@@ -30,11 +33,11 @@ set ruler               " show the cursor position all the time
 " Remove the low-hanging fruit, security wise
 set nomodeline
 
-" Activate pathogen and include all bundles in the .vim/bundle directory
-call pathogen#infect()
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+au InsertLeave * match ExtraWhitespace /\s\+$/
 
 if has('autocmd')
-	" Do correct indenting based on file 
+	" Do correct indenting based on file
 	filetype plugin indent on
 else
 	" Else use the standard smart indent
@@ -54,7 +57,7 @@ if &t_Co >= 256 || has('gui_running')
 	set background=dark
 	colorscheme solarizeddark
 elseif $TERM != 'linux'
-	set background=dark	
+	set background=dark
 	colorscheme solarizeddark
 else
 	set background=dark
@@ -128,12 +131,12 @@ map <leader><down> <esc>:tablast<cr>
 map <leader>tn <esc>:tabnew<cr>
 map <leader>td <esc>:tabclose<cr>
 
-imap <leader><left> <esc>:tabprev<cr>
-imap <leader><right> <esc>:tabnext<cr>
-imap <leader><up> <esc>:tabfirst<cr>
-imap <leader><down> <esc>:tablast<cr>
-imap <leader>tn <esc>:tabnew<cr>
-imap <leader>td <esc>:tabclose<cr>
+imap <leader><left> <esc>:tabprev<cr>i
+imap <leader><right> <esc>:tabnext<cr>i
+imap <leader><up> <esc>:tabfirst<cr>i
+imap <leader><down> <esc>:tablast<cr>i
+imap <leader>tn <esc>:tabnew<cr>i
+imap <leader>td <esc>:tabclose<cr>i
 
 " Shortcuts for end and home
 map <s-right> <end>
@@ -142,10 +145,13 @@ imap <s-right> <end>
 map <s-left> <home>
 imap <s-left> <home>
 
+map <c-w> <esc>:%s/\s\+$//g<cr>
+imap <c-w> <esc>:%s/\s\+$//g<cr>i
+
 " Reselect the deselected blocks in visual mode
 vnoremap < <gv
 vnoremap > >gv
 
 " Stop your shift-finger from falling off
 nore ; :
-nore , ;	
+nore , ;
