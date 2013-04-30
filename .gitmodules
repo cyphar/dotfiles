@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
 	url = git://github.com/vim-scripts/taglist.vim.git
+[submodule ".vim/bundle/multiple-cursors"]
+	path = .vim/bundle/multiple-cursors
+	url = git://github.com/terryma/vim-multiple-cursors.git
