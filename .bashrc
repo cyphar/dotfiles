@@ -30,7 +30,7 @@ if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
 		PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\] "
 	fi
 
-	PS1="$PS1\[\e[1;34m\]\w\[\e[m\]"
+	PS1="$PS1\[\e[1;34m\]\W\[\e[m\]"
 
 	if [ "$feedback" == yes ]; then
 		PS1="$PS1\`if [ \$? = 0 ]; then echo -e ''; else echo -e '\e[01;31m'; fi\` \\$\[\e[m\] "
@@ -44,7 +44,7 @@ else
 		PS1="\u@\h "
        	fi
 
-	PS1="$PS1\w"
+	PS1="$PS1\W"
 
 	if [ "$feedback" == yes ]; then
 		PS1="$PS1 \`if [ \$? = 0 ]; then echo -e ':)'; else echo -e ':('; fi\` \\$ " # keep it in this form in case of root-specific additions later
