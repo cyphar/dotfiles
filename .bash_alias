@@ -20,3 +20,10 @@ alias pls='sudo'
 
 # clear history
 alias clrh="history -c && echo > $HISTFILE"
+
+# nice relative jumps
+alias ..='cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
