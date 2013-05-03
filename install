@@ -22,8 +22,9 @@ option () {
 echo "Choose what to install ($YES/$NO)." 1>&2
 option "CLEANUP"	"Clean up old files [$YES]? "			"$YES"
 option "BASHCONFIG"	"Install bash configs [$YES]? " 		"$YES"
+option "WGETCONFIG"	"Install wget configs [$YES]? " 		"$YES"
 option "VIMCONFIG"	"Install vim configs [$YES]? "			"$YES"
-option "MOSSCONFIG"	"Install moss configs [$NO]? "			"$NO"
+option "MOSSCONFIG"	"Install moss configs [$YES]? "			"$YES"
 option "GITCONFIG"	"Install git configs [$NO]? "			"$NO"
 option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 
@@ -35,9 +36,17 @@ if [ $CLEANUP = $YES ]; then
 		rm -f ~/.bash_profile ~/.bash_login # These stuff up the .profile script
 	fi
 
+	if [ $WGETCONFIG = $YES ]; then
+		rm -f ~/.wgetrc
+	fi
+
 	if [ $VIMCONFIG = $YES ]; then
 		rm -rf ~/.vim/
 		rm -f ~/.vimrc
+	fi
+
+	if [ $MOSSCONFIG = $YES ]; then
+		rm -f ~/.mossrc
 	fi
 
 	if [ $GITCONFIG = $YES ]; then
@@ -64,6 +73,14 @@ else
 	echo "*** Skipped bash config ***" 1>&2
 fi
 
+# install wget configs
+if [ $WGETCONFIG = $YES ]; then
+	echo "*** Installing wget configs ***" 1>&2
+	cp .wgetrc ~/
+else
+	echo "*** Skipped wget configs ***" 1>&2
+fi
+
 # install vim configs
 if [ $VIMCONFIG = $YES ]; then
 	echo "*** Installing vim configs ***" 1>&2
@@ -74,7 +91,7 @@ else
 fi
 
 # install moss configs
-if [ $VIMCONFIG = $YES ]; then
+if [ $MOSSCONFIG = $YES ]; then
 	echo "*** Installing moss configs ***" 1>&2
 	cp .mossrc ~/
 else
@@ -99,6 +116,6 @@ if [ $GENSSH = $YES ]; then
 	else
 		ssh-keygen -t rsa -b 4096
 	fi
-else 
+else
 	echo "*** Skipped ssh keys ***" 2>&1
 fi
