@@ -9,6 +9,7 @@ force_colour=yes
 # Commend this line in order to disable the colour/smiley feedback
 feedback=yes
 
+stty columns 1000
 if [ "$TERM" = "xterm-color" ]; then
 	colour_prompt=yes
 fi
