@@ -20,3 +20,4 @@
 	wu	=	"log --stat origin..@{0}"
 	wup	=	"log -p origin..@{0}"
 	st	=	"status"
+	id	=	"rev-parse --verify HEAD"
