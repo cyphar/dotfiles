@@ -2,6 +2,7 @@
 alias ls='ls --color=auto'
 
 # ls shortcuts
+alias sl='ls'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
