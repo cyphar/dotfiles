@@ -21,3 +21,4 @@
 	wup	=	"log -p origin..@{0}"
 	st	=	"status"
 	id	=	"rev-parse --verify HEAD"
+	lg	=	"log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
