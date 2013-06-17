@@ -148,6 +148,9 @@ imap <s-left> <home>
 map <c-w> <esc>:%s/\s\+$//g<cr>
 imap <c-w> <esc>:%s/\s\+$//g<cr>i
 
+map <leader>sc <esc>:setlocal spell! spelllang=en_au<cr>
+imap <leader>sc <esc>:setlocal spell! spelllang=en_au<cr>i
+
 " Reselect the deselected blocks in visual mode
 vnoremap < <gv
 vnoremap > >gv
