@@ -79,6 +79,8 @@ set smartcase		" ... as long as it doesn't contain a capital
 set nobackup		" I can track my own changes,
 set noswapfile		" ... thanks.
 
+set pastetoggle=<F12>	" Toggle sane paste indentation mode
+
 " Syntastic setup
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
