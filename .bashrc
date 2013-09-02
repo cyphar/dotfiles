@@ -71,5 +71,9 @@ if [ ${EUID} = 0 ]; then
 	history -c
 fi
 
+
+# XTERM transparency
+[ -n "$XTERM_VERSION" ] && transset-df -a -m 0.85 >/dev/null
+
 cat ~/.bash_banner
 echo "`uname -o` (`uname -sr`) `date`"

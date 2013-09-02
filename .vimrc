@@ -69,17 +69,22 @@ let mapleader = "\\"
 
 set hidden
 set autoread		" Reload the file
-set number		" Line numbers
+set number			" Line numbers
 set noerrorbells	" No error beep
-set tabstop=8		" Size of hard tabs
-set shiftwidth=8	" Number of spaces for autoindent
+
+set tabstop=4		" Size of hard tabs
+set ts=4			" Size of hard tabs
+set shiftwidth=4	" Number of spaces for autoindent
+
 set ignorecase		" Ignore the case of a search
 set smartcase		" ... as long as it doesn't contain a capital
 
 set nobackup		" I can track my own changes,
 set noswapfile		" ... thanks.
 
-set pastetoggle=<F12>	" Toggle sane paste indentation mode
+set encoding=utf-8	" Enable UTF-8
+
+set pastetoggle=<F10>	" Toggle sane paste indentation mode
 
 " Syntastic setup
 set statusline+=%#warningmsg#
