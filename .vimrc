@@ -67,6 +67,9 @@ endif
 " Rebind the mapleader
 let mapleader = "\\"
 
+" automatically reload vimrc when it's saved
+au BufWritePost .vimrc so ~/.vimrc
+
 set hidden
 set autoread		" Reload the file
 set number			" Line numbers
@@ -85,6 +88,12 @@ set noswapfile		" ... thanks.
 set encoding=utf-8	" Enable UTF-8
 
 set pastetoggle=<F10>	" Toggle sane paste indentation mode
+set clipboard=unnamed	" Actual copy-paste
+au InsertLeave * set nopaste " Exit paste mode when leaving ins-mode
+
+set scrolloff=8			" Number of lines from vertical edge to start scrolling
+set sidescrolloff=15	" Number of cols from horizontal edge to start scrolling
+set sidescroll=1		" Number of cols to scroll at a time
 
 " Syntastic setup
 set statusline+=%#warningmsg#
@@ -152,6 +161,7 @@ imap <s-right> <end>
 map <s-left> <home>
 imap <s-left> <home>
 
+" Clear whitespace
 map <c-w> <esc>:%s/\s\+$//g<cr>
 imap <c-w> <esc>:%s/\s\+$//g<cr>i
 
