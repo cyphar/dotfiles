@@ -87,6 +87,9 @@ set noswapfile		" ... thanks.
 
 set encoding=utf-8	" Enable UTF-8
 
+set colorcolumn=80
+highlight ColorColumn ctermbg=233
+
 set pastetoggle=<F10>	" Toggle sane paste indentation mode
 set clipboard=unnamed	" Actual copy-paste
 au InsertLeave * set nopaste " Exit paste mode when leaving ins-mode
