@@ -73,7 +73,7 @@ fi
 
 
 # XTERM transparency
-[ -n "$XTERM_VERSION" ] && transset-df -a -m 0.85 >/dev/null
+[ -n "$XTERM_VERSION" ] && transset-df -a 0.85 >/dev/null
 
 cat ~/.bash_banner
 echo "`uname -o` (`uname -sr`) `date`"
