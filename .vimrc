@@ -65,7 +65,7 @@ else
 endif
 
 " Rebind the mapleader
-let mapleader = "\\"
+let mapleader = "?"
 
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
@@ -87,8 +87,8 @@ set noswapfile		" ... thanks.
 
 set encoding=utf-8	" Enable UTF-8
 
-set colorcolumn=80
-highlight ColorColumn ctermbg=233
+"set colorcolumn=80
+"highlight ColorColumn ctermbg=233
 
 set pastetoggle=<F10>	" Toggle sane paste indentation mode
 set clipboard=unnamed	" Actual copy-paste
@@ -140,29 +140,25 @@ nmap <leader>q :wq!<cr>
 nmap <leader>x :q!<cr>
 
 " Toggle Column Marking
-nmap <leader>m <esc>:set cuc!<cr>
+"nmap <leader>m <esc>:set cuc!<cr>
 
 " Tab management
-map <leader><left> <esc>:tabprev<cr>
-map <leader><right> <esc>:tabnext<cr>
-map <leader><up> <esc>:tabfirst<cr>
-map <leader><down> <esc>:tablast<cr>
-map <leader>tn <esc>:tabnew<cr>
-map <leader>td <esc>:tabclose<cr>
+nnoremap <leader>n <esc>:tabprev<cr>
+nnoremap <leader>m <esc>:tabnext<cr>
+nnoremap <leader>tn <esc>:tabnew<cr>
+nnoremap <leader>td <esc>:tabclose<cr>
 
-imap <leader><left> <esc>:tabprev<cr>i
-imap <leader><right> <esc>:tabnext<cr>i
-imap <leader><up> <esc>:tabfirst<cr>i
-imap <leader><down> <esc>:tablast<cr>i
-imap <leader>tn <esc>:tabnew<cr>i
-imap <leader>td <esc>:tabclose<cr>i
+" Split management
+nnoremap <leader>sh <esc>:vsp .<cr>
+nnoremap <leader>sv <esc>:sp .<cr>
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-l> <c-w><c-l>
+nnoremap <c-m> <c-w><c-m>
 
 " Shortcuts for end and home
-map <s-right> <end>
-imap <s-right> <end>
-
-map <s-left> <home>
-imap <s-left> <home>
+nnoremap <s-right> <end>
+nnoremap <s-left> <home>
 
 " Clear whitespace
 map <c-w> <esc>:%s/\s\+$//g<cr>
