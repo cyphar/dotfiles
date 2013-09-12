@@ -22,6 +22,7 @@ option () {
 echo "Choose what to install ($YES/$NO)." 1>&2
 option "CLEANUP"	"Clean up old files [$YES]? "			"$YES"
 option "BASHCONFIG"	"Install bash configs [$YES]? " 		"$YES"
+option "TMUXCONFIG"	"Install tmux configs [$YES]? " 		"$YES"
 option "WGETCONFIG"	"Install wget configs [$YES]? " 		"$YES"
 option "VIMCONFIG"	"Install vim configs [$YES]? "			"$YES"
 option "MOSSCONFIG"	"Install moss configs [$YES]? "			"$YES"
@@ -34,6 +35,10 @@ if [ $CLEANUP = $YES ]; then
 	if [ $BASHCONFIG = $YES ]; then
 		rm -f ~/.bashrc ~/.bash_alias ~/.profile ~/.bash_banner
 		rm -f ~/.bash_profile ~/.bash_login # These stuff up the .profile script
+	fi
+
+	if [ $TMUXCONFIG = $YES ]; then
+		rm -f ~/.tmux.conf
 	fi
 
 	if [ $WGETCONFIG = $YES ]; then
@@ -59,7 +64,7 @@ if [ $CLEANUP = $YES ]; then
 		rm -f ~/.ssh/id_dsa ~/.ssh/id_dsa.pub # Delete DSA keys
 	fi
 else
-	echo "*** WARNING: Skipping cleanup (NOT RECCOMENDED) ***" 1>&2
+	echo "*** WARNING: Skipping cleanup (NOT RECOMMENDED) ***" 1>&2
 fi
 
 # install bash configs
@@ -71,6 +76,14 @@ if [ $BASHCONFIG = $YES ]; then
 	cp .bash_banner ~/
 else
 	echo "*** Skipped bash config ***" 1>&2
+fi
+
+# install tmux configs
+if [ $TMUXCONFIG = $YES ]; then
+	echo "*** Installing tmux config ***" 1>&2
+	cp .tmux.conf ~/
+else
+	echo "*** Skipped tmux config ***" 1>&2
 fi
 
 # install wget configs

@@ -22,6 +22,10 @@ alias pls='sudo'
 # clear history
 alias clrh="history -c && echo > $HISTFILE"
 
+# make tmux nice
+#alias tmux="tmux -2"
+alias tmux="TERM=xterm-256color tmux"
+
 # nice relative jumps
 alias ..='cd ..'
 alias ..2='cd ../..'

@@ -53,16 +53,16 @@ if &t_Co > 2 || has('gui_running')
 	syntax enable
 endif
 
-if &t_Co >= 256 || has('gui_running')
-	set background=dark
-	colorscheme solarizeddark
-elseif $TERM != 'linux'
-	set background=dark
-	colorscheme solarizeddark
-else
-	set background=dark
-	colorscheme Tommorow-Night-Eighties
-endif
+"if &t_Co >= 256 || has('gui_running')
+"	set background=dark
+"	colorscheme solarizeddark
+"elseif $TERM != 'linux'
+"	set background=dark
+"	colorscheme solarizeddark
+"endif
+
+set background=dark
+colorscheme solarizeddark
 
 " Rebind the mapleader
 let mapleader = "?"
