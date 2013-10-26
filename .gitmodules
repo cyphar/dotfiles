@@ -1,18 +1,18 @@
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
-	url = git://github.com/scrooloose/nerdcommenter.git
+	url = https://github.com/scrooloose/nerdcommenter.git
 [submodule ".vim/bundle/nerdtree"]
 	path = .vim/bundle/nerdtree
-	url = git://github.com/scrooloose/nerdtree.git
+	url = https://github.com/scrooloose/nerdtree.git
 [submodule ".vim/bundle/syntastic"]
 	path = .vim/bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule ".vim/bundle/csapprox"]
 	path = .vim/bundle/csapprox
-	url = git://github.com/vim-scripts/CSApprox
+	url = https://github.com/vim-scripts/CSApprox
 [submodule ".vim/bundle/taglist"]
 	path = .vim/bundle/taglist
-	url = git://github.com/vim-scripts/taglist.vim.git
+	url = https://github.com/vim-scripts/taglist.vim.git
 [submodule ".vim/bundle/multiple-cursors"]
 	path = .vim/bundle/multiple-cursors
-	url = git://github.com/terryma/vim-multiple-cursors.git
+	url = https://github.com/terryma/vim-multiple-cursors.git
