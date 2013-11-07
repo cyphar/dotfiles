@@ -61,6 +61,9 @@ endif
 "	colorscheme solarizeddark
 "endif
 
+" Remove gvim's redundant toolbars
+set go=
+
 set background=dark
 colorscheme solarizeddark
 
