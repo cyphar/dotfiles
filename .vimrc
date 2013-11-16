@@ -37,11 +37,8 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertLeave * match ExtraWhitespace /\s\+$/
 
 if has('autocmd')
-	" Do correct indenting based on file
-	filetype plugin indent on
-else
-	" Else use the standard smart indent
-	set smartindent
+	" Enable block indentation and filetype-stuff
+	filetype indent on
 endif
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
@@ -78,15 +75,13 @@ set autoread		" Reload the file
 set number			" Line numbers
 set noerrorbells	" No error beep
 
+set smarttab		" Auto-indent correctly
 set tabstop=4		" Size of hard tabs
-set ts=4			" Size of hard tabs
-set shiftwidth=4	" Number of spaces for autoindent
+set shiftwidth=0	" Just use tabstop
+set noexpandtab		" Don't use spaces. EVER.
 
-set ignorecase		" Ignore the case of a search
-set smartcase		" ... as long as it doesn't contain a capital
-
-set nobackup		" I can track my own changes,
-set noswapfile		" ... thanks.
+"set ignorecase		" Ignore the case of a search
+"set smartcase		" ... as long as it doesn't contain a capital
 
 set encoding=utf-8	" Enable UTF-8
 
