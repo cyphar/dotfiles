@@ -28,7 +28,7 @@ alias tmux="TERM=xterm-256color tmux"
 
 # make valgrind ... work
 alias valgrind="valgrind --leak-check=full --trace-children=yes"
-alais vg="valgrind"
+alias vg="valgrind"
 
 # nice relative jumps
 alias ..='cd ..'
