@@ -71,9 +71,9 @@ fi
 if [ $BASHCONFIG = $YES ]; then
 	echo "*** Installing bash config ***" 1>&2
 	cp .bashrc ~/
-	cp .bash_alias ~/
+	cp .bashalias ~/
+	cp .bashbanner ~/
 	cp .profile ~/
-	cp .bash_banner ~/
 else
 	echo "*** Skipped bash config ***" 1>&2
 fi

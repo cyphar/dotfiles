@@ -55,9 +55,9 @@ fi
 
 unset colour_prompt force_colour feedback
 
-# Read aliases from ~/.bash_alias
-if [ -f ~/.bash_alias ]; then
-    . ~/.bash_alias
+# Read aliases from ~/.bashalias
+if [ -f ~/.bashalias ]; then
+    . ~/.bashalias
 fi
 
 # Print a banner
@@ -75,5 +75,5 @@ fi
 # XTERM transparency
 [ -n "$XTERM_VERSION" ] && transset-df -a 0.85 >/dev/null
 
-cat ~/.bash_banner
+cat ~/.bashbanner
 echo "`uname -o` (`uname -sr`) `date`"
