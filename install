@@ -33,35 +33,35 @@ option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 if [ $CLEANUP = $YES ]; then
 	echo "*** Cleaning old files ***" 1>&2
 	if [ $BASHCONFIG = $YES ]; then
-		rm -f ~/.bashrc ~/.bash_alias ~/.profile ~/.bash_banner
-		rm -f ~/.bash_profile ~/.bash_login # These stuff up the .profile script
+		rm -f $HOME/.bashrc $HOME/.bash_alias $HOME/.profile $HOME/.bash_banner
+		rm -f $HOME/.bash_profile $HOME/.bash_login # These stuff up the .profile script
 	fi
 
 	if [ $TMUXCONFIG = $YES ]; then
-		rm -f ~/.tmux.conf
+		rm -f $HOME/.tmux.conf
 	fi
 
 	if [ $WGETCONFIG = $YES ]; then
-		rm -f ~/.wgetrc
+		rm -f $HOME/.wgetrc
 	fi
 
 	if [ $VIMCONFIG = $YES ]; then
-		rm -rf ~/.vim/
-		rm -f ~/.vimrc
+		rm -rf $HOME/.vim/
+		rm -f $HOME/.vimrc
 	fi
 
 	if [ $MOSSCONFIG = $YES ]; then
-		rm -f ~/.mossrc
+		rm -f $HOME/.mossrc
 	fi
 
 	if [ $GITCONFIG = $YES ]; then
-		rm -f ~/.gitconfig
+		rm -f $HOME/.gitconfig
 	fi
 
 	if [ $GENSSH = $YES ]; then
-		rm -f ~/.ssh/id_rsa ~/.ssh/id_rsa.pub # Delete RSAv2 keys
-		rm -f ~/.ssh/identity ~/.ssh/identity.pub # Delete RSAv1 keys
-		rm -f ~/.ssh/id_dsa ~/.ssh/id_dsa.pub # Delete DSA keys
+		rm -f $HOME/.ssh/id_rsa $HOME/.ssh/id_rsa.pub # Delete RSAv2 keys
+		rm -f $HOME/.ssh/identity $HOME/.ssh/identity.pub # Delete RSAv1 keys
+		rm -f $HOME/.ssh/id_dsa $HOME/.ssh/id_dsa.pub # Delete DSA keys
 	fi
 else
 	echo "*** WARNING: Skipping cleanup (NOT RECOMMENDED) ***" 1>&2
@@ -70,10 +70,10 @@ fi
 # install bash configs
 if [ $BASHCONFIG = $YES ]; then
 	echo "*** Installing bash config ***" 1>&2
-	cp .bashrc ~/
-	cp .bashalias ~/
-	cp .bashbanner ~/
-	cp .profile ~/
+	cp .bashrc $HOME/
+	cp .bashalias $HOME/
+	cp .bashbanner $HOME/
+	cp .profile $HOME/
 else
 	echo "*** Skipped bash config ***" 1>&2
 fi
@@ -81,7 +81,7 @@ fi
 # install tmux configs
 if [ $TMUXCONFIG = $YES ]; then
 	echo "*** Installing tmux config ***" 1>&2
-	cp .tmux.conf ~/
+	cp .tmux.conf $HOME/
 else
 	echo "*** Skipped tmux config ***" 1>&2
 fi
@@ -89,7 +89,7 @@ fi
 # install wget configs
 if [ $WGETCONFIG = $YES ]; then
 	echo "*** Installing wget configs ***" 1>&2
-	cp .wgetrc ~/
+	cp .wgetrc $HOME/
 else
 	echo "*** Skipped wget configs ***" 1>&2
 fi
@@ -97,8 +97,8 @@ fi
 # install vim configs
 if [ $VIMCONFIG = $YES ]; then
 	echo "*** Installing vim configs ***" 1>&2
-	cp .vimrc ~/
-	cp -r .vim ~/
+	cp .vimrc $HOME/
+	cp -r .vim $HOME/
 else
 	echo "*** Skipped vim configs ***" 1>&2
 fi
@@ -106,7 +106,7 @@ fi
 # install moss configs
 if [ $MOSSCONFIG = $YES ]; then
 	echo "*** Installing moss configs ***" 1>&2
-	cp .mossrc ~/
+	cp .mossrc $HOME/
 else
 	echo "*** Skipped moss configs ***" 1>&2
 fi
@@ -114,7 +114,7 @@ fi
 # install gitconfig
 if [ $GITCONFIG = $YES ]; then
 	echo "*** Installing gitconfig ***" 1>&2
-	cp .gitconfig ~/
+	cp .gitconfig $HOME/
 else
 	echo "*** Skipped gitconfig ***" 2>&1
 fi
