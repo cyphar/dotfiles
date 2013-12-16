@@ -55,14 +55,14 @@ fi
 
 unset colour_prompt force_colour feedback
 
-# Read aliases from ~/.bashalias
-if [ -f ~/.bashalias ]; then
-    . ~/.bashalias
+# Read aliases from $HOME/.bashalias
+if [ -f $HOME/.bashalias ]; then
+    . $HOME/.bashalias
 fi
 
 # Print a banner
 if [ -n "`figlet -v`" ]; then
-	figlet "<< `uname -s` >>" > ~/.bash_banner # If figlet is installed, generate the banner, otherwise use the one in the git repos
+	figlet "<< `uname -s` >>" > $HOME/.bash_banner # If figlet is installed, generate the banner, otherwise use the one in the git repos
 fi
 
 # eradicate all history
@@ -75,5 +75,5 @@ fi
 # XTERM transparency
 [ -n "$XTERM_VERSION" ] && transset-df -a 0.85 >/dev/null
 
-cat ~/.bashbanner
+cat $HOME/.bashbanner
 echo "`uname -o` (`uname -sr`) `date`"
