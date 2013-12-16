@@ -5,10 +5,10 @@
 " compiled). Also note that, even if you have vim +gui, it still will not
 " work if you use the "linux" terminal (without Xorg).
 
-" Activate pathogen and include all bundles in the .vim/bundle directory
+" Activate pathogen and include all bundles in the .vim/bundle directory.
 call pathogen#infect()
 
-" Ensure that this config is only used with Vim and not with Vi
+" Ensure that this config is only used with Vim and not with Vi.
 set nocompatible
 
 " Make backspace work.
@@ -18,157 +18,119 @@ set backspace=indent,eol,start
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-" Middle click usually pastes selected text inside a terminal.
-" Make it accessible from the keyboard
-if has('gui_running')
-	" Make shift-insert work like in Xterm
-	map <S-Insert> <MiddleMouse>
-	map! <S-Insert> <MiddleMouse>
-endif
-
 " Now we set some defaults for the editor
-set history=50          " keep 50 lines of command line history
-set ruler               " show the cursor position all the time
+set history=50
+set ruler
 
-" Remove the low-hanging fruit, security wise
+" Nothing good ever came out of modeline.
+" Seriously. Talk about a security hole.
 set nomodeline
 
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-au InsertLeave * match ExtraWhitespace /\s\+$/
+" Make the whitespace RED
+au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+au InsertCharPre,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+" Crush that whitespace.
+au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :%s/\s\+$//ge
 
+" Can slow things down.
+au InsertCharPre * match ExtraWhitespace /\s\+$/
+
+" Enable block indentation and filetype-stuff.
 if has('autocmd')
-	" Enable block indentation and filetype-stuff
 	filetype indent on
 endif
 
-if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-	set t_Co=256
-endif
-
-" Enable syntax
+" Enable syntax highlighting.
 if &t_Co > 2 || has('gui_running')
 	syntax enable
 endif
 
-"if &t_Co >= 256 || has('gui_running')
-"	set background=dark
-"	colorscheme solarizeddark
-"elseif $TERM != 'linux'
-"	set background=dark
-"	colorscheme solarizeddark
-"endif
-
-" Remove gvim's redundant toolbars
+" Remove gvim's redundant toolbars.
+" Not that I use gvim ... much.
 set go=
 
+" Dark-As-My-Soul colourscheme.
 set background=dark
 colorscheme solarizeddark
 
-" Rebind the mapleader
+" Rebind the mapleader.
 let mapleader = "?"
 
-" automatically reload vimrc when it's saved
+" Automatically reload vimrc when it's saved.
 au BufWritePost .vimrc so ~/.vimrc
 
+" Basic stuff.
 set hidden
-set autoread		" Reload the file
-set number			" Line numbers
-set noerrorbells	" No error beep
+set autoread
+set number
+set noerrorbells
 
-set smarttab		" Auto-indent correctly
-set tabstop=4		" Size of hard tabs
-set shiftwidth=0	" Just use tabstop
-set noexpandtab		" Don't use spaces. EVER.
+" We are using hard tabs, like Cthulu intended.
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
 
-"set ignorecase		" Ignore the case of a search
-"set smartcase		" ... as long as it doesn't contain a capital
+" Did someone say glyphs?
+set encoding=utf-8
 
-set encoding=utf-8	" Enable UTF-8
+" Paste-related stuff.
+set pastetoggle=<F10>
+set clipboard=unnamed
+au InsertLeave * set nopaste
 
-"set colorcolumn=80
-"highlight ColorColumn ctermbg=233
+" Scrolling is crucial.
+set scrolloff=8
+set sidescrolloff=15
+set sidescroll=1
 
-set pastetoggle=<F10>	" Toggle sane paste indentation mode
-set clipboard=unnamed	" Actual copy-paste
-au InsertLeave * set nopaste " Exit paste mode when leaving ins-mode
-
-set scrolloff=8			" Number of lines from vertical edge to start scrolling
-set sidescrolloff=15	" Number of cols from horizontal edge to start scrolling
-set sidescroll=1		" Number of cols to scroll at a time
-
-" Syntastic setup
+" Syntastic stuff.
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 let g:syntastic_enable_signs=1
 let g:syntastic_loc_list_height=3
 
+" Syntastic errors.
 map <F3> :Errors<cr>
-map <leader>. <esc>:lprev<cr>
-map <leader>/ <esc>:lnext<cr>
+map <leader>. :lprev<cr>
+map <leader>/ :lnext<cr>
 
-" ctags epicness
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
+" Set up ctags.
+let Tlist_Ctags_Cmd = "/usr/bin/env ctags"
 let Tlist_WinWidth = 50
 map <F4> :TlistToggle<cr>
-map <F5> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+map <F5> :!/usr/bin/env ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
-" Set up delimit-mate
-let delimitMate_matchpairs = "\":\",':',(:),[:],{:},<:>"
+" Set up delimit-mate.
+let delimitMate_matchpairs = "(:),[:],{:},<:>"
 
-" Ctrl-mappings
-nnoremap <c-c> yy
-nnoremap <c-x> dd
-nnoremap <c-v> p
-nnoremap <c-u> lbveU<esc>
-nnoremap <c-l> lbveu<esc>
+" Easier tab management.
+map <leader>n :tabprev<cr>
+map <leader>m :tabnext<cr>
+map <leader>tn :tabnew<cr>
+map <leader>td :tabclose<cr>
 
-vmap <c-c> y
-vmap <c-x> dd
-vmap <c-v> p
+" Easier split management.
+map <leader>sh :vsp .<cr>
+map <leader>sv :sp .<cr>
+noremap <c-j> <c-w><c-j>
+noremap <c-k> <c-w><c-k>
+noremap <c-l> <c-w><c-l>
+noremap <c-m> <c-w><c-m>
 
-imap <c-d> <esc>ddi
-imap <c-z> <esc>ui
-imap <c-u> <esc>llbveU<esc>i
-imap <c-l> <esc>llbveu<esc>i
+" Shortcuts for end and home.
+map <s-right> <end>
+map <s-left> <home>
 
-" Quick-save and close
-nmap <leader>w :w!<cr>
-nmap <leader>q :wq!<cr>
-nmap <leader>x :q!<cr>
+" Speling iz gode.
+noremap <leader>sc :setlocal spell! spelllang=en_au<cr>
+inoremap <leader>sc <c-\><c-o>:setlocal spell! spelllang=en_au<cr>
 
-" Toggle Column Marking
-"nmap <leader>m <esc>:set cuc!<cr>
-
-" Tab management
-nnoremap <leader>n <esc>:tabprev<cr>
-nnoremap <leader>m <esc>:tabnext<cr>
-nnoremap <leader>tn <esc>:tabnew<cr>
-nnoremap <leader>td <esc>:tabclose<cr>
-
-" Split management
-nnoremap <leader>sh <esc>:vsp .<cr>
-nnoremap <leader>sv <esc>:sp .<cr>
-nnoremap <c-j> <c-w><c-j>
-nnoremap <c-k> <c-w><c-k>
-nnoremap <c-l> <c-w><c-l>
-nnoremap <c-m> <c-w><c-m>
-
-" Shortcuts for end and home
-nnoremap <s-right> <end>
-nnoremap <s-left> <home>
-
-" Clear whitespace
-map <c-w> <esc>:%s/\s\+$//g<cr>
-imap <c-w> <esc>:%s/\s\+$//g<cr>i
-
-map <leader>sc <esc>:setlocal spell! spelllang=en_au<cr>
-imap <leader>sc <esc>:setlocal spell! spelllang=en_au<cr>i
-
-" Reselect the deselected blocks in visual mode
+" Reselect the deselected blocks in visual mode.
 vnoremap < <gv
 vnoremap > >gv
 
-" Stop your shift-finger from falling off
+" Stop your shift-finger from falling off.
+" Trust me, this *really* helps.
 nore ; :
 nore , ;
