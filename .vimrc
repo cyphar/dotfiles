@@ -113,8 +113,8 @@ let Tlist_WinWidth = 50
 map <F4> :TlistToggle<cr>
 map <F5> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
-" Completion
-set complete+=i		" Scan included files
+" Set up delimit-mate
+let delimitMate_matchpairs = "\":\",':',(:),[:],{:},<:>"
 
 " Ctrl-mappings
 nnoremap <c-c> yy
