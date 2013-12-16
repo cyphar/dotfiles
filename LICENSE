@@ -1,24 +1,5 @@
-# dotfiles #
-These are my personal configuration files. Feel free to use them yourself if you wish.
-
-## Download ##
-When cloning my git, ensure that you:
-```
-git clone --recursive git://github.com/cyphar/dotfiles.git
-```
-
-## Install ##
-Run the script `install` in the root of the project to install my configs.
-
-## Requirements ##
-You NEED the following packages to ensure that my configs will work properly:
-- figlet
-- exuberant-ctags
-
-## License ##
-Apart from files where specifically specified (e.g vim plugins), these configuration files have been released under the MIT/X11 License:
-```
-Copyright (C) 2013 Cyphar
+dotfiles: a collection of configuration files
+Copyright (c) 2013 Cyphar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -37,4 +18,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
