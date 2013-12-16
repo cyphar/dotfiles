@@ -16,3 +16,6 @@
 [submodule ".vim/bundle/multiple-cursors"]
 	path = .vim/bundle/multiple-cursors
 	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule ".vim/bundle/delimit-mate"]
+	path = .vim/bundle/delimit-mate
+	url = https://github.com/Raimondi/delimitMate.git
