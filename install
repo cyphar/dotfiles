@@ -47,7 +47,7 @@ option "TMUXCONFIG"	"Install tmux configs [$YES]? " 		"$YES"
 option "WGETCONFIG"	"Install wget configs [$YES]? " 		"$YES"
 option "VIMCONFIG"	"Install vim configs [$YES]? "			"$YES"
 option "MOSSCONFIG"	"Install moss configs [$YES]? "			"$YES"
-option "GITCONFIG"	"Install git configs [$NO]? "			"$NO"
+option "GITCONFIG"	"Install git configs [$YES]? "			"$YES"
 option "GENSSH"		"Generate a new set of SSH keys [$NO]? "	"$NO"
 
 # clean up any old files
