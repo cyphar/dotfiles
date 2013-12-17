@@ -122,6 +122,15 @@ map <F5> :!/usr/bin/env ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
 " Set up delimit-mate.
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
+let delimitMate_quotes = "\" ' `"
+let delimitMate_nesting_quotes = ['"', "'", "`"]
+
+" Enable all the things.
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+let delimitMate_jump_expansion = 1
+let delimitMate_smart_quotes = 1
+let delimitMate_balance_matchpairs = 1
 
 " Easier tab management.
 map <leader>n :tabprev<cr>
