@@ -121,7 +121,7 @@ map <F4> :TlistToggle<cr>
 map <F5> :!/usr/bin/env ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
 " Set up delimit-mate.
-let delimitMate_matchpairs = "(:),[:],{:},<:>"
+let delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_quotes = "\" ' `"
 let delimitMate_nesting_quotes = ['"', "'", "`"]
 
