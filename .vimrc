@@ -56,8 +56,11 @@ au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Enable block indentation and filetype-stuff.
 if has('autocmd')
-	filetype indent on
+	filetype plugin indent on
 endif
+
+" Omnicompletion
+set omnifunc=syntaxcomplete#Complete
 
 " Enable syntax highlighting.
 if &t_Co > 2 || has('gui_running')
