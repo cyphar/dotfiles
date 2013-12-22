@@ -48,7 +48,8 @@ alias clrh="history -c && echo > $HISTFILE"
 alias tmux="TERM=xterm-256color tmux"
 
 # make valgrind ... work
-alias valgrind="valgrind --leak-check=full --trace-children=yes --read-var-info=yes"
+alias valgrind="valgrind --leak-check=full --trace-children=yes"
+alias vgs="valgrind --read-ver-info=yes"
 alias vg="valgrind"
 
 # nice relative jumps
