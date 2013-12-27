@@ -20,23 +20,24 @@
 # SOFTWARE.
 
 [user]
-	name	=	cyphar
-	email	=	cyphar@cyphar.com
+	name	= cyphar
+	email	= cyphar@cyphar.com
 
 [credential]
-	helper	=	cache
+	helper	= cache
 
 [color]
-	ui		=	true
-	diff	=	auto
-	status	=	auto
-	branch	=	auto
+	ui		= true
+	diff	= auto
+	status	= auto
+	branch	= auto
 
 [alias]
-	up		=	"pull --rebase"
-	sup		=	"submodule foreach git pull origin master"
-	wu		=	"log --stat origin..@{0}"
-	wup		=	"log -p origin..@{0}"
-	st		=	"status"
-	id		=	"rev-parse --verify HEAD"
-	lg		=	"log --graph --pretty=format:'%Cred%h%Cblue%G?%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(yellow)%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+	up	= "pull --rebase"
+	sup	= "submodule foreach git pull origin master"
+	wu	= "log --stat origin..@{0}"
+	wup	= "log -p origin..@{0}"
+	st	= "status"
+	id	= "rev-parse --verify HEAD"
+	lg	= "log --graph --abbrev-commit \
+			--pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
