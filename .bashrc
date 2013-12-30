@@ -54,7 +54,7 @@ if [ "$colour_prompt" = yes -o "$force_colour" = yes ]; then
 	PS1="$PS1\[\e[1;34m\]\W\[\e[m\]"
 
 	if [ "$feedback" == yes ]; then
-		PS1="$PS1 \`if [ \$? = 0 ]; then echo -e ''; else echo -e '\e[01;31m'; fi\`\\$\[\e[m\] "
+		PS1="$PS1 \`if [ \$? != 0 ]; then echo -e '\e[01;31m'; fi\`\\$\[\e[m\] "
 	else
 		PS1="$PS1 \\$ "
 	fi
