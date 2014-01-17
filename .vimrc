@@ -56,7 +56,8 @@ au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Enable block indentation and filetype-stuff.
 if has('autocmd')
-	filetype plugin indent on
+"	filetype plugin indent on
+	filetype on
 endif
 
 " Omnicompletion
