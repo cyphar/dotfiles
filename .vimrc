@@ -87,6 +87,7 @@ set hidden
 set autoread
 set number
 set noerrorbells
+set nowrap
 
 " We are using hard tabs, like Cthulu intended.
 set tabstop=4

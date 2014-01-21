@@ -39,5 +39,6 @@
 	wup	= "log -p origin..@{0}"
 	st	= "status"
 	id	= "rev-parse --verify HEAD"
+	mm	= "merge --no-ff"
 	lg	= "log --graph --abbrev-commit \
 			--pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
