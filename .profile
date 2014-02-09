@@ -34,3 +34,8 @@ if [ ${EUID} == 0 ]; then
 	history -c
 	unset HISTFILE
 fi
+
+# Set up keychain
+if keychain --version 2>/dev/null; then
+	eval $(keychain --eval --agents ssh -Q --quiet $HOME/.ssh/id_rsa)
+fi
