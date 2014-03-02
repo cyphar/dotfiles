@@ -48,6 +48,7 @@ set nomodeline
 " Make the whitespace RED
 au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au InsertCharPre,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+
 " Crush that whitespace.
 au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :%s/\s\+$//ge
 
@@ -56,8 +57,7 @@ au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Enable block indentation and filetype-stuff.
 if has('autocmd')
-"	filetype plugin indent on
-	filetype on
+	filetype indent plugin on
 endif
 
 " Omnicompletion
@@ -99,9 +99,20 @@ set encoding=utf-8
 
 " Set up airline
 set laststatus=2
+set noshowmode
 let g:airline_powerline_fonts=1
 let g:airline_theme='powerlineish'
 let g:airline_enable_syntastic=1
+
+" Exit every mode quickly
+if !has('gui_running')
+	set ttimeoutlen=10
+	augroup FastEscape
+		autocmd!
+		au InsertEnter * set timeoutlen=0
+		au InsertLeave * set timeoutlen=1000
+	augroup END
+endif
 
 " Paste-related stuff.
 set pastetoggle=<F10>
