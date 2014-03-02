@@ -97,6 +97,12 @@ set noexpandtab
 " Did someone say glyphs?
 set encoding=utf-8
 
+" Set up airline
+set laststatus=2
+let g:airline_powerline_fonts=1
+let g:airline_theme='powerlineish'
+let g:airline_enable_syntastic=1
+
 " Paste-related stuff.
 set pastetoggle=<F10>
 set clipboard=unnamed
