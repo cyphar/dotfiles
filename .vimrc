@@ -101,7 +101,7 @@ set encoding=utf-8
 set laststatus=2
 set noshowmode
 let g:airline_powerline_fonts=1
-let g:airline_theme='powerlineish'
+let g:airline_theme='wombat'
 let g:airline_enable_syntastic=1
 
 " Exit every mode quickly
