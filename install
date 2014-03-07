@@ -130,7 +130,7 @@ fi
 if [ "$VIMCONFIG" = "$YES" ]; then
 	echo "*** Installing font configs ***" 1>&2
 	cp -r .fonts "$HOME"
-	fc-cache -vf "$HOME/.fonts"
+	fc-cache -f "$HOME/.fonts"
 	cp -r .fonts.conf.d "$HOME"
 else
 	echo "*** Skipped font configs ***" 1>&2
