@@ -52,3 +52,6 @@
 [submodule ".vim/bundle/golang"]
 	path = .vim/bundle/golang
 	url = https://github.com/jnwhiteh/vim-golang.git
+[submodule ".vim/bundle/supertab"]
+	path = .vim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
