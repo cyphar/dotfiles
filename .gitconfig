@@ -34,7 +34,8 @@
 
 [alias]
 	up	= "pull --rebase"
-	sup	= "submodule foreach git pull origin master"
+	sup	= "submodule foreach --recursive git pull origin master"
+	sin	= "submodule update --init --recursive"
 	wu	= "log --stat origin..@{0}"
 	wup	= "log -p origin..@{0}"
 	st	= "status"
