@@ -90,10 +90,14 @@ set noerrorbells
 set nowrap
 
 " I *need* to stop using the arrow keys.
-map <left>  <nop>
-map <right> <nop>
-map <up>    <nop>
-map <down>  <nop>
+map  <up>    <nop>
+imap <up>    <nop>
+map  <down>  <nop>
+imap <down>  <nop>
+map  <left>  <nop>
+map  <right> <nop>
+imap <left>  <nop>
+imap <right> <nop>
 
 " We are using hard tabs, like Cthulu intended.
 set tabstop=4
