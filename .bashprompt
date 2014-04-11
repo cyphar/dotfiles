@@ -1,0 +1,79 @@
+#!/bin/sh
+# dotfiles: a collection of configuration files
+# Copyright (c) 2013 Cyphar
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+
+# 1. The above copyright notice and this permission notice shall be included in
+#    all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Clear any old data.
+unset PROMPT COLOUR FCOLOUR FEEDBACK
+
+# Comment this line to allow the script to automatically decide whether to use colours
+FCOLOUR=1
+
+# Comment this line in order to disable the colour/smiley feedback
+FEEDBACK=1
+
+if [ "$TERM" = "xterm-color" ]; then
+	COLOUR=1
+fi
+
+if [ -z "$FCOLOUR" ]; then
+	if [ -x /usr/bin/tput ] && [ tput setaf 1 >&/dev/null ]; then
+		# Terminal has colour support
+		COLOUR=1
+	else
+		# Terminal has not colour support, or doesn't "advertise" it
+		COLOUR=
+	fi
+else
+	COLOUR="$FCOLOUR"
+fi
+
+if [ -n "$COLOUR" ]; then
+	if [ ${EUID} == 0 ]; then
+		PROMPT="\[\e[1;31m\]\h\[\e[m\] "
+	else
+		PROMPT="\[\e[1;32m\]\u\[\e[m\]\[\e[0;32m\]@\h\[\e[m\] "
+	fi
+
+	PROMPT="${PROMPT}\[\e[1;34m\]\W\[\e[m\]"
+
+	if [ -n "$FEEDBACK" ]; then
+		PROMPT="${PROMPT} \`if [ \$? != 0 ]; then echo -e '\e[01;31m'; fi\`\\$\[\e[m\] "
+	else
+		PROMPT="${PROMPT} \\$ "
+	fi
+else
+	if [ ${EUID} == 0 ]; then
+		PROMPT="\h "
+	else
+		PROMPT="\u@\h "
+	fi
+
+	PROMPT="${PROMPT}\W"
+
+	if [ -n "$FEEDBACK" ]; then
+		PROMPT="${PROMPT} \`if [ \$? = 0 ]; then echo -e ':)'; else echo -e ':('; fi\` \\$ " # keep it in this form in case of root-specific additions later
+	else
+		PROMPT="${PROMPT} \\$ "
+	fi
+fi
+
+export PS1="${PROMPT}"
+unset PROMPT COLOUR FCOLOUR FEEDBACK

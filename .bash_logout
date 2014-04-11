@@ -20,42 +20,5 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# only if running interactively
-if [ -z "$PS1" -o -v "$PS1" ]; then return; fi
-
-# Set aliases from $HOME/.bashalias
-if [ -f $HOME/.bashalias ]; then
-    . $HOME/.bashalias
-fi
-
-# Configure prompt from $HOME/.bashalias
-if [ -f $HOME/.bashprompt ]; then
-    . $HOME/.bashprompt
-fi
-
-# Eradicate all history
-if [ ${EUID} = 0 ]; then
-	echo > $HISTFILE
-	history -c
-fi
-
-# Exports
-export PATH="$PATH:$HOME/bin"
-export EDITOR="vim"
-export PAGER="less"
-
-# Go Exports
-export GOPATH="$HOME"
-
-# XTERM transparency
-[ -n "$XTERM_VERSION" ] && transset-df -a 0.85 >/dev/null
-
-# Set the banner
-if [ -n "$(figlet -v)" ]; then
-	# If figlet is installed, generate the banner, otherwise use the one in the git repos
-	figlet "<< $(uname -s) >>" > $HOME/.bashbanner
-fi
-
-# Print out the banner.
-cat "$HOME/.bashbanner"
-echo "$(uname -o) ($(uname -sr)) $(date)"
+# Clear the screen when logging out.
+clear
