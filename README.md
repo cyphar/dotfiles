@@ -18,7 +18,7 @@ You NEED the following packages to ensure that my configs will work properly:
 ## License ##
 Apart from files where specifically specified (e.g vim plugins), these configuration files have been released under the MIT/X11 License:
 ```
-Copyright (C) 2013 Cyphar
+Copyright (C) 2013, 2014 Cyphar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

@@ -1,5 +1,5 @@
 " dotfiles: a collection of configuration files
-" Copyright (c) 2013 Cyphar
+" Copyright (C) 2013, 2014 Cyphar
 
 " Permission is hereby granted, free of charge, to any person obtaining a copy of
 " this software and associated documentation files (the "Software"), to deal in
