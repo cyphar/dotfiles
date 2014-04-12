@@ -1,3 +1,4 @@
+#!/bin/sh
 # dotfiles: a collection of configuration files
 # Copyright (C) 2013, 2014 Cyphar
 
@@ -37,5 +38,5 @@ fi
 
 # Set up keychain
 if keychain --version 2>/dev/null; then
-	eval $(keychain --eval --agents ssh -Q --quiet --nogui $HOME/.ssh/id_rsa)
+	eval $(keychain --eval --agents ssh -Q --quiet --nogui "$HOME/.ssh/id_rsa")
 fi
