@@ -65,6 +65,30 @@ alias go64="goc amd64"
 alias go32="goc 386"
 alias goarm="goc arm"
 
+# make setting proxies simpler
+prox () {
+	USER=${1-$(read -p  "username: "; echo $REPLY)}
+	PASS=${2-$(read -sp "password: "; echo $REPLY)}
+	SERV=${3-$(read -p  "server: ";   echo $REPLY)}
+	PROT=${4-$(read -p  "protocol: "; echo $REPLY)}
+
+	PROX="$PROT://$USER:$PASS@$SERV"
+
+	export HTTP_PROXY="$PROX"
+	export HTTPS_PROXY="$PROX"
+	export SOCKS_PROXY="$PROX"
+	export FTP_PROXY="$PROX"
+	export ALL_PROXY="$PROX"
+
+	export http_proxy="$PROX"
+	export https_proxy="$PROX"
+	export socks_proxy="$PROX"
+	export ftp_proxy="$PROX"
+	export all_proxy="$PROX"
+
+	unset USER PASS SERV PROT PROX
+}
+
 # nice relative jumps
 alias ..='cd ..'
 alias ..2='cd ../..'
