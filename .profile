@@ -28,15 +28,3 @@ if [ -n "$BASH_VERSION" ]; then
 		. "$HOME/.bashrc"
 	fi
 fi
-
-# ensure that no history is saved for root
-if [ ${EUID} == 0 ]; then
-	echo > $HISTFILE
-	history -c
-	unset HISTFILE
-fi
-
-# Set up keychain
-if keychain --version 2>/dev/null; then
-	eval $(keychain --eval --agents ssh -Q --quiet --nogui "$HOME/.ssh/id_rsa")
-fi

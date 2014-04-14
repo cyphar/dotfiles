@@ -23,6 +23,18 @@
 # only if running interactively
 if [ -z "$PS1" -o -v "$PS1" ]; then return; fi
 
+##################
+# Welcome Screen #
+##################
+
+if [ -f $HOME/.bashbanner ]; then
+	. $HOME/.bashbanner
+fi
+
+###########
+# Imports #
+###########
+
 # Set aliases from $HOME/.bashalias
 if [ -f $HOME/.bashalias ]; then
     . $HOME/.bashalias
@@ -33,29 +45,39 @@ if [ -f $HOME/.bashprompt ]; then
     . $HOME/.bashprompt
 fi
 
+###########
+# Exports #
+###########
+
+export PATH="$PATH:$HOME/bin"
+export EDITOR="vim"
+export PAGER="less"
+
+# Make go ... work
+export GOPATH="$HOME"
+
+###################
+# History actions #
+###################
+
 # Eradicate all history
 if [ ${EUID} = 0 ]; then
 	echo > $HISTFILE
 	history -c
 fi
 
-# Exports
-export PATH="$PATH:$HOME/bin"
-export EDITOR="vim"
-export PAGER="less"
-
-# Go Exports
-export GOPATH="$HOME"
-
-# XTERM transparency
-[ -n "$XTERM_VERSION" ] && transset-df -a 0.85 >/dev/null
-
-# Set the banner
-if [ -n "$(figlet -v)" ]; then
-	# If figlet is installed, generate the banner, otherwise use the one in the git repos
-	figlet "<< $(uname -s) >>" > $HOME/.bashbanner
+# ensure that no history is saved for root
+if [ ${EUID} == 0 ]; then
+	echo > $HISTFILE
+	history -c
+	unset HISTFILE
 fi
 
-# Print out the banner.
-cat "$HOME/.bashbanner"
-echo "$(uname -o) ($(uname -sr)) $(date)"
+################
+# Daemon setup #
+################
+
+# Set up keychain
+if keychain --version 2>/dev/null; then
+	eval $(keychain --eval --agents ssh -Q --quiet --nogui "$HOME/.ssh/id_rsa")
+fi
