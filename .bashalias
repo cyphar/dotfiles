@@ -35,7 +35,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 # do. not. use. nano.
-alias nano="echo Seriously? Why don\'t you just use Notepad.exe, MS Paint or Edlin?"
+#alias nano="echo Seriously? Why don\'t you just use Notepad.exe, MS Paint or Edlin?"
 
 # super user do = please do?
 alias please='sudo'
@@ -89,6 +89,12 @@ prox () {
 	export all_proxy="$PROX"
 
 	unset USER PASS SERV PROT PROX
+}
+
+# make deactivating proxies simpler
+unprox () {
+	unset HTTP_PROXY HTTPS_PROXY SOCKS_PROXY FTP_PROXY ALL_PROXY
+	unset http_proxy https_proxy socks_proxy ftp_proxy all_proxy
 }
 
 # nice relative jumps
