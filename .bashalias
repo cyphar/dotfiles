@@ -67,10 +67,12 @@ alias goarm="goc arm"
 
 # make setting proxies simpler
 prox () {
-	USER=${1-$(read -p  "username: "; echo $REPLY)}
-	PASS=${2-$(read -sp "password: "; echo $REPLY)}
-	SERV=${3-$(read -p  "server: ";   echo $REPLY)}
-	PROT=${4-$(read -p  "protocol: "; echo $REPLY)}
+	USER=$(read -p  "username: "; echo $REPLY)
+	PASS=$(read -sp "password: "; echo $REPLY)
+	echo
+
+	SERV=${1-$(read -p  "server: ";   echo $REPLY)}
+	PROT=${2-$(read -p  "protocol: "; echo $REPLY)}
 
 	PROX="$PROT://$USER:$PASS@$SERV"
 
