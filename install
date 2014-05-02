@@ -81,7 +81,7 @@ if [ "$CLEANUP" = "$YES" ]; then
 	fi
 
 	if [ "$GITCONFIG" = "$YES" ]; then
-		rm -f "$HOME/.gitconfig"
+		rm -f "$HOME/.gitconfig" "$HOME/.gitignore"
 	fi
 
 	if [ $GENSSH = $YES ]; then
@@ -147,7 +147,7 @@ fi
 # install gitconfig
 if [ "$GITCONFIG" = "$YES" ]; then
 	echo "*** Installing gitconfig ***" 1>&2
-	cp .gitconfig "$HOME"
+	cp .gitconfig .gitignore "$HOME"
 else
 	echo "*** Skipped gitconfig ***" 2>&1
 fi
