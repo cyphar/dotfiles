@@ -34,19 +34,12 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# do. not. use. nano.
-#alias nano="echo Seriously? Why don\'t you just use Notepad.exe, MS Paint or Edlin?"
-
 # super user do = please do?
 alias please='sudo'
 alias pls='sudo'
 
 # clear history
 alias clrh="history -c && echo > $HISTFILE"
-
-# make tmux nice
-#alias tmux="tmux -2"
-alias tmux="TERM=xterm-256color tmux"
 
 # make valgrind ... work
 alias valgrind="valgrind --leak-check=full --trace-children=yes"
