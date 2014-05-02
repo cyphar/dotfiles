@@ -56,6 +56,9 @@ export PAGER="less"
 # Make go ... work
 export GOPATH="$HOME"
 
+# Made TERM work nicer
+export TERM="xterm-256color"
+
 ###################
 # History actions #
 ###################
