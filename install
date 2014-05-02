@@ -48,6 +48,7 @@ option "VIMCONFIG"	"[?] Install vim configs [$YES]? "				"$YES"
 option "FONTCONFIG"	"[?] Install font configs [$YES]? "				"$YES"
 option "MOSSCONFIG"	"[?] Install moss configs [$YES]? "				"$YES"
 option "GITCONFIG"	"[?] Install git configs [$YES]? "				"$YES"
+option "BIN"        "[?] Install bin [$YES]"						"$YES"
 option "GENSSH"		"[?] Generate a new set of SSH keys [$NO]? "	"$NO"
 
 # clean up any old files
@@ -81,6 +82,10 @@ if [ "$CLEANUP" = "$YES" ]; then
 
 	if [ "$GITCONFIG" = "$YES" ]; then
 		rm -f "$HOME/.gitconfig" "$HOME/.gitignore"
+	fi
+
+	if [ "$BIN" = "$YES" ]; then
+		rm -rf "$HOME/bin"
 	fi
 
 	if [ $GENSSH = $YES ]; then
@@ -149,6 +154,14 @@ if [ "$GITCONFIG" = "$YES" ]; then
 	cp .gitconfig .gitignore "$HOME"
 else
 	echo "[-] Skipped gitconfig" 2>&1
+fi
+
+# install gitconfig
+if [ "$BIN" = "$YES" ]; then
+	echo "[+] Installing bin" 1>&2
+	cp -r bin "$HOME"
+else
+	echo "[-] Skipped bin" 2>&1
 fi
 
 # generate new ssh keys
