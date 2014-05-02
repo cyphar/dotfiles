@@ -1,6 +1,6 @@
 #!/bin/sh
 # dotfiles: a collection of configuration files
-# Copyright (C) 2014 Cyphar
+# Copyright (C) 2013, 2014 Cyphar
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -26,14 +26,23 @@ BLMAX=$(cat "$BLDIR/max_brightness")
 BLCUR=$(cat "$BLFILE")
 
 BRIGHTNESS=""
+NOTCH=10
 
 usage () {
-	echo "usage: $0 [-s <0-$BLMAX>]" >&2
-	echo "       set the screen backlight using the /sys filesystem" >&2
-	echo "       backlight directory: $BLDIR" >&2
+	echo "usage: $0 [-s <0-$BLMAX>] [-n notch] [-dig]" >&2
+	echo "    set the screen backlight using the /sys filesystem" >&2
+	echo "    backlight directory: $BLDIR" >&2
+	echo "options:" >&2
+	echo "    -g              get the brightness"
+	echo "    -s brightness   set the brightness to the one given" >&2
+	echo "    -m              set brightness to maximum (${BLMAX})" >&2
+	echo >&2
+	echo "    -n notch        set the delta to change the brightness by" >&2
+	echo "    -i              increment brightness by ${NOTCH}" >&2
+	echo "    -d              decrement brightness by ${NOTCH}" >&2
 }
 
-while getopts "s:" opt; do
+while getopts "dgimn:s:" opt; do
 	case "${opt}" in
 		s)
 			BRIGHTNESS="${OPTARG}"
@@ -41,6 +50,30 @@ while getopts "s:" opt; do
 				usage
 				exit 1
 			fi
+			;;
+		m)
+			BRIGHTNESS="${BLMAX}"
+			;;
+		n)
+			NOTCH="${OPTARG}"
+			;;
+		i)
+			BRIGHTNESS="$((BLCUR + NOTCH))"
+			if [ "${BRIGHTNESS}" -le 0 -o "${BRIGHTNESS}" -gt "${BLMAX}" ]; then
+				echo "$0: new brightness is outside of available brightness"
+				exit 1
+			fi
+			;;
+		d)
+			BRIGHTNESS="$((BLCUR - NOTCH))"
+			if [ "${BRIGHTNESS}" -le 0 -o "${BRIGHTNESS}" -gt "${BLMAX}" ]; then
+				echo "$0: new brightness is outside of available brightness"
+				exit 1
+			fi
+			;;
+		g)
+			echo "${BLCUR}"
+			exit
 			;;
 	esac
 done
