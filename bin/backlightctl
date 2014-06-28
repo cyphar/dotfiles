@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-BLDIR="/sys/class/backlight/backlight.10"
+BLDIR="/sys/class/backlight/backlight.*"
 BLFILE="$BLDIR/brightness"
 BLMAX=$(cat "$BLDIR/max_brightness")
 BLCUR=$(cat "$BLFILE")
