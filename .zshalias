@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 # dotfiles: a collection of configuration files
 # Copyright (C) 2013, 2014 Cyphar
 
@@ -20,79 +20,79 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# ls colours
-alias ls='ls --color=auto'
+# Enable alias option completion.
+setopt completealiases
 
-# ls shortcuts
-alias sl='ls'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# ls colours.
+alias ls="ls --color=auto"
 
-# grep colours
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+# ls shortcuts.
+alias sl="ls"
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
 
-# super user do = please do?
-alias please='sudo'
-alias pls='sudo'
+# grep colours.
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
 
-# clear history
-alias clrh="history -c && echo > $HISTFILE"
-
-# make valgrind ... work
+# Make valgrind ... work.
 alias valgrind="valgrind --leak-check=full --trace-children=yes"
 alias vgs="valgrind --read-ver-info=yes"
 alias vg="valgrind"
 
-# make cross-compiling go easier
-goc () {
-	ARCH="${1}"; shift
-	GOARCH="${ARCH}" go $@
-	unset ARCH
+# Make cross-compiling go easier.
+function goc() {
+	local __arch
+	__arch="${1}"; shift
+
+	GOARCH="${__arch}" go $@
 }
 
-# aliases for all archs
+# Aliases for all archs.
 alias go64="goc amd64"
 alias go32="goc 386"
 alias goarm="goc arm"
 
-# make setting proxies simpler
-prox () {
-	USER=$(read -p  "username: "; echo $REPLY)
-	PASS=$(read -sp "password: "; echo $REPLY)
+# Make setting proxies simpler.
+function prox() {
+	USER=$(read -p  "username: "; echo ${REPLY})
+	PASS=$(read -sp "password: "; echo ${REPLY})
 	echo
 
-	SERV=${1-$(read -p  "server: ";   echo $REPLY)}
-	PROT=${2-$(read -p  "protocol: "; echo $REPLY)}
+	SERV=${1-$(read -p  "server: ";   echo ${REPLY})}
+	PROT=${2-$(read -p  "protocol: "; echo ${REPLY})}
 
-	PROX="$PROT://$USER:$PASS@$SERV"
+	PROX="${PROT}://${USER}:${PASS}@${SERV}"
 
-	export HTTP_PROXY="$PROX"
-	export HTTPS_PROXY="$PROX"
-	export SOCKS_PROXY="$PROX"
-	export FTP_PROXY="$PROX"
-	export ALL_PROXY="$PROX"
+	export HTTP_PROXY="${PROX}"
+	export HTTPS_PROXY="${PROX}"
+	export SOCKS_PROXY="${PROX}"
+	export FTP_PROXY="${PROX}"
+	export ALL_PROXY="${PROX}"
 
-	export http_proxy="$PROX"
-	export https_proxy="$PROX"
-	export socks_proxy="$PROX"
-	export ftp_proxy="$PROX"
-	export all_proxy="$PROX"
+	export http_proxy="${PROX}"
+	export https_proxy="${PROX}"
+	export socks_proxy="${PROX}"
+	export ftp_proxy="${PROX}"
+	export all_proxy="${PROX}"
 
 	unset USER PASS SERV PROT PROX
 }
 
-# make deactivating proxies simpler
-unprox () {
+# Make deactivating proxies simpler.
+function unprox() {
 	unset HTTP_PROXY HTTPS_PROXY SOCKS_PROXY FTP_PROXY ALL_PROXY
 	unset http_proxy https_proxy socks_proxy ftp_proxy all_proxy
 }
 
-# nice relative jumps
-alias ..='cd ..'
-alias ..2='cd ../..'
-alias ..3='cd ../../..'
-alias ..4='cd ../../../..'
-alias ..5='cd ../../../../..'
+# Nice relative jumps.
+alias ..="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+
+# Make changing directories easy.
+setopt AUTO_CD

@@ -20,11 +20,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# profile - executed by the command interpreter on login shell
+# profile -- executed by any POSIX shell on login
 
-# run the .bashrc in the users home directory
-if [ -n "$BASH_VERSION" ]; then
-	if [ -f "$HOME/.bashrc" ]; then
-		. "$HOME/.bashrc"
+# run the .zshrc in the user's home directory
+if [ -n "${ZSH_VERSION}" ]; then
+	if [ -f "${HOME}/.zshrc" ]; then
+		. "${HOME}/.zshrc"
 	fi
 fi

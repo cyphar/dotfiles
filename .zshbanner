@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 # dotfiles: a collection of configuration files
 # Copyright (C) 2013, 2014 Cyphar
 
@@ -20,4 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-exit 0
+# Output banner.
+if (figlet -v &>/dev/null); then
+	figlet "<< $(uname -s) >>"
+fi
+
+# Print out the kernel data and date.
+echo "$(uname -o) ($(uname -sr)) $(date)"

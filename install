@@ -41,7 +41,7 @@ option () {
 
 echo "[+] Choose what to install ($YES/$NO)." 1>&2
 option "CLEANUP"	"[?] Clean up old files [$YES]? "				"$YES"
-option "BASHCONFIG"	"[?] Install bash configs [$YES]? " 			"$YES"
+option "ZSHCONFIG"	"[?] Install zsh configs [$YES]? " 			"$YES"
 option "TMUXCONFIG"	"[?] Install tmux configs [$YES]? " 			"$YES"
 option "WGETCONFIG"	"[?] Install wget configs [$YES]? " 			"$YES"
 option "VIMCONFIG"	"[?] Install vim configs [$YES]? "				"$YES"
@@ -54,9 +54,9 @@ option "GENSSH"		"[?] Generate a new set of SSH keys [$NO]? "	"$NO"
 # clean up any old files
 if [ "$CLEANUP" = "$YES" ]; then
 	echo "[+] Cleaning old files" 1>&2
-	if [ "$BASHCONFIG" = "$YES" ]; then
-		rm -f "$HOME/.bashrc" "$HOME/.bashalias" "$HOME/.bashbanner" "$HOME/.bashprompt" "$HOME/.bash_logout" "$HOME/.profile"
-		rm -f "$HOME/.bash_profile" "$HOME/.bash_login" # These stuff up the .profile script
+	if [ "$ZSHCONFIG" = "$YES" ]; then
+		rm -f "$HOME/.zshrc" "$HOME/.zshalias" "$HOME/.zshbanner" "$HOME/.zshprompt" "$HOME/.zsh_logout" "$HOME/.profile"
+		rm -f "$HOME/.zsh_profile" "$HOME/.zsh_login" # These stuff up the .profile script
 	fi
 
 	if [ "$TMUXCONFIG" = "$YES" ]; then
@@ -97,12 +97,12 @@ else
 	echo "[!] WARNING: Skipping cleanup (NOT RECOMMENDED)" 1>&2
 fi
 
-# install bash configs
-if [ "$BASHCONFIG" = "$YES" ]; then
-	echo "[+] Installing bash config" 1>&2
-	cp .bashrc .bashalias .bashprompt .bashbanner .bash_logout .profile "$HOME"
+# install zsh configs
+if [ "$ZSHCONFIG" = "$YES" ]; then
+	echo "[+] Installing zsh config" 1>&2
+	cp .zshrc .zshalias .zshprompt .zshbanner .profile "$HOME"
 else
-	echo "[-] Skipped bash config" 1>&2
+	echo "[-] Skipped zsh config" 1>&2
 fi
 
 # install tmux configs

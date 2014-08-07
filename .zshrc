@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 # dotfiles: a collection of configuration files
 # Copyright (C) 2013, 2014 Cyphar
 
@@ -20,20 +20,43 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Set the banner
-if [ -n "$(figlet -v)" ]; then
-	# If figlet is installed, generate the banner, otherwise use the one in the git repos
-	figlet "<< $(uname -s) >>"
-else
-	cat <<EOF
-  ____  _     _                   ____
- / / / | |   (_)_ __  _   ___  __ \ \ \
-/ / /  | |   | | '_ \| | | \ \/ /  \ \ \
-\ \ \  | |___| | | | | |_| |>  <   / / /
- \_\_\ |_____|_|_| |_|\__,_/_/\_\ /_/_/
+# Only set up if running interactively.
+[[ -t 0 ]] || exit 0
 
-EOF
+# Load completion.
+autoload -U compinit
+compinit
+
+# Banner.
+if [[ -f "${HOME}/.zshbanner" ]]; then
+	. "${HOME}/.zshbanner"
 fi
 
-# Print out the kernel data and date.
-echo "$(uname -o) ($(uname -sr)) $(date)"
+# Set aliases from ${HOME}/.zshalias.
+if [[ -f "${HOME}/.zshalias" ]]; then
+    . "${HOME}/.zshalias"
+fi
+
+# Configure prompt from ${HOME}/.zshalias.
+if [[ -f "${HOME}/.zshprompt" ]]; then
+    . "${HOME}/.zshprompt"
+fi
+
+# Export the standard stuff.
+export PATH="${PATH}:${HOME}/bin"
+export EDITOR="vim"
+export PAGER="less"
+
+# Make go ... work.
+export GOPATH="${HOME}"
+
+# Made TERM work nicer.
+#export TERM="xterm-256color"
+
+# Ignore duplicate history data.
+setopt HIST_IGNORE_DUPS
+
+# Set up keychain.
+if (keychain --version 2>/dev/null); then
+	eval $(keychain --eval --agents ssh -Q --quiet --nogui "${HOME}/.ssh/id_rsa")
+fi
