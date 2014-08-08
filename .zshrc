@@ -45,8 +45,8 @@ export GOPATH="${HOME}"
 # Made TERM work nicer.
 export TERM="xterm-256color"
 
-# Ignore duplicate history data.
-setopt HIST_IGNORE_DUPS
+# Make the history usable.
+setopt histignoredups sharehistory
 
 # Set up keychain.
 if (keychain --version 2>/dev/null); then

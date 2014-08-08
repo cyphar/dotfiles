@@ -95,4 +95,4 @@ alias ..4="cd ../../../.."
 alias ..5="cd ../../../../.."
 
 # Make changing directories easy.
-setopt AUTO_CD
+setopt autocd

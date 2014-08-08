@@ -22,7 +22,7 @@
 
 # Enable prompt substitution and colours.
 autoload -U colors; colors
-setopt prompt_subst
+setopt promptsubst
 
 # Emacs mode.
 bindkey -e
