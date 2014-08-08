@@ -24,11 +24,6 @@
 autoload -U colors; colors
 setopt prompt_subst
 
-# Redraw prompt when TMOUT elapses.
-function TRAPALRM() {
-	zle reset-prompt
-}
-
 # Set up precmd hook to set up prompt.
 function precmd() {
 	local user_prompt
@@ -63,8 +58,21 @@ function precmd() {
 		fi
 	}
 
+	function __nice_path() {
+		local __path
+		__path="$(pwd)"
+
+		if [[ "${__path}" == "${HOME}" ]]; then
+			__path="~"
+		else
+			__path="$(basename ${__path})"
+		fi
+
+		echo "${__path}"
+	}
+
 	# Path information.
-	path_prompt="%{$fg_bold[blue]%}%~%{$reset_color%}$(__git_info)$(__hg_info)"
+	path_prompt="%{$fg_bold[blue]%}$(__nice_path)%{$reset_color%}$(__git_info)$(__hg_info)"
 
 	# Return prompt based on exit code of last command.
 	function __ret_prompt() {
@@ -78,10 +86,23 @@ function precmd() {
 	}
 	ret_prompt="$(__ret_prompt)"
 
+	# Get loadavg for last minute.
+	function __loadavg() {
+		[[ -f "/proc/loadavg" ]] && echo "$(cat /proc/loadavg 2>/dev/null | cut -d' ' -f1)"
+	}
+
+	# Get number of processes, if we can.
+	function __nproc() {
+		echo "$(nproc 2>/dev/null || echo '?')"
+	}
+
 	# Actually set up prompts.
 	export PROMPT="$user_prompt %{$fg[cyan]%}::%{$reset_color%} $path_prompt $ret_prompt"
-	export RPROMPT="[%D{%L:%M:%S %p}]"
+	export RPROMPT="[$(uname -o) $(__loadavg)($(__nproc))]"
 
-	# Set refresh time to every second.
-	export TMOUT=1
+	# Set up secondary prompts.
+	export PS1="${PROMPT}"
+	export PS2="%_> "
+	export PS3="?#> "
+	export PS4="+> "
 }
