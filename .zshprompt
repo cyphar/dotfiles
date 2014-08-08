@@ -77,11 +77,6 @@ function precmd() {
 			# Get the ref path.
 			local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
 
-			# Check that the __refpath exists.
-			if ! [[ -f "${__gitdir}/${__refpath}" ]]; then
-				return 1
-			fi
-
 			# Yield the actual branch name from the __refpath.
 			echo "$(basename -- "${__refpath}")"
 			return 0
