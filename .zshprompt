@@ -24,14 +24,18 @@
 autoload -U colors; colors
 setopt prompt_subst
 
+# Emacs mode.
+bindkey -e
+
 # Set up precmd hook to set up prompt.
 function precmd() {
+	# Save old exit code first.
+	local exit_code="$?"
+
+	# Locals.
 	local user_prompt
 	local path_prompt
 	local ret_prompt
-
-	# Save old exit code first.
-	local __exit_code="$?"
 
 	# User information.
 	if [[ "${EUID}" == "0" ]]; then
@@ -41,34 +45,110 @@ function precmd() {
 	fi
 
 	# Git branch and ref information.
+	# Everything is calculated inside this shell script (no calls to `git` are made).
+	# This is because on large projects (like, say, the kernel) git can take >1 minute
+	# to figure out what branch and ref HEAD is pointing to. The filesystem is faster.
 	function __git_info() {
-		if (git status &>/dev/null); then
-			local branch="$(git branch --list | grep "^\*" | cut -d' ' -f2)"
-			local info
+		function __find_git() {
+			local __current="$1"
 
-			# Figure out if in detached state.
-			if (grep "^ref: " ".git/HEAD" &>/dev/null); then
-				info="%{$fg_bold[magenta]%}${branch}%{$reset_color%}"
-			else
-				info="%{$fg_bold[red]%}{detached}%{$reset_color%}"
+			# Search up the directory tree for '.git'.
+			while [[ "${__current}" != "/" ]]; do
+				if [[ -d "${__current}/.git" ]]; then
+					echo "${__current}/.git"
+					return 0
+				fi
+
+				__current="$(dirname -- "${__current}")"
+			done
+
+			return 1
+		}
+
+		# Get the current branch ref from '.git/HEAD' and '.git/refs/heads'.
+		function __get_branch() {
+			local __gitdir="$1"
+
+			# Detached state -- no branch name.
+			if (grep -v "^ref: refs/heads/.*$" -- "${__gitdir}/HEAD" &>/dev/null); then
+				return 1
 			fi
 
-			local ref="$(git rev-parse --short --verify HEAD)"
-			echo " git:(${info}:%{$fg[magenta]%}${ref}%{$reset_color%})"
+			# Get the ref path.
+			local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
+
+			# Check that the __refpath exists.
+			if ! [[ -f "${__gitdir}/${__refpath}" ]]; then
+				return 1
+			fi
+
+			# Yield the actual branch name from the __refpath.
+			echo "$(basename -- "${__refpath}")"
+			return 0
+		}
+
+		# Get short commit hash.
+		function __get_short_ref() {
+			local __gitdir="$1"
+			local __ref
+
+			# Detached state -- ref is in 'ref'.
+			if ! (__get_branch "${__gitdir}" &>/dev/null); then
+				__ref="$(< "${__gitdir}/HEAD")"
+			else
+				# Get the ref path.
+				local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
+
+				# Check that the __refpath exists.
+				if ! [[ -f "${__gitdir}/${__refpath}" ]]; then
+					return 1
+				fi
+
+				# Get the commit hash from the ref path.
+				__ref="$(< "${__gitdir}/${__refpath}")"
+			fi
+
+			# Shorten the ref to 7 characters.
+			# Why 7? Because that's what git does by default.
+			echo "$__ref[1,7]"
+			return 0
+		}
+
+		if (__find_git "$(pwd)" &>/dev/null); then
+			# Get the closest git directory.
+			local __gitdir="$(__find_git "$(pwd)")"
+
+			# Figure out if in detached state.
+			local __info
+			if (__get_branch "${__gitdir}" &>/dev/null); then
+				__info="%{$fg_bold[magenta]%}$(__get_branch "${__gitdir}")%{$reset_color%}"
+			else
+				__info="%{$fg_bold[red]%}{detached}%{$reset_color%}"
+			fi
+
+			# Figure out short ref.
+			local __ref
+			if (__get_short_ref "${__gitdir}" &>/dev/null); then
+				__ref="%{$fg[magenta]%}$(__get_short_ref "${__gitdir}")%{$reset_color%}"
+			else
+				__ref="%{$fg[red]%}0000000%{$reset_color%}"
+			fi
+
+			echo " git:(${__info}:${__ref})"
 		fi
 	}
 
 	# Mercurial branch information.
 	function __hg_info() {
 		if (hg status &>/dev/null); then
-			local branch="$(hg branch)"
-			echo " hg:(%{$fg_bold[magenta]%}${branch}%{$reset_color%})"
+			local __branch="$(hg branch)"
+			echo " hg:(%{$fg_bold[magenta]%}${__branch}%{$reset_color%})"
 		fi
 	}
 
+	# Get the last part of the given path, with tilde replacement.
 	function __nice_path() {
-		local __path
-		__path="$(pwd)"
+		local __path="$1"
 
 		if [[ "${__path}" == "${HOME}" ]]; then
 			__path="~"
@@ -80,11 +160,12 @@ function precmd() {
 	}
 
 	# Path information.
-	path_prompt="%{$fg_bold[blue]%}$(__nice_path)%{$reset_color%}$(__git_info)$(__hg_info)"
+	path_prompt="%{$fg_bold[blue]%}$(__nice_path "$(pwd)")%{$reset_color%}$(__git_info)$(__hg_info)"
 
 	# Return prompt based on exit code of last command.
 	function __ret_prompt() {
-		__prompt="%#"
+		local __exit_code="$1"
+		local __prompt="%#"
 
 		if [[ "${__exit_code}" != "0" ]]; then
 			__prompt="%{$fg_bold[red]%}${__prompt}%{$reset_color%}"
@@ -92,7 +173,7 @@ function precmd() {
 
 		echo "${__prompt} "
 	}
-	ret_prompt="$(__ret_prompt)"
+	ret_prompt="$(__ret_prompt "${exit_code}")"
 
 	# Get loadavg for last minute.
 	function __loadavg() {
