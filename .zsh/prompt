@@ -185,8 +185,7 @@ function precmd() {
 	export RPROMPT="[$(uname -o) $(__loadavg)($(__nproc))]"
 
 	# Set up secondary prompts.
-	export PS1="${PROMPT}"
-	export PS2="%_> "
-	export PS3="?#> "
-	export PS4="+> "
+	export PROMPT2="%_> "
+	export PROMPT3="?#> "
+	export PROMPT4="+> "
 }
