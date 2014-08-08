@@ -51,7 +51,7 @@ export PAGER="less"
 export GOPATH="${HOME}"
 
 # Made TERM work nicer.
-#export TERM="xterm-256color"
+export TERM="xterm-256color"
 
 # Ignore duplicate history data.
 setopt HIST_IGNORE_DUPS
