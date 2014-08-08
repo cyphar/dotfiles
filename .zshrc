@@ -27,19 +27,11 @@
 autoload -U compinit
 compinit
 
-# Banner.
-if [[ -f "${HOME}/.zshbanner" ]]; then
-	. "${HOME}/.zshbanner"
-fi
-
-# Set aliases from ${HOME}/.zshalias.
-if [[ -f "${HOME}/.zshalias" ]]; then
-    . "${HOME}/.zshalias"
-fi
-
-# Configure prompt from ${HOME}/.zshalias.
-if [[ -f "${HOME}/.zshprompt" ]]; then
-    . "${HOME}/.zshprompt"
+# Load all scripts in ~/.zsh.
+if [[ -d "${HOME}/.zsh" ]]; then
+	for file in $(find "${HOME}/.zsh" -type f); do
+		source "${file}"
+	done
 fi
 
 # Export the standard stuff.

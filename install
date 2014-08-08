@@ -55,7 +55,7 @@ option "GENSSH"		"[?] Generate a new set of SSH keys [$NO]? "	"$NO"
 if [ "$CLEANUP" = "$YES" ]; then
 	echo "[+] Cleaning old files" 1>&2
 	if [ "$ZSHCONFIG" = "$YES" ]; then
-		rm -f "$HOME/.zshrc" "$HOME/.zshalias" "$HOME/.zshbanner" "$HOME/.zshprompt" "$HOME/.zsh_logout" "$HOME/.profile"
+		rm -rf "$HOME/.zshrc" "$HOME/.zsh/" "$HOME/.profile"
 		rm -f "$HOME/.zsh_profile" "$HOME/.zsh_login" # These stuff up the .profile script
 	fi
 
@@ -100,7 +100,7 @@ fi
 # install zsh configs
 if [ "$ZSHCONFIG" = "$YES" ]; then
 	echo "[+] Installing zsh config" 1>&2
-	cp .zshrc .zshalias .zshprompt .zshbanner .profile "$HOME"
+	cp -r .zshrc .zsh .profile "$HOME"
 else
 	echo "[-] Skipped zsh config" 1>&2
 fi
