@@ -31,8 +31,7 @@ function precmd() {
 	local ret_prompt
 
 	# Save old exit code first.
-	local __exit_code
-	__exit_code="$?"
+	local __exit_code="$?"
 
 	# User information.
 	if [[ "${EUID}" == "0" ]]; then
@@ -45,8 +44,17 @@ function precmd() {
 	function __git_info() {
 		if (git status &>/dev/null); then
 			local branch="$(git branch --list | grep "^\*" | cut -d' ' -f2)"
+			local info
+
+			# Figure out if in detached state.
+			if (grep "^ref: " ".git/HEAD" &>/dev/null); then
+				info="%{$fg_bold[magenta]%}${branch}%{$reset_color%}"
+			else
+				info="%{$fg_bold[red]%}{detached}%{$reset_color%}"
+			fi
+
 			local ref="$(git rev-parse --short --verify HEAD)"
-			echo " git:(%{$fg_bold[magenta]%}${branch}%{$reset_color%}:%{$fg[magenta]%}${ref}%{$reset_color%})"
+			echo " git:(${info}:%{$fg[magenta]%}${ref}%{$reset_color%})"
 		fi
 	}
 
