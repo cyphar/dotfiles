@@ -44,8 +44,9 @@ alias vg="valgrind"
 
 # Make cross-compiling go easier.
 function goc() {
-	local __arch
-	__arch="${1}"; shift
+	# Get arch as $1.
+	local __arch="$1"
+	shift
 
 	GOARCH="${__arch}" go $@
 }
@@ -57,28 +58,29 @@ alias goarm="goc arm"
 
 # Make setting proxies simpler.
 function prox() {
-	USER=$(read -p  "username: "; echo ${REPLY})
-	PASS=$(read -sp "password: "; echo ${REPLY})
+	local __user=$(read -p  "username: "; echo ${REPLY})
+	local __pass=$(read -sp "password: "; echo ${REPLY})
+
+	# Deal with no newlines after `read -p`.
 	echo
 
-	SERV=${1-$(read -p  "server: ";   echo ${REPLY})}
-	PROT=${2-$(read -p  "protocol: "; echo ${REPLY})}
+	local __serv=${1-$(read -p  "server: ";   echo ${REPLY})}
+	local __prot=${2-$(read -p  "protocol: "; echo ${REPLY})}
 
-	PROX="${PROT}://${USER}:${PASS}@${SERV}"
+	# Create proxy url.
+	local __prox="${__prot}://${__user}:${__pass}@${__serv}"
 
-	export HTTP_PROXY="${PROX}"
-	export HTTPS_PROXY="${PROX}"
-	export SOCKS_PROXY="${PROX}"
-	export FTP_PROXY="${PROX}"
-	export ALL_PROXY="${PROX}"
+	export HTTP_PROXY="${__prox}"
+	export HTTPS_PROXY="${__prox}"
+	export SOCKS_PROXY="${__prox}"
+	export FTP_PROXY="${__prox}"
+	export ALL_PROXY="${__prox}"
 
-	export http_proxy="${PROX}"
-	export https_proxy="${PROX}"
-	export socks_proxy="${PROX}"
-	export ftp_proxy="${PROX}"
-	export all_proxy="${PROX}"
-
-	unset USER PASS SERV PROT PROX
+	export http_proxy="${__prox}"
+	export https_proxy="${__prox}"
+	export socks_proxy="${__prox}"
+	export ftp_proxy="${__prox}"
+	export all_proxy="${__prox}"
 }
 
 # Make deactivating proxies simpler.
