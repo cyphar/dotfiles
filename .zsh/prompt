@@ -137,7 +137,9 @@ function precmd() {
 	function __hg_info() {
 		if (hg status &>/dev/null); then
 			local __branch="$(hg branch)"
-			echo " hg:(%{$fg_bold[magenta]%}${__branch}%{$reset_color%})"
+			local __ref="$(hg id | cut -d' ' -f1)"
+
+			echo " hg:(%{$fg_bold[magenta]%}${__branch}%{$reset_color%}:%{$fg[magenta]%}${__ref}%{$reset_color%})"
 		fi
 	}
 
