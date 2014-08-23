@@ -27,8 +27,8 @@ setopt promptsubst
 # Emacs mode.
 bindkey -e
 
-# Set up precmd hook to set up prompt.
-function precmd() {
+# Set up prompt.
+function __generate_prompt() {
 	# Save old exit code first.
 	local exit_code="$?"
 
@@ -190,4 +190,9 @@ function precmd() {
 	export PROMPT2="%_> "
 	export PROMPT3="?#> "
 	export PROMPT4="+> "
+}
+
+# Set up precmd hook to set up prompt.
+function precmd() {
+	__generate_prompt
 }
