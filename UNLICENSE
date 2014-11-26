@@ -1,31 +1,3 @@
-# dotfiles #
-These are my personal configuration files. Feel free to use them yourself if you
-wish.
-
-## Download ##
-When cloning this repo, ensure that you clone it recursively (to ensure that
-submodules are also cloned):
-
-```
-git clone --recursive git://github.com/cyphar/dotfiles.git
-```
-
-## Install ##
-Run the script `install` in the root of the project to install the configs.
-
-## Requirements ##
-You NEED the following packages to ensure that the configs work properly:
-
-- figlet
-- exuberant-ctags
-- keychains
-
-## (Un)license ##
-Apart from files where specifically specified (e.g vim plugins), these
-configuration files have been released under the unlicense (in the hope that
-they would be useful to others):
-
-```
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -48,4 +20,3 @@ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-```
