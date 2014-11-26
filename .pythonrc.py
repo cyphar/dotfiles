@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env python3
 # This is free and unencumbered software released into the public domain.
 
 # Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -22,38 +22,28 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-# Only set up if running interactively.
-[[ -t 0 ]] || exit 0
+# Wrap start-up in a function, to make cleanup easier.
+def __atstart__():
+	import readline
+	import rlcompleter
 
-# Load completion.
-autoload -U compinit
-compinit
+	# Steal the default completer for later wrapping.
+	default_completer = rlcompleter.Completer(locals())
 
-# Load all scripts in ~/.zsh.
-if [[ -d "${HOME}/.zsh" ]]; then
-	for file in $(find "${HOME}/.zsh" -type f); do
-		source "${file}"
-	done
-fi
+	# A custom tab-completer, which allows for tabs to be used as indentation.
+	def my_completer(text, state):
+		if text.strip() == "" and state == 0:
+			return text + "\t"
+		else:
+			return default_completer.complete(text, state)
 
-# Export the standard stuff.
-export PATH="${PATH}:${HOME}/bin"
-export EDITOR="vim"
-export PAGER="less"
+	# Bind the tab-completion to the completer, using the appropriate library.
+	readline.set_completer(my_completer)
+	if "libedit" in readline.__doc__:
+		readline.parse_and_bind("bind ^I rl_complete")
+	else:
+		readline.parse_and_bind("tab: complete")
 
-# Make go ... work.
-export GOPATH="${HOME}"
-
-# Make python load `.pythonrc.py`
-export PYTHONSTARTUP="${HOME}/.pythonrc.py"
-
-# Made TERM work nicer.
-export TERM="xterm-256color"
-
-# Make the history usable.
-setopt histignoredups sharehistory
-
-# Set up keychain.
-if (keychain --version 2>/dev/null); then
-	eval $(keychain --eval --agents ssh -Q --quiet --nogui "${HOME}/.ssh/id_rsa")
-fi
+# Run startup, and delete the reference to it, so as not to pollute the REPL.
+__atstart__()
+del __atstart__

@@ -45,6 +45,7 @@ option "ZSHCONFIG"	"[?] Install zsh configs [$YES]? " 			"$YES"
 option "TMUXCONFIG"	"[?] Install tmux configs [$YES]? " 			"$YES"
 option "WGETCONFIG"	"[?] Install wget configs [$YES]? " 			"$YES"
 option "VIMCONFIG"	"[?] Install vim configs [$YES]? "				"$YES"
+option "PYCONFIG"	"[?] Install python configs [$YES]? " 			"$YES"
 option "FONTCONFIG"	"[?] Install font configs [$YES]? "				"$YES"
 option "MOSSCONFIG"	"[?] Install moss configs [$YES]? "				"$YES"
 option "GITCONFIG"	"[?] Install git configs [$YES]? "				"$YES"
@@ -70,6 +71,10 @@ if [ "$CLEANUP" = "$YES" ]; then
 	if [ "$VIMCONFIG" = "$YES" ]; then
 		rm -rf "$HOME/.vim"
 		rm -f "$HOME/.vimrc"
+	fi
+
+	if [ "$PYCONFIG" = "$YES" ]; then
+		rm -f "$HOME/.pythonrc.py"
 	fi
 
 	if [ "$FONTCONFIG" = "$YES" ]; then
@@ -128,6 +133,14 @@ if [ "$VIMCONFIG" = "$YES" ]; then
 	cp -r .vim "$HOME"
 else
 	echo "[-] Skipped vim configs" 1>&2
+fi
+
+# install python configs
+if [ "$PYCONFIG" = "$YES" ]; then
+	echo "[+] Installing python configs" 1>&2
+	cp .pythonrc.py "$HOME"
+else
+	echo "[-] Skipped python configs" 1>&2
 fi
 
 # install font configs
