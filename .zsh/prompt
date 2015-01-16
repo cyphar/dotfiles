@@ -64,6 +64,12 @@ function __generate_prompt() {
 				__current="$(dirname -- "${__current}")"
 			done
 
+			# Check for '/.git'.
+			if [[ -d "${__current}/.git" ]]; then
+				echo "${__current}/.git"
+				return 0
+			fi
+
 			return 1
 		}
 
