@@ -73,10 +73,21 @@ def _exists(path):
 		return False
 	return True
 
-def _safe_basename(path):
+def _sanitise(path):
 	path = os.path.join(path, "")
 	path = os.path.dirname(path)
+	return path
+
+# Returns the last path component.
+def _safe_basename(path):
+	path = _sanitise(path)
 	path = os.path.basename(path)
+	return path
+
+# Returns the path minus the last component.
+def _safe_dirname(path):
+	path = _sanitise(path)
+	path = os.path.dirname(path)
 	return path
 
 def _copy(source, target, clobber=True):
@@ -129,8 +140,13 @@ def _response_bool(response, default=True):
 
 def _install(files):
 	for _file in files:
+		# Deal with leading directories in path.
+		file_dir = _safe_dirname(_file)
+		prefix = os.path.join(PREFIX, file_dir)
+		os.makedirs(prefix, exist_ok=True)
+
 		# Copy the file to its new PREFIX.
-		_copy(_file, PREFIX, clobber=CLOBBER)
+		_copy(_file, prefix, clobber=CLOBBER)
 
 def main():
 	# Chosen list.
