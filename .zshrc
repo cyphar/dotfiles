@@ -40,6 +40,7 @@ fi
 export PATH="${PATH}:${HOME}/.local/bin"
 export EDITOR="vim"
 export PAGER="less"
+export TERMINAL="termite"
 
 # Make go ... work.
 export GOPATH="${HOME}"
