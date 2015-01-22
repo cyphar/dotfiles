@@ -24,6 +24,7 @@ import os
 import stat
 import shutil
 import argparse
+import subprocess
 
 # Default "yes" and "no" shortcuts.
 YES = "yes"
@@ -36,6 +37,11 @@ is_no  = lambda s: s.lower() in {NO, "n", "no", "false"}
 # Install options, modified by command-line flags.
 PREFIX = os.path.expanduser("~")
 CLOBBER = True
+HOOK_DIR = "hooks"
+
+# Hook constants.
+HOOK_BEFORE = "before"
+HOOK_AFTER = "after"
 
 # Install targets.
 OPTIONS = {
@@ -129,7 +135,21 @@ def _copy(source, target, clobber=True):
 		shutil.copymode(source, target_path)
 
 
-# Main install script and helper.
+# Main install script and helpers.
+
+def _run_hook(ctx, hook):
+	# Generate the script path.
+	script = os.path.join(HOOK_DIR, ctx, hook)
+
+	# Ignore non-existant hooks.
+	if not _exists(script):
+		return
+
+	# Something something shell out to os.path.join(ctx, hook).
+	ret = subprocess.call([script])
+
+	if ret != 0:
+		_warn("%s hook for '%s' returned with non-zero error code: %d" % (ctx.title(), hook, ret))
 
 def _response_bool(response, default=True):
 	if is_yes(response):
@@ -139,7 +159,10 @@ def _response_bool(response, default=True):
 
 	return default
 
-def _install(files):
+def _install(target, files):
+	# Run before hook.
+	_run_hook(HOOK_BEFORE, target)
+
 	for _file in files:
 		# Deal with leading directories in path.
 		prefix = os.path.join(PREFIX, _safe_dirname(_file))
@@ -147,6 +170,9 @@ def _install(files):
 
 		# Copy the file to its new PREFIX.
 		_copy(_file, prefix, clobber=CLOBBER)
+
+	# Run after hook.
+	_run_hook(HOOK_AFTER, target)
 
 def main():
 	# Chosen list.
@@ -179,19 +205,21 @@ def main():
 
 		# Install the files.
 		_, files = OPTIONS[choice]
-		_install(files)
+		_install(choice, files)
 
 if __name__ == "__main__":
 	def __atstart__():
 		# Something, something scoping?
-		global CLOBBER
 		global PREFIX
+		global CLOBBER
+		global HOOK_DIR
 
 		# Set up argument parser.
 		parser = argparse.ArgumentParser()
-		parser.add_argument("--prefix", dest="prefix", type=str, default="~")
-		parser.add_argument("-nc", "--no-clobber", dest="clobber", action="store_const", const=False, default=True)
-		parser.add_argument("-c", "--clobber", dest="clobber", action="store_const", const=True, default=True)
+		parser.add_argument("--prefix", dest="prefix", type=str, default=PREFIX)
+		parser.add_argument("--hook-dir", dest="hook_dir", type=str, default=HOOK_DIR)
+		parser.add_argument("-nc", "--no-clobber", dest="clobber", action="store_const", const=False, default=CLOBBER)
+		parser.add_argument("-c", "--clobber", dest="clobber", action="store_const", const=True, default=CLOBBER)
 
 		# Get arguments.
 		args = parser.parse_args()
@@ -199,6 +227,7 @@ if __name__ == "__main__":
 		# Change options.
 		PREFIX = os.path.expanduser(args.prefix)
 		CLOBBER = args.clobber
+		HOOK_DIR = args.hook_dir
 
 	# Run wrapper and clean up.
 	__atstart__()
