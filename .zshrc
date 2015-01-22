@@ -37,7 +37,7 @@ if [[ -d "${HOME}/.zsh" ]]; then
 fi
 
 # Export the standard stuff.
-export PATH="${PATH}:${HOME}/bin"
+export PATH="${PATH}:${HOME}/.local/bin"
 export EDITOR="vim"
 export PAGER="less"
 

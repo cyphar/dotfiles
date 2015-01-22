@@ -48,7 +48,7 @@ OPTIONS = {
 	"tmux":    (YES, [".tmux.conf"]),
 	"wget":    (YES, [".wgetrc"]),
 	"termite": (YES, [".config/termite/"]),
-	"bin":     (YES, ["bin/"]),
+	"bin":     (YES, [".local/bin/"]),
 }
 
 
@@ -142,8 +142,7 @@ def _response_bool(response, default=True):
 def _install(files):
 	for _file in files:
 		# Deal with leading directories in path.
-		file_dir = _safe_dirname(_file)
-		prefix = os.path.join(PREFIX, file_dir)
+		prefix = os.path.join(PREFIX, _safe_dirname(_file))
 		os.makedirs(prefix, exist_ok=True)
 
 		# Copy the file to its new PREFIX.
