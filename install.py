@@ -39,15 +39,16 @@ CLOBBER = True
 
 # Install targets.
 OPTIONS = {
-	"fonts":  (YES, [".fonts/", ".fonts.conf.d/"]),
-	"git":    (YES, [".gitconfig"]),
-	"moss":   (NO,  [".mossrc"]),
-	"zsh":    (YES, [".profile", ".zsh/", ".zshrc"]),
-	"python": (YES, [".pythonrc.py"]),
-	"vim":    (YES, [".vim/", ".vimrc"]),
-	"tmux":   (YES, [".tmux.conf"]),
-	"wget":   (YES, [".wgetrc"]),
-	"bin":    (YES, ["bin/"]),
+	"fonts":   (YES, [".fonts/", ".fonts.conf.d/"]),
+	"git":     (YES, [".gitconfig"]),
+	"moss":    (NO,  [".mossrc"]),
+	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
+	"python":  (YES, [".pythonrc.py"]),
+	"vim":     (YES, [".vim/", ".vimrc"]),
+	"tmux":    (YES, [".tmux.conf"]),
+	"wget":    (YES, [".wgetrc"]),
+	"termite": (YES, [".config/termite/"]),
+	"bin":     (YES, ["bin/"]),
 }
 
 
