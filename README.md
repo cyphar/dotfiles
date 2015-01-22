@@ -7,8 +7,19 @@ When cloning this repo, ensure that you clone it recursively (to ensure that
 submodules are also cloned):
 
 ```
-git clone --recursive git://github.com/cyphar/dotfiles.git
+$ git clone --recursive git://github.com/cyphar/dotfiles.git
 ```
+
+You could of course do something like this:
+
+```
+$ git clone git://github.com/cyphar/dotfiles.git
+$ cd dotfiles
+$ git submodules init
+$ git submodules update
+```
+
+But who needs all that typing? `;)`
 
 ## Install ##
 Run the script `install` in the root of the project to install the configs.
