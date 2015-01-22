@@ -91,6 +91,12 @@ function unprox() {
 	unset http_proxy https_proxy socks_proxy ftp_proxy all_proxy
 }
 
+# Mess around with pico and nano.
+alias pico="nano"
+function nano() {
+	echo "Seriously? Why don't you just use notepad.exe, MS Paint or Edlin?"
+}
+
 # Nice relative jumps.
 alias ..="cd .."
 alias ..2="cd ../.."
