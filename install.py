@@ -47,7 +47,6 @@ HOOK_AFTER = "after"
 OPTIONS = {
 	"fonts":   (YES, [".fonts/", ".fonts.conf.d/"]),
 	"git":     (YES, [".gitconfig"]),
-	"moss":    (NO,  [".mossrc"]),
 	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
 	"python":  (YES, [".pythonrc.py"]),
 	"vim":     (YES, [".vim/", ".vimrc"]),
