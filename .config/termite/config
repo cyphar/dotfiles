@@ -23,6 +23,53 @@
 
 [options]
 font = Dina 8
+allow_bold = true
+
+scroll_on_output = true
+scroll_on_keystroke = true
+scrollback_lines = 10000
+
+audible_bell = false
+urgent_on_bell = false
+
+mouse_autohide = false
+search_wrap = true
+
+cursor_blink = off
+cursor_shape = block
 
 [colors]
-background = rgba(0, 0, 0, 0.90)
+foreground = #C0C0C0
+background = rgba(0, 0, 0, 0.85)
+
+# black.
+color0 = #000000
+color8 = #3F3F3F
+
+# red.
+color1 = #A30000
+color9 = #FF3F3F
+
+# green.
+color2 = #00A300
+color10 = #3FFF3F
+
+# yellow.
+color3 =  #C0C000
+color11 = #FFFF3F
+
+# blue.
+color4 = #0000A0
+color12 = #3F3FFF
+
+# magenta.
+color5 = #A000A0
+color13 = #FF3FFF
+
+# cyan.
+color6 = #00C0C0
+color14 = #3FFFFF
+
+# white.
+color7 = #C0C0C0
+color15 = #FFFFFF
