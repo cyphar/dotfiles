@@ -1,0 +1,157 @@
+# This is free and unencumbered software released into the public domain.
+
+# Anyone is free to copy, modify, publish, use, compile, sell, or
+# distribute this software, either in source code form or as a compiled
+# binary, for any purpose, commercial or non-commercial, and by any
+# means.
+
+# In jurisdictions that recognize copyright laws, the author or authors
+# of this software dedicate any and all copyright interest in the
+# software to the public domain. We make this dedication for the benefit
+# of the public at large and to the detriment of our heirs and
+# successors. We intend this dedication to be an overt act of
+# relinquishment in perpetuity of all present and future rights to this
+# software under copyright law.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+
+# Set the Super key as the modifier.
+set $mod Mod4
+
+# Use Dina (a very nice font IMO).
+font pango:Dina 9
+
+# Make things usable.
+workspace_auto_back_and_forth yes
+focus_follows_mouse no
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Start a terminal.
+bindsym $mod+Return exec "termite"
+
+# Kill focused window.
+bindsym $mod+Shift+q kill
+
+# Start dmenu.
+bindsym $mod+d exec "dmenu_run"
+
+# Vim movements.
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window.
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Match my tmux split bindings.
+bindsym $mod+minus split h
+bindsym $mod+bar split v
+
+# Fullscreen mode.
+bindsym $mod+f fullscreen
+
+# Layout selection (stacked, tabbed, toggle split).
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Change focus between tiling / floating windows.
+bindsym $mod+space focus mode_toggle
+
+# Toggle tiling / floating.
+bindsym $mod+Shift+space floating toggle
+
+# Focus child / parent containers.
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+# Switch workspaces.
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move containers to workspaces.
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Reload / restart i3.
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# Exits i3 -- with nagging to make sure you didn't do it by accident.
+bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+		# Vim bindings.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+		# RETURN TO SAFETY.
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Enter the dragon.
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+	status_command i3status
+
+	colors {
+		background #0f0f0f
+		statusline #dcdccc
+
+		focused_workspace  #ffffff #285577
+		active_workspace   #ffffff #333333
+		inactive_workspace #888888 #222222
+		urgent_workspace   #ffffff #900000
+	}
+}
+
+# Background is handled by feh.
+exec_always --no-startup-id "feh --bg-scale /usr/share/backgrounds/default.jpg"
+
+# Tile colours.
+# class                 border  backgr. text    indicator
+client.focused          #333333 #3f3f3f #dcdccc #2e9ef4
+client.focused_inactive #333333 #5f676a #ffffff #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
+# Hide borders.
+hide_edge_borders both
+
+# Use compton as the compositor.
+exec_always "compton -cCGb -o0"

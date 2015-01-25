@@ -54,6 +54,7 @@ OPTIONS = {
 	"wget":    (YES, [".wgetrc"]),
 	"termite": (YES, [".config/termite/"]),
 	"bin":     (YES, [".local/bin/"]),
+	"i3":      (YES, [".i3/"])
 }
 
 
