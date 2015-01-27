@@ -39,7 +39,7 @@ cursor_blink = off
 cursor_shape = block
 
 [colors]
-foreground = #C0C0C0
+foreground = #FFFFFF
 background = rgba(0, 0, 0, 0.85)
 
 # black.
