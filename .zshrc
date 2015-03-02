@@ -25,6 +25,26 @@
 # Only set up if running interactively.
 [[ -t 0 ]] || exit 0
 
+if (tmux -V &>/dev/null); then
+	# If the current shell is not running in tmux, start/attach to a tmux session.
+	if (( $+TMUX == 0 )); then
+		# The default name for the tmux session is `cyphar/zsh`.
+		local __tmux_session="${TMUX_SESSION:-cyphar/zsh}"
+
+		# Start the server in case it doesn't exist.
+		tmux start-server
+
+		# Create the session if it doesn't exist.
+		if ! (tmux has-session -t "${__tmux_session}" &>/dev/null); then
+			tmux new-session -c "$HOME" -s "${__tmux_session}" "${SHELL} $@"
+		fi
+
+		# Switch to tmux session.
+		# You can set $TMUX to any value to stop this from happening.
+		exec tmux attach-session -t "${__tmux_session}"
+	fi
+fi
+
 # Load completion.
 autoload -U compinit
 compinit
