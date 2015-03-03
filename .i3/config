@@ -24,6 +24,10 @@
 # Set the Super key as the modifier.
 set $mod Mod4
 
+# Set the variables.
+set $bin .local/bin
+set $term termite
+
 # Use Dina (a very nice font IMO).
 font pango:Dina 9
 
@@ -35,7 +39,8 @@ focus_follows_mouse no
 floating_modifier $mod
 
 # Start a terminal.
-bindsym $mod+Return exec "termite"
+bindsym $mod+Return exec "$term"
+bindsym $mod+Shift+Return exec "$term -e '$bin/zsh-safe'"
 
 # Kill focused window.
 bindsym $mod+Shift+q kill
