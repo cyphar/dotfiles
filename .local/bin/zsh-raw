@@ -1,0 +1,4 @@
+#!/usr/bin/zsh
+
+export TMUX="fake"
+exec zsh
