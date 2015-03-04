@@ -97,6 +97,11 @@ def _safe_dirname(path):
 	path = os.path.dirname(path)
 	return path
 
+# Makes the set of directories, ignoring permission issues.
+def _makedirs(path, *args, **kwargs):
+	if not _exists(path):
+		os.makedirs(path, *args, **kwargs)
+
 def _copy(source, target, clobber=True):
 	"""
 	Copies source (regardless of inode type) to target.
@@ -166,7 +171,7 @@ def _install(target, files):
 	for _file in files:
 		# Deal with leading directories in path.
 		prefix = os.path.join(PREFIX, _safe_dirname(_file))
-		os.makedirs(prefix, exist_ok=True)
+		_makedirs(prefix, exist_ok=True)
 
 		# Copy the file to its new PREFIX.
 		_copy(_file, prefix, clobber=CLOBBER)
@@ -196,7 +201,7 @@ def main():
 		return
 
 	# Make sure that the PREFIX path is real.
-	os.makedirs(PREFIX, exist_ok=True)
+	_makedirs(PREFIX, exist_ok=True)
 
 	# Actually install the buggers.
 	for choice in chosen:
