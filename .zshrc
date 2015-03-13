@@ -69,7 +69,8 @@ export GOPATH="${HOME}"
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"
 
 # Made TERM work nicer.
-export TERM="xterm-256color"
+# This is also changed by .tmux.conf, but we might as well ensure it's correct here.
+export TERM="screen-256color"
 
 # Make the history usable.
 setopt histignoredups sharehistory
