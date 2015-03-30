@@ -50,15 +50,14 @@ set nomodeline
 
 " Make the whitespace RED
 au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-au InsertCharPre,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinEnter,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+" Can slow things down, but show whitespace as red while typing.
+au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Crush that whitespace.
 " This can be a problem for formats that depend on trailing whitespace (see:
 " git format-patch). In such cases, just use `noa w` when saving.
 au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :%s/\s\+$//ge
-
-" Can slow things down, but show whitespace as red while typing.
-au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Hopefully I can remove this some day when 80 characters is no longer the
 " standard.
