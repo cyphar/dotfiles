@@ -42,6 +42,10 @@ floating_modifier $mod
 bindsym $mod+Return exec "$term"
 bindsym $mod+Shift+Return exec "$term -e '$bin/zsh-safe'"
 
+# Lock the i3 session.
+bindsym $mod+p exec "$bin/lockmyi3"
+bindsym $mod+Shift+p exec "$bin/lockmyi3 -- -d"
+
 # Kill focused window.
 bindsym $mod+Shift+q kill
 
