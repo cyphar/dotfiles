@@ -22,10 +22,26 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-# Output banner.
-if (figlet -v &>/dev/null); then
-	figlet "<< $(uname -s) >>"
-fi
+ping -c1 -s0 www.google.com &>/dev/null
+local __have_internet="$?"
 
-# Print out the kernel data and date.
-echo "$(uname -o) ($(uname -sr)) $(date)"
+(
+	# Kernel banner.
+	if (figlet -v &>/dev/null); then
+		figlet "<< $(uname -s) >>"
+	fi
+
+	# Internet information.
+	if [[ "${__have_internet}" == 0 ]]; then
+		# Get external IP address.
+		echo "The Internet™  -- brought to you by: $(curl -s https://wtfismyip.com/text) [$(curl -s https://ipv4.wtfismyip.com/text)]."
+
+		# Get news headlines.
+		if (dig -v &>/dev/null); then
+			dig +short txt istheinternetonfire.com | cut -f2 -d'"' | cowsay -f tux
+		fi
+	fi
+
+	# Print out the kernel data and date.
+	echo "$(uname -o) ($(uname -sr)) $(date)"
+) | lolcat
