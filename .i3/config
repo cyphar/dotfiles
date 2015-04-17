@@ -40,7 +40,7 @@ floating_modifier $mod
 
 # Start a terminal.
 bindsym $mod+Return exec "$term"
-bindsym $mod+Shift+Return exec "$term -e '$bin/zsh-safe'"
+bindsym $mod+Shift+Return exec "$term -e '$bin/zsh-raw'"
 
 # Lock the i3 session.
 bindsym $mod+p exec "$bin/lockmyi3"
