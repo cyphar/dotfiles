@@ -97,6 +97,10 @@ function nano() {
 	echo "Seriously? Why don't you just use notepad.exe, MS Paint or Edlin?"
 }
 
+# Add `time` to `make`, so that we get automagical build script timing
+# information, even if you forget to add `time`.
+alias make="time make"
+
 # Nice relative jumps.
 alias ..="cd .."
 alias ..2="cd ../.."
