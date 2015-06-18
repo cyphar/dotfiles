@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 import os
+import sys
 import stat
 import shutil
 import argparse
@@ -37,6 +38,7 @@ is_no  = lambda s: s.lower() in {NO, "n", "no", "false"}
 # Install options, modified by command-line flags.
 PREFIX = os.path.expanduser("~")
 CLOBBER = True
+FRAGILE = False
 HOOK_DIR = "hooks"
 
 # Hook constants.
@@ -65,7 +67,6 @@ def _warn(*args, **kwargs):
 
 def _info(*args, **kwargs):
 	print("[*]", *args, **kwargs)
-	pass
 
 def _ask(prompt, **kwargs):
 	return input("[?] %s " % (prompt,), **kwargs) or ""
@@ -148,13 +149,16 @@ def _run_hook(ctx, hook):
 
 	# Ignore non-existant hooks.
 	if not _exists(script):
-		return
+		return 0
 
 	# Something something shell out to os.path.join(ctx, hook).
+	# You trust me, right? :P
 	ret = subprocess.call([script])
 
 	if ret != 0:
 		_warn("%s hook for '%s' returned with non-zero error code: %d" % (ctx.title(), hook, ret))
+
+	return ret
 
 def _response_bool(response, default=True):
 	if is_yes(response):
@@ -166,7 +170,8 @@ def _response_bool(response, default=True):
 
 def _install(target, files):
 	# Run before hook.
-	_run_hook(HOOK_BEFORE, target)
+	if _run_hook(HOOK_BEFORE, target):
+		return 1
 
 	for _file in files:
 		# Deal with leading directories in path.
@@ -177,7 +182,7 @@ def _install(target, files):
 		_copy(_file, prefix, clobber=CLOBBER)
 
 	# Run after hook.
-	_run_hook(HOOK_AFTER, target)
+	return _run_hook(HOOK_AFTER, target)
 
 def main():
 	# Chosen list.
@@ -198,10 +203,14 @@ def main():
 
 	# Nothing chosen to be installed.
 	if not chosen:
-		return
+		return 0
 
 	# Make sure that the PREFIX path is real.
 	_makedirs(PREFIX, exist_ok=True)
+
+	# We want to return a non-zero error code in case of any error, but still
+	# blindly blunder on installing orthogonal components.
+	retval = 0
 
 	# Actually install the buggers.
 	for choice in chosen:
@@ -210,13 +219,20 @@ def main():
 
 		# Install the files.
 		_, files = OPTIONS[choice]
-		_install(choice, files)
+		retval |= _install(choice, files)
+
+		if FRAGILE and retval:
+			_warn("Cowardly refusing to continue installation, because '%s' failed." % (choice,))
+			return retval
+
+	return retval
 
 if __name__ == "__main__":
 	def __atstart__():
 		# Something, something scoping?
 		global PREFIX
 		global CLOBBER
+		global FRAGILE
 		global HOOK_DIR
 
 		# Set up argument parser.
@@ -225,6 +241,8 @@ if __name__ == "__main__":
 		parser.add_argument("--hook-dir", dest="hook_dir", type=str, default=HOOK_DIR)
 		parser.add_argument("-nc", "--no-clobber", dest="clobber", action="store_const", const=False, default=CLOBBER)
 		parser.add_argument("-c", "--clobber", dest="clobber", action="store_const", const=True, default=CLOBBER)
+		parser.add_argument("-nf", "--no-fragile", dest="fragile", action="store_const", const=False, default=FRAGILE)
+		parser.add_argument("-f", "--fragile", dest="fragile", action="store_const", const=True, default=FRAGILE)
 
 		# Get arguments.
 		args = parser.parse_args()
@@ -232,11 +250,15 @@ if __name__ == "__main__":
 		# Change options.
 		PREFIX = os.path.expanduser(args.prefix)
 		CLOBBER = args.clobber
+		FRAGILE = args.fragile
 		HOOK_DIR = args.hook_dir
 
 	# Run wrapper and clean up.
 	__atstart__()
 	del __atstart__
 
+	# XXX: Should I add a banner saying "read the code before you execute it"?
+
 	# Run main program.
-	main()
+	retval = main()
+	sys.exit(retval)
