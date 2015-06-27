@@ -111,9 +111,10 @@ function __generate_prompt() {
 				__ref="$(< "${__gitdir}/${__refpath}")"
 			fi
 
-			# Shorten the ref to 7 characters.
-			# Why 7? Because that's what git does by default.
-			echo "$__ref[1,7]"
+			# Shorten the ref to 12 characters.
+			# Why 12? Because that's what the kernel tells us is good.
+			# In Linus we trust.
+			echo "$__ref[1,12]"
 			return 0
 		}
 
