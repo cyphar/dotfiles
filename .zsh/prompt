@@ -47,9 +47,12 @@ function __generate_prompt() {
 	fi
 
 	# Git branch and ref information.
-	# Everything is calculated inside this shell script (no calls to `git` are made).
-	# This is because on large projects (like, say, the kernel) git can take >1 minute
-	# to figure out what branch and ref HEAD is pointing to. The filesystem is faster.
+	# Everything is calculated inside this shell script (no calls to `git` are
+	# made). This is because on large projects (like, say, the kernel) git can
+	# take >1 minute to figure out what branch and ref HEAD is pointing to. The
+	# filesystem is faster. However, we have to fall back in *one* case, when
+	# we are sitting on a packed ref or a repo which was recently gc'd -- in
+	# that case `git` is faster and easier.
 	function __git_info() {
 		function __find_git() {
 			local __current="$1"
@@ -77,8 +80,8 @@ function __generate_prompt() {
 		function __get_branch() {
 			local __gitdir="$1"
 
-			# Detached state -- no branch name.
 			if (grep -v "^ref: refs/heads/.*$" -- "${__gitdir}/HEAD" &>/dev/null); then
+				# Detached state -- no branch name.
 				return 1
 			fi
 
@@ -104,11 +107,18 @@ function __generate_prompt() {
 
 				# Check that the __refpath exists.
 				if ! [[ -f "${__gitdir}/${__refpath}" ]]; then
-					return 1
-				fi
+					# If not, we might be on a commit in a packed ref.
+					# Fallback to `git` in this case -- we can't do better.
+					__ref="$(git rev-parse --verify HEAD)"
 
-				# Get the commit hash from the ref path.
-				__ref="$(< "${__gitdir}/${__refpath}")"
+					# We don't have a commit.
+					if [[ "$?" != 0 ]]; then
+						return 1
+					fi
+				else
+					# Get the commit hash from the ref path.
+					__ref="$(< "${__gitdir}/${__refpath}")"
+				fi
 			fi
 
 			# Shorten the ref to 12 characters.
@@ -135,7 +145,7 @@ function __generate_prompt() {
 			if (__get_short_ref "${__gitdir}" &>/dev/null); then
 				__ref="%{$fg[magenta]%}$(__get_short_ref "${__gitdir}")%{$reset_color%}"
 			else
-				__ref="%{$fg[red]%}0000000%{$reset_color%}"
+				__ref="%{$fg[red]%}000000000000%{$reset_color%}"
 			fi
 
 			echo " git:(${__info}:${__ref})"
