@@ -120,7 +120,6 @@ set laststatus=2
 set noshowmode
 let g:airline_powerline_fonts=1
 let g:airline_theme='wombat'
-"let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#syntastic#enabled=1
 
 " Exit every mode quickly
@@ -190,6 +189,11 @@ noremap <c-m> <c-w><c-m>
 " Shortcuts for end and home.
 map <s-right> <end>
 map <s-left> <home>
+
+" Inserting the date is important for certain cases (see: GPG messages).
+" XXX: It'd be nice if we could do this with Vim's functions.
+noremap <leader>d :read !date<cr>
+inoremap <leader>d <c-\><c-o>:read !date<cr>
 
 " Speling iz gode.
 noremap <leader>sc :setlocal spell! spelllang=en_au<cr>
