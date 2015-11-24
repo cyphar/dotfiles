@@ -25,6 +25,10 @@
 # Enable alias option completion.
 setopt completealiases
 
+# Some weird distros don't symlink vi -> vim.
+# This is wrong.
+alias vi="vim"
+
 # ls colours.
 alias ls="ls --color=auto"
 
