@@ -28,4 +28,4 @@ if (figlet -v &>/dev/null); then
 fi
 
 # Print out the kernel data and date.
-echo "$(uname -o) ($(uname -sr)) $(date)"
+echo "$(uname -sr) $(date)"

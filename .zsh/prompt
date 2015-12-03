@@ -191,19 +191,9 @@ function __generate_prompt() {
 	}
 	ret_prompt="$(__ret_prompt "${exit_code}")"
 
-	# Get loadavg for last minute.
-	function __loadavg() {
-		[[ -f "/proc/loadavg" ]] && echo "$(cat /proc/loadavg 2>/dev/null | cut -d' ' -f1)"
-	}
-
-	# Get number of processes, if we can.
-	function __nproc() {
-		echo "$(nproc 2>/dev/null || echo '?')"
-	}
-
 	# Actually set up prompts.
 	export PROMPT="$user_prompt %{$fg[cyan]%}::%{$reset_color%} $path_prompt $ret_prompt"
-	export RPROMPT="[$(uname -o) $(__loadavg)($(__nproc))]"
+	export RPROMPT="[$(uname -s)]"
 
 	# Set up secondary prompts.
 	export PROMPT2="%_> "

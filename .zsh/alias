@@ -30,7 +30,7 @@ setopt completealiases
 alias vi="vim"
 
 # ls colours.
-alias ls="ls --color=auto"
+alias ls="ls -G"
 
 # ls shortcuts.
 alias sl="ls"
