@@ -51,8 +51,6 @@ set nomodeline
 " Make the whitespace RED
 au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 au BufWinEnter,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-" Can slow things down, but show whitespace as red while typing.
-au InsertCharPre * match ExtraWhitespace /\s\+$/
 
 " Crush that whitespace.
 " This can be a problem for formats that depend on trailing whitespace (see:
