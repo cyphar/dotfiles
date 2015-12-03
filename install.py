@@ -54,9 +54,9 @@ OPTIONS = {
 	"vim":     (YES, [".vim/", ".vimrc"]),
 	"tmux":    (YES, [".tmux.conf"]),
 	"wget":    (YES, [".wgetrc"]),
-	"termite": (YES, [".config/termite/"]),
+	"termite": (NO,  [".config/termite/"]),
 	"bin":     (YES, [".local/bin/"]),
-	"i3":      (YES, [".i3/"])
+	"i3":      (NO,  [".i3/"])
 }
 
 
