@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+function abort() {
+	echo $* 1>&2
+	exit 1
+}
+
+# Make sure $GOPATH works.
+[[ -z "$GOPATH" ]] && abort '$GOPATH not set!'
+
+# $GOPATH/src should always link to $HOME/src
+[[ -L "$GOPATH/src" ]] && rm "$GOPATH/src"
+[[ -e "$GOPATH/src" ]] && rm -rf "$GOPATH/src"
+ln -sf "$HOME/src" "$GOPATH/src"

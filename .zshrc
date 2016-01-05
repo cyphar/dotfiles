@@ -63,7 +63,7 @@ export PAGER="less"
 export TERMINAL="termite"
 
 # Make go ... work.
-export GOPATH="${HOME}"
+export GOPATH="${HOME}/.local"
 
 # Make python load `.pythonrc.py`
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"
