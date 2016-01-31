@@ -105,6 +105,10 @@ function nano() {
 # information, even if you forget to add `time`.
 alias make="time make"
 
+# For OBS.
+alias iosc="osc -A https://api.suse.de"
+alias eosc="osc -A https://api.opensuse.org"
+
 # Nice relative jumps.
 alias ..="cd .."
 alias ..2="cd ../.."
