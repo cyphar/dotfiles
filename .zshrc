@@ -73,7 +73,7 @@ export PYTHONSTARTUP="${HOME}/.pythonrc.py"
 export TERM="screen-256color"
 
 # Make the history usable.
-setopt histignoredups sharehistory
+setopt histignoredups no_sharehistory
 
 # Set up keychain.
 if (keychain --version 2>/dev/null); then
