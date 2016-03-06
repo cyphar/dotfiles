@@ -128,9 +128,15 @@ function __generate_prompt() {
 			return 0
 		}
 
-		if (__find_git "$(pwd)" &>/dev/null); then
+		# Most shells (zsh included) like to be clever with symlinks. This breaks
+		# things like symlinks into subdirectories of git repositories (because
+		# `pwd` lies to you). Fix this by using the `pwd` command which isn't
+		# magical.
+		local __pwd="$(command pwd)"
+
+		if (__find_git "${__pwd}" &>/dev/null); then
 			# Get the closest git directory.
-			local __gitdir="$(__find_git "$(pwd)")"
+			local __gitdir="$(__find_git "${__pwd}")"
 
 			# Figure out if in detached state.
 			local __info
