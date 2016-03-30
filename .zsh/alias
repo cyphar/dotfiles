@@ -28,6 +28,7 @@ setopt completealiases
 # Some weird distros don't symlink vi -> vim.
 # This is wrong.
 alias vi="vim"
+alias vim="nvim"
 
 # ls colours.
 alias ls="ls --color=auto"

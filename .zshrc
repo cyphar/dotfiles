@@ -58,7 +58,7 @@ fi
 
 # Export the standard stuff.
 export PATH="${PATH}:${HOME}/.local/bin"
-export EDITOR="vim"
+export EDITOR="nvim"
 export PAGER="less"
 export TERMINAL="termite"
 
