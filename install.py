@@ -51,7 +51,7 @@ OPTIONS = {
 	"git":     (YES, [".gitconfig"]),
 	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
 	"python":  (YES, [".pythonrc.py"]),
-	"vim":     (YES, [".vim/", ".vimrc"]),
+	"neovim":  (YES, [".config/nvim/"]),
 	"tmux":    (YES, [".tmux.conf"]),
 	"wget":    (YES, [".wgetrc"]),
 	"termite": (YES, [".config/termite/"]),

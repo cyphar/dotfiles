@@ -22,11 +22,6 @@
 " ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 " OTHER DEALINGS IN THE SOFTWARE.
 
-" N.B. Opening vim < 7.3 with this config will cause it to print errors
-" You need to have a version of vim installed WITH gui support (+gui when
-" compiled). Also note that, even if you have vim +gui, it still will not
-" work if you use the "linux" terminal (without Xorg).
-
 " Activate pathogen and include all bundles in the .vim/bundle directory.
 call pathogen#infect()
 
@@ -76,19 +71,12 @@ if &t_Co > 2 || has('gui_running')
 	syntax enable
 endif
 
-" Remove gvim's redundant toolbars.
-" Not that I use gvim ... much.
-set go=
-
 " Dark-As-My-Soul colourscheme.
 set background=dark
 colorscheme solarizeddark
 
 " Rebind the mapleader.
 let mapleader = "?"
-
-" Automatically reload vimrc when it's saved.
-au BufWritePost .vimrc so ~/.vimrc
 
 " Basic stuff.
 set hidden
@@ -97,7 +85,7 @@ set number
 set noerrorbells
 set nowrap
 
-" I *need* to stop using the arrow keys.
+" I don't use arrow keys.
 map  <up>    <nop>
 imap <up>    <nop>
 map  <down>  <nop>
@@ -155,12 +143,14 @@ map <leader>. :lprev<cr>
 map <leader>/ :lnext<cr>
 
 " Set up ctags.
+" XXX: I don't use this at all.
 let Tlist_Ctags_Cmd = "/usr/bin/env ctags"
 let Tlist_WinWidth = 50
 map <F4> :TlistToggle<cr>
 map <F5> :!/usr/bin/env ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 
 " Set up delimit-mate.
+" XXX: These are objectively horrible, I need to fix this.
 let delimitMate_matchpairs = "(:),[:],{:}"
 let delimitMate_quotes = "\" ' `"
 let delimitMate_nesting_quotes = ['"', "'", "`"]

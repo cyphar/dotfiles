@@ -21,42 +21,45 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule ".vim/bundle/nerdtree"]
-	path = .vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule ".vim/bundle/syntastic"]
-	path = .vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
-[submodule ".vim/bundle/csapprox"]
-	path = .vim/bundle/csapprox
-	url = https://github.com/vim-scripts/CSApprox
-[submodule ".vim/bundle/taglist"]
-	path = .vim/bundle/taglist
+[submodule ".config/nvim/bundle/taglist"]
+	path = .config/nvim/bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim.git
-[submodule ".vim/bundle/multiple-cursors"]
-	path = .vim/bundle/multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
-[submodule ".vim/bundle/delimit-mate"]
-	path = .vim/bundle/delimit-mate
+[submodule ".config/nvim/bundle/delimit-mate"]
+	path = .config/nvim/bundle/delimit-mate
 	url = https://github.com/Raimondi/delimitMate.git
-[submodule ".vim/bundle/surround"]
-	path = .vim/bundle/surround
+[submodule ".config/nvim/bundle/surround"]
+	path = .config/nvim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule ".vim/bundle/fugitive"]
-	path = .vim/bundle/fugitive
+[submodule ".config/nvim/bundle/nerdcommenter"]
+	path = .config/nvim/bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule ".config/nvim/bundle/nerdtree"]
+	path = .config/nvim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule ".config/nvim/bundle/multiple-cursors"]
+	path = .config/nvim/bundle/multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule ".config/nvim/bundle/fugitive"]
+	path = .config/nvim/bundle/fugitive
 	url = https://github.com/tpope/vim-fugitive.git
-[submodule ".vim/bundle/airline"]
-	path = .vim/bundle/airline
-	url = https://github.com/bling/vim-airline.git
-[submodule ".vim/bundle/supertab"]
-	path = .vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
-[submodule ".vim/bundle/git"]
-	path = .vim/bundle/git
+[submodule ".config/nvim/bundle/csapprox"]
+	path = .config/nvim/bundle/csapprox
+	url = https://github.com/vim-scripts/CSApprox
+[submodule ".config/nvim/bundle/git"]
+	path = .config/nvim/bundle/git
 	url = https://github.com/tpope/vim-git.git
-[submodule ".vim/bundle/go"]
-	path = .vim/bundle/go
+[submodule ".config/nvim/bundle/supertab"]
+	path = .config/nvim/bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule ".config/nvim/bundle/go"]
+	path = .config/nvim/bundle/go
 	url = https://github.com/fatih/vim-go.git
+[submodule ".config/nvim/bundle/syntastic"]
+	path = .config/nvim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule ".config/nvim/bundle/airline"]
+	path = .config/nvim/bundle/airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule ".config/nvim/bundle/airline-themes"]
+	path = .config/nvim/bundle/airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git
