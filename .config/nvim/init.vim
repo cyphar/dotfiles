@@ -122,7 +122,7 @@ endif
 
 " Paste-related stuff.
 set pastetoggle=<F10>
-set clipboard=unnamed
+set clipboard+=unnamedplus
 au InsertLeave * set nopaste
 
 " Scrolling is crucial.

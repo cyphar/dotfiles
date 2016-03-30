@@ -30,6 +30,7 @@ You NEED the following packages to ensure that the configs work properly:
 - figlet
 - exuberant-ctags
 - keychains
+- `xsel` or some other clipboard (optional).
 
 ## (Un)license ##
 Apart from files where specifically specified (e.g vim plugins), these
