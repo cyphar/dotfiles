@@ -21,9 +21,6 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-[submodule ".config/nvim/bundle/taglist"]
-	path = .config/nvim/bundle/taglist
-	url = https://github.com/vim-scripts/taglist.vim.git
 [submodule ".config/nvim/bundle/delimit-mate"]
 	path = .config/nvim/bundle/delimit-mate
 	url = https://github.com/Raimondi/delimitMate.git

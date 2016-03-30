@@ -142,13 +142,6 @@ map <F3> :Errors<cr>
 map <leader>. :lprev<cr>
 map <leader>/ :lnext<cr>
 
-" Set up ctags.
-" XXX: I don't use this at all.
-let Tlist_Ctags_Cmd = "/usr/bin/env ctags"
-let Tlist_WinWidth = 50
-map <F4> :TlistToggle<cr>
-map <F5> :!/usr/bin/env ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-
 " Set up delimit-mate.
 " XXX: These are objectively horrible, I need to fix this.
 let delimitMate_matchpairs = "(:),[:],{:}"

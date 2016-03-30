@@ -28,7 +28,6 @@ Run the script `install` in the root of the project to install the configs.
 You NEED the following packages to ensure that the configs work properly:
 
 - figlet
-- exuberant-ctags
 - keychains
 - `xsel` or some other clipboard (optional).
 
