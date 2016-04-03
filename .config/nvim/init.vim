@@ -95,6 +95,9 @@ map  <right> <nop>
 imap <left>  <nop>
 imap <right> <nop>
 
+" No mouse control.
+set mouse=
+
 " We are using hard tabs, like Cthulu intended.
 set tabstop=4
 set shiftwidth=4
