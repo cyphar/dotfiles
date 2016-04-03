@@ -36,7 +36,22 @@ done
 shift $(_calc "${OPTIND}-1")
 
 # Gets the (width, height) of the screen.
-read __screen_x __screen_y <<<$(xrandr -q | grep '*' | awk '{ split($1, res, "x"); print res[1], res[2];}')
+read __screen_x __screen_y <<<$(xrandr -q | awk '
+# xrandr tells us screen sizes.
+$1 == "Screen" {
+	# Line is of the form:
+	#   Screen 0: minimum 8 x 8, current 3840 x 1080, maximum 32767 x 32767
+	for(i = 1; i <= NF && $i != "current"; i++)
+		;
+
+	# We did not find "current".
+	if($i != "current")
+		exit 1;
+
+	# Output the dimensions (there may be a trailing comma).
+	print $(i+1), $(i+3);
+	exit;
+}' | tr -d ,)
 
 # Calculate the "reduced" height and width for the down-scaling.
 local __reduced_x=$(_calc "${__screen_x}/${__block_size}")
