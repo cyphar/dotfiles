@@ -7,6 +7,7 @@ function abort() {
 
 # Make sure $GOPATH works.
 [[ -z "$GOPATH" ]] && abort '$GOPATH not set!'
+[[ "$GOPATH" == "$HOME" ]] && exit 0
 
 # $GOPATH/src should always link to $HOME/src
 [[ -L "$GOPATH/src" ]] && rm "$GOPATH/src"
