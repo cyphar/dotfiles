@@ -160,7 +160,38 @@ function __generate_prompt() {
 
 	# Mercurial branch information.
 	function __hg_info() {
-		if (hg status &>/dev/null); then
+		# Hot path: check that there isn't a parent .hg/ directory.
+		# We don't implement parsing (I don't clone big hg project often enough
+		# to care).
+		function __find_hg() {
+			local __current="$1"
+
+			# Search up the directory tree for '.git'.
+			while [[ "${__current}" != "/" ]]; do
+				if [[ -d "${__current}/.hg" ]]; then
+					echo "${__current}/.hg"
+					return 0
+				fi
+
+				__current="$(dirname -- "${__current}")"
+			done
+
+			# Check for '/.hg'.
+			if [[ -d "${__current}/.hg" ]]; then
+				echo "${__current}/.hg"
+				return 0
+			fi
+
+			return 1
+		}
+
+		# Most shells (zsh included) like to be clever with symlinks. This breaks
+		# things like symlinks into subdirectories of git repositories (because
+		# `pwd` lies to you). Fix this by using the `pwd` command which isn't
+		# magical.
+		local __pwd="$(command pwd)"
+
+		if (__find_hg "${__pwd}" && hg status &>/dev/null); then
 			local __branch="$(hg branch)"
 			local __ref="$(hg id | cut -d' ' -f1)"
 
