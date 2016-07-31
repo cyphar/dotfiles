@@ -77,5 +77,5 @@ setopt histignoredups no_sharehistory
 
 # Set up keychain.
 if (keychain --version 2>/dev/null); then
-	eval $(keychain --eval --agents ssh -Q --quiet --nogui "${HOME}/.ssh/id_rsa")
+	eval $(keychain --eval --agents ssh -Q --quiet --nogui "${HOME}/.ssh/id_ed25519")
 fi
