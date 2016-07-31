@@ -60,3 +60,6 @@
 [submodule ".config/nvim/bundle/airline-themes"]
 	path = .config/nvim/bundle/airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
+[submodule ".config/nvim/bundle/rust"]
+	path = .config/nvim/bundle/rust
+	url = https://github.com/rust-lang/rust.vim.git
