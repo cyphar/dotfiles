@@ -23,42 +23,94 @@
 	# Recommended kernel default. It's amazing how many things this breaks.
 	abbrev = 12
 
+	# Whitespace.
+	whitespace=trailing-space,space-before-tab
+
 [user]
+	# XXX: Change this when you're using these configs.
 	name  = Aleksa Sarai
 	email = cyphar@cyphar.com
 
-[format]
-	signoff = true
-
-[credential]
-	helper = cache
-
-[color]
-	ui     = true
-	diff   = auto
-	status = auto
-	branch = auto
+[commit]
+	# Sign every commit. People have complicated views on this, but in
+	# general I'm of the belief that not signing commits means that
+	# you're putting far too much faith in maintainers manually
+	# verifying source code before releasing it. We don't check every
+	# line of code before signing a tag, so sign every commit I've
+	# authored.
+	gpgsign = true
 
 [alias]
-	wu  = "log --stat origin..@{0}"
-	wup = "log -p origin..@{0}"
-	lg  = "log --graph --abbrev-commit \
-	           --pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
-
+	# Very useful aliases for getting the state of a repo.
 	id = "rev-parse --verify HEAD"
+	lg = "log --graph --abbrev-commit \
+	          --pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
+	st = "status --long"
+	tags = "tag -l"
+	branches = "branch -v"
+	remotes = "remote -v"
 
+	# Updates and merging.
 	up  = "pull --rebase"
 	sup = "submodule foreach --recursive git pull origin master"
 	sin = "submodule update --init --recursive"
-
 	mm = "merge --no-ff"
-	st = "status"
-	co = "checkout"
-	rb = "rebase"
 
+	# Checks out a GitHub pull request from origin.
+	# TODO: Improve this so it also works with Gogs and GitLab.
+	pr = !"pr() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; pr"
+
+	# Commit all the things!
+	cc = !"cc() { git add -A && git commit -av; }; cc"
+
+	# Rebasing.
+	reb = !"reb() { git rebase -i HEAD~$i; }; reb"
+
+	# Finding commits.
+	ft = !"ft() { git tag --contains $1; }; ft"
+	fb = !"fb() { git branch -a --contains $1; }; fb"
+
+	# Cleaning up a repo. Deletes commits already merged against master.
+	dm = !"dm() { git branch --merged | grep -v '\\*' | xargs -n 1 -- git branch -d; }; dm"
+
+[color]
+	# Enable colours because we're not in the 80s anymore, Toto.
+	ui = true
+	interactive = always
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+	upstream = red
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	func = yellow
+	old = red
+	new = green
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+[color "grep"]
+	filename = magenta
+	linenumber = blue
+	separator = cyan
+	function = yellow
+
+[credential]
+	helper = cache
 
 [merge]
 	tool = vimdiff
 
 [push]
 	default = simple
+
+[apply]
+	# Make sure whitespace is clean when we commit it.
+	whitespace = fix
