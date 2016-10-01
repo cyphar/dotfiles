@@ -78,8 +78,8 @@
 	lc = !"lc() { git log --pretty=format:'%cN <%ce>' $1 | sort -u; }; lc"
 
 	# Get the count of authors and commiters from a range-ish.
-	lla = !"lla() { git log --pretty=format:'%aN <%ae>' $1 | sort | uniq -c; }; lla"
-	llc = !"llc() { git log --pretty=format:'%cN <%ce>' $1 | sort | uniq -c; }; llc"
+	lla = !"lla() { git log --pretty=format:'%aN <%ae>' $1 | sort | uniq -c | sort -k1 -nr; }; lla"
+	llc = !"llc() { git log --pretty=format:'%cN <%ce>' $1 | sort | uniq -c | sort -k1 -nr; }; llc"
 
 [color]
 	# Enable colours because we're not in the 80s anymore, Toto.
