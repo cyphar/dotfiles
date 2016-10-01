@@ -21,7 +21,8 @@ cat <<EOH
 usage: lockmyi3 [-h] [-p <size=20>] [options]...
 
 Locks your screen with i3lock, using a pixelated version of the current screen
-as the background.
+as the background. The semantics of the "current screen" are borrowed from
+ImageMagick's 'import -screen -window root' options.
 
 Options:
   -p <size=20> -- Set the the size of each blocky pixel to <size> (in pixels).
@@ -75,4 +76,9 @@ local __reduced_y=$(_calc "${__screen_y}/${__block_size}")
 # Actually do the locking (generate the image without temporary files to not
 # clutter the filesystem). Since `convert -scale` doesn't do blurring, scaling
 # down and then back up is an efficient method of producing a pixelated image.
-i3lock $* -i <(import -screen -window root -silent png:- | convert png:- -scale '!'"${__reduced_x}x${__reduced_y}" -scale '!'"${__screen_x}x${__screen_y}" png:-)
+i3lock $* -i \
+	<(import -screen -window root -silent png:- | \
+	  convert png:- \
+	          -scale '!'"${__reduced_x}x${__reduced_y}" \
+	          -scale '!'"${__screen_x}x${__screen_y}" \
+	          png:-)
