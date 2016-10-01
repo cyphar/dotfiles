@@ -73,6 +73,14 @@
 	# Cleaning up a repo. Deletes commits already merged against master.
 	dm = !"dm() { git branch --merged | grep -v '\\*' | xargs -n 1 -- git branch -d; }; dm"
 
+	# Get the list of authors and commiters from a range-ish.
+	la = !"la() { git log --pretty=format:'%aN <%ae>' $1 | sort -u; }; la"
+	lc = !"lc() { git log --pretty=format:'%cN <%ce>' $1 | sort -u; }; lc"
+
+	# Get the count of authors and commiters from a range-ish.
+	lla = !"lla() { git log --pretty=format:'%aN <%ae>' $1 | sort | uniq -c; }; lla"
+	llc = !"llc() { git log --pretty=format:'%cN <%ce>' $1 | sort | uniq -c; }; llc"
+
 [color]
 	# Enable colours because we're not in the 80s anymore, Toto.
 	ui = true
