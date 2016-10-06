@@ -65,4 +65,4 @@
 	url = https://github.com/rust-lang/rust.vim.git
 [submodule ".config/nvim/bundle/bats"]
 	path = .config/nvim/bundle/bats
-	url = git@github.com:vim-scripts/bats.vim.git
+	url = https://github.com/vim-scripts/bats.vim.git
