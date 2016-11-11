@@ -50,6 +50,9 @@
 	branches = "branch -v"
 	remotes = "remote -v"
 
+	# The obvious counterpart to git-grep.
+	sed = !"sed() { git ls-files -z | xargs -0 sed -i -e $*; }; sed"
+
 	# Updates and merging.
 	up  = "pull --rebase"
 	sup = "submodule foreach --recursive git pull origin master"
