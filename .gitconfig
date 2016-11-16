@@ -45,10 +45,13 @@
 	id = "rev-parse --verify HEAD"
 	lg = "log --graph --abbrev-commit \
 	          --pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
+
+	# Information about the current checked out repo.
+	# These are just better versions of the defaults.
 	st = "status --long"
-	tags = "tag -l"
-	branches = "branch -v"
-	remotes = "remote -v"
+	tg = "tag -l"
+	br = "branch -v"
+	re = "remote -v"
 
 	# The obvious counterpart to git-grep.
 	sed = !"sed() { git ls-files -z | xargs -0 sed -i -e $*; }; sed"
@@ -59,9 +62,10 @@
 	sin = "submodule update --init --recursive"
 	mm = "merge --no-ff"
 
-	# Checks out a GitHub pull request from origin.
+	# Pulls / checks out a GitHub pull request from origin.
 	# TODO: Improve this so it also works with Gogs and GitLab.
-	pr = !"pr() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; pr"
+	pr = !"pr() { git fetch origin pull/$1/head:pr-$1; }; pr"
+	cpr = !"cpr() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; cpr"
 
 	# Commit all the things!
 	cc = !"cc() { git add -A && git commit -av; }; cc"
