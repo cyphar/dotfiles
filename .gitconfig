@@ -45,6 +45,8 @@
 	id = "rev-parse --verify HEAD"
 	lg = "log --graph --abbrev-commit \
 	          --pretty=format:'%Cred%h %C(bold red)(%G?)%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar %C(bold green)%cr) %C(bold blue)<%an>%Creset'"
+	# Short form for kernel comments.
+	one = "show -s --pretty='format:%h (\"%s\")'"
 
 	# Information about the current checked out repo.
 	# These are just better versions of the defaults.
