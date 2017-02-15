@@ -42,18 +42,18 @@ HOOK_AFTER = "after"
 
 # Install targets.
 OPTIONS = {
+	"bin":     (YES, [".local/bin/"]),
+	"dunst":   (YES, [".config/dunst/"]),
 	"fonts":   (YES, [".fonts/", ".fonts.conf.d/"]),
 	"git":     (YES, [".gitconfig"]),
-	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
-	"python":  (YES, [".pythonrc.py"]),
+	"i3":      (YES, [".i3/"]),
 	"neovim":  (YES, [".config/nvim/"]),
+	"python":  (YES, [".pythonrc.py"]),
+	"termite": (YES, [".config/termite/"]),
 	"tmux":    (YES, [".tmux.conf"]),
 	"wget":    (YES, [".wgetrc"]),
-	"termite": (YES, [".config/termite/"]),
-	"bin":     (YES, [".local/bin/"]),
-	"i3":      (YES, [".i3/"])
+	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
 }
-
 
 # Stdio helpers.
 
