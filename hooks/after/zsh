@@ -1,6 +1,6 @@
 #!/bin/zsh
 # dotfiles: collection of my personal dotfiles [code]
-# Copyright (C) 2012-2016 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,16 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# In order to make sure that $GOPATH acts correctly, we have to add quite a few
+# symlinks. Unfortunately this is quite ugly. Everything ends up being under
+# $HOME/.local so that Go's lovely $GOPATH/pkg bullshit doesn't pollute my
+# $HOME. We then make a symlink from $HOME/src to make things act nicer -- and
+# inside $HOME/.zshrc $CDPATH is set to make changing into Go projects a bit
+# less of a pain.
+
 function abort() {
-	echo $* 1>&2
+	echo $* >&2
 	exit 1
 }
 
-# Make sure $GOPATH works.
 [[ -z "$GOPATH" ]] && abort '$GOPATH not set!'
-[[ "$GOPATH" == "$HOME" ]] && exit 0
-
-# $GOPATH/src should always link to $HOME/src
+[[ -e "$HOME/src" && ! -L "$HOME/src" ]] && abort '$HOME/src exists but is not a symlink!'
 [[ -L "$GOPATH/src" ]] && rm "$GOPATH/src"
-[[ -e "$GOPATH/src" ]] && rm -rf "$GOPATH/src"
-ln -sf "$HOME/src" "$GOPATH/src"
+
+mkdir -p "$GOPATH/src"
+rm -f "$HOME/src"
+ln -sf "$GOPATH/src" "$HOME/src"

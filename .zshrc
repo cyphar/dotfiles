@@ -1,6 +1,6 @@
 #!/bin/zsh
 # dotfiles: collection of my personal dotfiles [code]
-# Copyright (C) 2012-2016 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -55,8 +55,9 @@ export EDITOR="nvim"
 export PAGER="less"
 export TERMINAL="termite"
 
-# Make go ... work.
+# Make go ... work. This is inspired by how runc0m handles things.
 export GOPATH="${HOME}/.local"
+export CDPATH=".:${GOPATH}/src"
 
 # Make python load `.pythonrc.py`
 export PYTHONSTARTUP="${HOME}/.pythonrc.py"
