@@ -46,7 +46,7 @@ OPTIONS = {
 	"dunst":   (YES, [".config/dunst/"]),
 	"fonts":   (YES, [".fonts/", ".fonts.conf.d/"]),
 	"git":     (YES, [".gitconfig"]),
-	"i3":      (YES, [".i3/"]),
+	"i3":      (YES, [".config/i3/"]),
 	"neovim":  (YES, [".config/nvim/"]),
 	"python":  (YES, [".pythonrc.py"]),
 	"termite": (YES, [".config/termite/"]),
