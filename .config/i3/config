@@ -162,3 +162,6 @@ hide_edge_borders both
 
 # Use compton as the compositor.
 exec_always "compton -cCGb -o0"
+
+# Run redshiftd.
+exec_always "$bin/redshiftd"
