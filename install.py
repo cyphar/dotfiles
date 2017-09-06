@@ -42,17 +42,18 @@ HOOK_AFTER = "after"
 
 # Install targets.
 OPTIONS = {
-	"bin":     (YES, [".local/bin/"]),
-	"dunst":   (YES, [".config/dunst/"]),
-	"fonts":   (YES, [".fonts/", ".fonts.conf.d/"]),
-	"git":     (YES, [".gitconfig"]),
-	"i3":      (YES, [".config/i3/", ".config/i3status/"]),
-	"neovim":  (YES, [".config/nvim/"]),
-	"python":  (YES, [".pythonrc.py"]),
-	"termite": (YES, [".config/termite/"]),
-	"tmux":    (YES, [".tmux.conf"]),
-	"wget":    (YES, [".wgetrc"]),
-	"zsh":     (YES, [".profile", ".zsh/", ".zshrc"]),
+	"bin":      (YES, [".local/bin/"]),
+	"dunst":    (YES, [".config/dunst/"]),
+	"fonts":    (YES, [".fonts/", ".fonts.conf.d/"]),
+	"git":      (YES, [".gitconfig"]),
+	"i3":       (YES, [".config/i3/", ".config/i3status/"]),
+	"neovim":   (YES, [".config/nvim/"]),
+	"python":   (YES, [".pythonrc.py"]),
+	"termite":  (YES, [".config/termite/"]),
+	"tmux":     (YES, [".tmux.conf"]),
+	"wget":     (YES, [".wgetrc"]),
+	"zsh":      (YES, [".profile", ".zsh/", ".zshrc"]),
+	"redshift": (YES, [".config/redshift.conf"]),
 }
 
 # Stdio helpers.
