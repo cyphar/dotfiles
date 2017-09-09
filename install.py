@@ -139,21 +139,19 @@ def _copy(source, target, clobber=True):
 
 # Main install script and helpers.
 
-def _run_hook(ctx, hook):
-	# Generate the script path.
-	script = os.path.join(HOOK_DIR, ctx, hook)
-
-	# Ignore non-existant hooks.
+def _run_script(script):
+	# Ignore non-existant scripts.
 	if not _exists(script):
 		return 0
 
-	# Something something shell out to os.path.join(ctx, hook).
 	# You trust me, right? :P
-	ret = subprocess.call([script])
+	return subprocess.call([script])
 
+def _run_hook(ctx, hook):
+	script = os.path.join(HOOK_DIR, ctx, hook)
+	ret = _run_script(script)
 	if ret != 0:
 		_warn("%s hook for '%s' returned with non-zero error code: %d" % (ctx.title(), hook, ret))
-
 	return ret
 
 def _response_bool(response, default=True):
@@ -221,6 +219,9 @@ def main():
 			_warn("Cowardly refusing to continue installation, because '%s' failed." % (choice,))
 			return retval
 
+	# Run setup scripts for the distribution.
+	_info("Executing distribution scripts.")
+	retval |= _run_script("dist/install.sh")
 	return retval
 
 if __name__ == "__main__":
