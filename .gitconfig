@@ -62,7 +62,7 @@
 	up  = "pull --rebase"
 	sup = "submodule foreach --recursive git pull origin master"
 	sin = "submodule update --init --recursive"
-	mm = "merge --no-ff"
+	mm = "merge --no-ff --log"
 
 	# Pulls / checks out a GitHub pull request from origin.
 	# TODO: Improve this so it also works with Gogs and GitLab.
