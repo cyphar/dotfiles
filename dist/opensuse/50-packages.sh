@@ -38,7 +38,7 @@ packages=(
 	# Basic cli tools necessary.
 	"neovim" "tmux" "zsh" "git" "gcc" "go" "keychain" "figlet" "gpg2" "python3"
 	"mosh" "rsync" "ranger" "alsa-utils" "weechat" "make" "exfat-utils"
-	"fuse-exfat" "xfsprogs"
+	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool"
 	# Basic graphics stack and environment.
 	"i3" "i3lock" "i3status" "dmenu" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "compton"
