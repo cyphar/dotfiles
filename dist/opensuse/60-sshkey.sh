@@ -15,11 +15,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e
-
-# Set our shell to be zsh.
-sudo usermod -s/bin/zsh $USER
-
-# Add ourselves to the docker group, if it exists (we no longer install Docker
-# by default).
-sudo usermod -a -G docker $USER || :
+# Generate a new ed25519 key if one isn't already available.
+[[ -f "$HOME/.ssh/id_ed25519" ]] || ssh-keygen -t ed25519
