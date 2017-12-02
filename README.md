@@ -7,29 +7,19 @@ When cloning this repo, ensure that you clone it recursively (to ensure that
 submodules are also cloned):
 
 ```
-$ git clone --recursive git://github.com/cyphar/dotfiles.git
+$ git clone --recursive https://github.com/cyphar/dotfiles.git
 ```
-
-You could of course do something like this:
-
-```
-$ git clone git://github.com/cyphar/dotfiles.git
-$ cd dotfiles
-$ git submodules init
-$ git submodules update
-```
-
-But who needs all that typing? `;)`
 
 ## Install ##
-Run the script `install` in the root of the project to install the configs.
+Run the `install.py` script in the root of this project to install the
+configurations. It interactively asks you whether you'd like to install each
+configuration "set" (enter no input to use the default).
 
-## Requirements ##
-You NEED the following packages to ensure that the configs work properly:
-
-- figlet
-- keychains
-- `xsel` or some other clipboard (optional).
+`install.py` also has OS-specific hooks to preconfigure supported GNU/Linux
+distributions (by installing necessary packages, and other system
+configuration). At the moment, this is only supported on openSUSE Tumbleweed.
+If you'd like to figure out what packages are required please take a look at
+`dist/opensuse/50-packages.sh`.
 
 ## License ##
 Apart from files where specifically specified (e.g vim plugins), any scripts
