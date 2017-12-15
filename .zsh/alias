@@ -112,3 +112,7 @@ alias ..5="cd ../../../../.."
 
 # Make changing directories easy.
 setopt autocd
+
+# Mutt mailboxes.
+alias pmutt="mutt -F $HOME/.mutt/muttrc-personal"
+alias smutt="mutt -F $HOME/.mutt/muttrc-suse"

@@ -1,0 +1,138 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# muttrc-colours -- This theme is based loosely on my custom
+# solarized-dark-like vim theme (which is effectively taking the key foreground
+# colour themes and making a sanely contrasted version).
+
+# Uncolour everything.
+uncolor index *
+
+# Basic colours .
+color normal         white           default
+color error          color160        default
+color tilde          color235        default
+color message        color37         default
+color markers        color160        color254
+color attachment     color220        default
+color search         color61         default
+color tree           color136        default                                   # arrow in threads
+
+# The status line is based on the "wombat" airline theme that I use. Because
+# mutt doesn't support modal colouring natively we do it through hooks. The
+# airline-wombat theme has the following colour sets:
+# XYZ     is  mode      info      status    changed
+# normal  is {232:192} {192:238} {192:235} {113}
+# insert  is {232:227} {227:238} {227:235} {221}
+# visual  is {232:153} {153:238} {153:235} {111}
+# replace is {232:173} {173:238} {173:235} {203}
+color status         color15         color235
+color indicator      brightcolor15   default
+set arrow_cursor
+
+# Monocolor screen.
+mono  bold           bold
+mono  underline      underline
+mono  indicator      reverse
+mono  error          bold
+
+# Index colours.
+color index          color160        default        "~A"                       # all messages
+color index          color166        default        "~="                       # duplicate messages
+color index          color242        default        "~R"                       # read messages
+color index          color245        default        "~R~p!~F"                  # read messages
+color index          brightcolor214  default        "!~R"                      # unread messages
+color index          brightcolor220  default        "!~R~p!~F"                 # unread messages to me
+color index          color26         default        "~Q~R"                     # messages replied to
+color index          brightcolor39   default        "~Q!~R"                    # unread messages replied to
+color index          brightcolor45   default        "~Q!~R~p!~F"               # unread messages replied to me
+color index          color88         default        "~D~R"                     # deleted
+color index          color124        default        "~D!~R"                    # deleted
+color index          brightcolor124  default        "~D!~R~p!~F"               # deleted
+#color index          color241        default        "~P"                       # messages from me
+#color index          brightcolor37   default        "~p!~F"                    # messages to me
+#color index          color240        default        "~R~p!~F"                  # messages to me
+#color index          color160        default        "~F"                       # flagged messages
+#color index          color160        default        "~F~p"                     # flagged messages to me
+#color index          color160        default        "~N~F"                     # new flagged messages
+#color index          color160        default        "~N~F~p"                   # new flagged messages to me
+#color index          color160        default        "~U~F~p"                   # new flagged messages to me
+
+color index          brightcolor160   default        "~v"                      # messages part of a collapsed thread
+color index          color248         default        "~v!~(!~R)"               # collapsed thread with no unread
+color index          color249         default        "~v!~(!~R)~(~p!~F)"       # collapsed thread with no unread to me
+color index          brightcolor166   default        "~v~(!~R)"                # collapsed thread with some unread
+color index          brightcolor172   default        "~v~(!~R~p!~F)"           # collapsed thread with some unread to me
+color index          brightcolor202   default        "!~R~v~(!~R)"             # collapsed thread with unread parent
+color index          brightcolor208   default        "!~R~v~(!~R~p!~F)"        # collapsed thread with unread parent to me
+color index          brightcolor208   default        "~v~(!~R~p!~F)"           # collapsed thread with flagged
+color index          brightcolor208   default        "~v~(!~R~p!~F)"           # collapsed thread with flagged
+
+# Message header colours.
+color hdrdefault     color136        default
+color header         brightcolor136  default        "^(From|To):"
+color header         brightcolor166  default        "^(Subject):"
+
+# Message body colours.
+color normal         color254        default
+color bold           brightcolor15   default
+color underline      color15         default
+color signature      color242        default
+color quoted         color217        default
+color quoted1        color210        default
+color quoted2        color198        default
+color quoted3        color161        default
+color quoted4        color125        default
+color quoted5        color89         default
+
+# Make attachment headers nicer to read.
+color attach_headers brightyellow    default        "^\\[--"
+color attach_headers brightyellow    default        "--\\]$"
+color attach_headers brightcolor220  default        "Type: [a-z]+/[a-z0-9\-]+"
+color attach_headers brightcolor220  default        "Size: [0-9\.]+[KMG]?"
+
+# Add some colouring for GPG output. We must use attach_headers to ensure we
+# match only GPGME output (though I'm not sure if this will match non-signature
+# output).
+color attach_headers brightgreen     default        "(Begin|End) signature information"
+color attach_headers green           default        "(The following data is signed|End of signed data)"
+color attach_headers brightgreen     default        "Good signature from.*"
+color attach_headers brightred       default        "Bad signature from.*"
+color attach_headers brightred       default        "BAD signature from.*"
+color attach_headers brightred       default        "Note: This key has expired!"
+color attach_headers brightmagenta   default        "Problem signature from.*"
+color attach_headers brightmagenta   default        "WARNING: This key is not certified with a trusted signature!"
+color attach_headers brightmagenta   default        "         There is no indication that the signature belongs to the owner."
+color attach_headers brightmagenta   default        "can't handle these multiple signatures"
+color attach_headers brightmagenta   default        "signature verification suppressed"
+color attach_headers brightmagenta   default        "invalid node with packet of type"
+
+# Colouring of URLs and email addresses. Yes, these regular expressions are
+# completely insane but they seem to handle most things.
+color body           color160        default        "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
+color body           color160        default        "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+
+# Highlighting of common ASCII email "formatting" such as *bold*, _underline_,
+# and /italic/.
+# *bold*
+color body           brightcolor15   default        "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
+mono  body           bold                           "(^|[[:space:][:punct:]])\\*[^*]+\\*([[:space:][:punct:]]|$)"
+# _underline_
+color body           color15         default        "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
+mono  body           underline                      "(^|[[:space:][:punct:]])_[^_]+_([[:space:][:punct:]]|$)"
+# /italic/
+color body           color15         default        "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"
+mono  body           underline                      "(^|[[:space:][:punct:]])/[^/]+/([[:space:][:punct:]]|$)"

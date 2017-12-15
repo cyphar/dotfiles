@@ -1,0 +1,49 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# muttrc-suse -- configuration for <asarai@suse.com> with alias smutt.
+
+set my_profile="SUSE"
+set pgp_sign_as="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
+source $HOME/.mutt/muttrc
+
+set my_name="asarai"
+set my_username="$my_name@suse.de"
+set from=$my_username
+
+# I have quite a few aliases. These are all (mostly) public so I'll just keep
+# them in this config.
+alternates '^asarai@suse\.com$'
+
+# Change the major colour scheme to blue to differentiate it.
+color status        color46         color235
+color indicator     brightcolor46   default
+
+# Configuration for inbox. There's no point in using offlineimap for mailbox,
+# because generally they have okay connectivity.
+set folder="imaps://imap.suse.de:993"
+set smtp_url="smtp://$my_name@imap.suse.de:587"
+set spoolfile="+INBOX"
+set record="!/Sent"
+set postponed="!/Drafts"
+set trash="!/Trash"
+
+# I store my password information in KeePassXC (with a small wrapper so I can
+# support different versions, as well as fix up some of the issues with
+# KeePassXC's CLI interface).
+set imap_user=$my_username
+set imap_pass=`keepassxc-helper "Work/SUSE/SUSE Email"`
+set smtp_pass=$imap_pass

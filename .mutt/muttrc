@@ -1,0 +1,67 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# muttrc -- this is the "common" subset of my mutt configurations between all
+# of my mailboxes. Individual mailboxes are configured in ~/.mutt/muttrc-$box
+# and then I have an alias like Xmutt='mutt -F ~/.mutt/muttrc-XYZ'.
+
+set realname="Aleksa Sarai"
+set signature="$HOME/.mutt/signature"
+set my_date_format="%F"
+set my_datetime_format="$my_date_format at %H:%M:%S%z"
+set attribution="On %{$my_date_format}, %n <%A> wrote:"
+set forward_format="Fwd: %s"
+set editor="nvim -c 'set tw=72 ft=mail spell spelllang=en'"
+set edit_headers
+set mime_forward
+
+# Don't ever do email operations over cleartext. Note that ssl_force_tls *does*
+# also force STARTTLS, and will cause connection attempts to fail if it cannot
+# establish a STARTTLS (or any other STARTTLS) connection. The documentation
+# doesn't mention this, but I've verified that OPT_SSL_FORCE_TLS is implemented
+# this way (in NeoMutt at least).
+set ssl_force_tls
+set ssl_starttls
+
+# Disable bad crypto. Anything pre-TLSv1 is broken.
+set nossl_use_sslv2
+set nossl_use_sslv3
+
+# PGP-related options.
+set crypt_use_gpgme
+set crypt_verify_sig
+set crypt_autosign
+set postpone_encrypt
+set pgp_auto_decode
+set pgp_self_encrypt
+#set pgp_self_encrypt_as=$pgp_sign_as
+set nosmime_is_default
+
+# Show threads.
+set sort=threads
+set sort_aux=last-date-received
+
+# Formatting of menus.
+set date_format=$my_date_format
+set compose_format=" [$my_profile] > Compose %> < %l <  "
+set pager_format=" [$my_profile] > %.20n > %s %>  [%Z] < %P %c <  "
+set index_format="%Z %{$my_date_format} %-20.20n (%?l?%4l&%4c?) %s"
+set status_chars="-*%A"
+set status_format=" %r$my_profile%r > %f >%?u? +%u(%n+%o)?%?d? -%d?%?p? ^%p? >%?t? *%t \\>? %>  < %s/%S < %P %?M?%M/?%m <  "
+
+# Include my default colour scheme. Accents (status and indicator) will be
+# overridden by the individual muttrc-$box configurations.
+source $HOME/.mutt/muttrc-colours

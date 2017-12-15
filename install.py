@@ -55,6 +55,7 @@ OPTIONS = {
 	"zsh":       (YES, [".profile", ".zsh/", ".zshrc"]),
 	"redshift":  (YES, [".config/redshift.conf"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
+	"mutt":      (YES, [".mutt/"]),
 }
 
 # Stdio helpers.

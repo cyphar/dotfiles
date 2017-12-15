@@ -1,0 +1,121 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# keepassxc-helper is used as part of my Mutt configuration to automate getting
+# passwords without storing the password (even in encrypted form) in my
+# mailbox. Mutt only allows you to use the first line of output as a variable
+# (and it doesn't allow interactive prompts) so we have to improvise.
+
+# NOTE: keepassxc-cli has a really badly defined UX. I've done some work to fix
+#       the changes in v2.3.0 which will allow scripting to be done in a *far*
+#       more sane way. See keepassxc#1289 and keepassxc#1280.
+
+set -e
+
+KDBX="$HOME/doc/secret/passwords.kdbx"
+ATTRIBUTE="Password"
+RETRY=3
+
+# Output help page.
+function usage() {
+cat <<EOH
+usage: keepassxc-helper [-h] [-a <attribute>] [-k <database>] <entry>
+
+A wrapper around 'keepassxc-cli show' which provides a GUI password prompt. It
+is usable from a Mutt context (which is how I personally manage my passwords
+for Mutt and offlineimap -- this has an obvious downside of not really working
+over SSH unless you do X11 forwarding).
+
+Options:
+  -a <attribute> -- Attribute of the entry to output (default: "$ATTRIBUTE").
+  -k <database>  -- Path the KeePassXC database (default: $KDBX).
+  <entry>        -- Entry name passed to 'keepassxc-cli show'.
+EOH
+}
+
+function bail() {
+	echo "$@" >&2
+	usage
+	exit 1
+}
+
+# Succeeds if $1 is older than $2.
+function version_isolder() {
+	[[ "$(printf "$1\n$2\n" | sort -V | head -n1)" == "$1" ]] || return 1
+}
+
+# Get the options.
+while getopts "a:p:h" OPT; do
+	case "$OPT" in
+		(a)
+			ATTRIBUTE="${OPTARG}"
+			;;
+		(k)
+			KDBX="${OPTARG}"
+			;;
+		(h)
+			usage
+			exit 0;;
+	esac
+done
+[[ "$OPTIND" -le "$#" ]] || bail "Missing operand."
+shift $(($OPTIND - 1))
+[[ "$#" -eq 1 ]] || bail "Incorrect number of operands."
+ENTRY="$1"
+
+# Get keepass version. In 2.3.0 and later the API has changed quite a lot.
+KEEPASSXC_VERSION="$(keepassxc-cli --version)"
+
+# Cannot use --attributes in older KeePassXC versions.
+[[ "$ATTRIBUTE" == "Password" ]] || version_isolder "2.3.0" "$KEEPASSXC_VERSION" || bail "Cannot use --attributes with pre-2.3.0 KeePassXC versions."
+
+RETRY_NUM=0
+RETRY_MAX=3
+while true
+do
+	if [ "$RETRY_NUM" -eq 0 ]
+	then
+		PROMPT="Password for '$KDBX': "
+	elif [ "$RETRY_NUM" -lt "$RETRY_MAX" ]
+	then
+		PROMPT="Bad password, re-enter password for '$KDBX': "
+	else
+		bail "Could not unlock '$KDBX': bad password."
+	fi
+	RETRY_NUM="$(($RETRY_NUM + 1))"
+
+	# Get the password.
+	#DISPLAY="${DISPLAY:?DISPLAY is not set.}"
+	#DB_PASSWORD="$(zenity --password --title="KeePassXC Password" --display="$DISPLAY" 2>/dev/null)"
+	read -rs "DB_PASSWORD?$PROMPT" ; printf '\n' >&2
+	[[ "$DB_PASSWORD" ]] || bail "Empty passwords are not accepted."
+
+	# Make sure the password actually works and then Get the thing we wanted from
+	# KeePassXC.
+	if (version_isolder "2.3.0" "$KEEPASSXC_VERSION")
+	then
+		echo "$DB_PASSWORD" | keepassxc-cli ls "$KDBX" &>/dev/null || continue
+		KP_PASSWORD="$(echo "$DB_PASSWORD" | keepassxc-cli show --attributes "$ATTRIBUTE" "$KDBX" "$ENTRY" | tail -1)"
+	else
+		echo "$DB_PASSWORD" | keepassxc-cli list "$KDBX" &>/dev/null || continue
+		KP_PASSWORD="$(echo "$DB_PASSWORD" | keepassxc-cli show $KDBX $* | tail -1)"
+	fi
+	break
+done
+
+# And echo just the password.
+echo "$KP_PASSWORD"

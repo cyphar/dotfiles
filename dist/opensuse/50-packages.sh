@@ -49,5 +49,7 @@ packages=(
 	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
+	# Mutt and related packages.
+	"mutt" "zenity"
 )
 sudo zypper install "${packages[@]}"
