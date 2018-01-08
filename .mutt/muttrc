@@ -28,6 +28,11 @@ set editor="nvim -c 'set tw=72 ft=mail spell spelllang=en'"
 set edit_headers
 set mime_forward
 
+# Set up folders.
+set mbox_type=Maildir
+set my_mailroot="$HOME/mail"
+set folder="$my_mailroot/$my_profile"
+
 # Don't ever do email operations over cleartext. Note that ssl_force_tls *does*
 # also force STARTTLS, and will cause connection attempts to fail if it cannot
 # establish a STARTTLS (or any other STARTTLS) connection. The documentation

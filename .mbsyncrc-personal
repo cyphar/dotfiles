@@ -1,0 +1,53 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+MaildirStore personal-local
+Path "~/mail/personal"
+Inbox "~/mail/personal/inbox"
+Trash "trash"
+
+# Mailbox.org configuration.
+IMAPAccount mailbox
+Host imap.mailbox.org
+Port 993
+User "cyphar@mailbox.org"
+PassCmd +"keepassxc-helper 'Email/Mailbox cyphar'"
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+IMAPStore mailbox-remote
+Account mailbox
+
+# Gmail configuration.
+IMAPAccount gmail
+Host imap.gmail.com
+Port 993
+User "cyphar@mailbox.org"
+PassCmd +"keepassxc-helper -a 'MuttPassword' 'Email/Gmail cyphar'"
+SSLType IMAPS
+SSLVersions TLSv1 TLSv1.1 TLSv1.2
+
+IMAPStore gmail-remote
+Account gmail
+
+# At the moment I'm still using gmail.
+Channel personal
+Master :gmail-remote:
+#Master :mailbox-remote:
+Slave :personal-local:
+Sync All
+Create Both
+CopyArrivalDate yes

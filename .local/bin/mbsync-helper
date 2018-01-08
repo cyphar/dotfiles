@@ -1,0 +1,125 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# mbsync-helper allows us to run mbsync with a given interval in the
+# background. It also removes the need to run PassCmd on each mbsync call, by
+# replacing PassCmd lines with the result of executing them.
+
+set -e
+
+INTERVAL=5
+MBSYNCRC="$HOME/.mbsyncrc"
+
+# Output help page.
+function usage() {
+cat <<EOH
+usage: mbsync-helper [-h] [-i <interval>] [-c <config>]
+
+A wrapper around 'mbsync' which provides auto-retry support with the given
+interval. It is usable from a Mutt context (and it echos the INBOX path to
+stdout, which means it can be used as a variable in Mutt).
+
+Options:
+  -i <interval>  -- Number of seconds between each invocation of 'mbsync' (default: $INTERVAL).
+  -c <config>    -- Base configuration to run mbsync under (default: "$MBSYNCRC").
+EOH
+}
+
+function bail() {
+	echo "$@" >&2
+	exit 1
+}
+
+function bail_usage() {
+	echo "$@" >&2
+	usage
+	exit 1
+}
+
+# Get the options.
+while getopts "hi:c:" OPT; do
+	case "$OPT" in
+		(i)
+			INTERVAL="${OPTARG}"
+			;;
+		(c)
+			MBSYNCRC="${OPTARG}"
+			;;
+		(h)
+			usage
+			exit 0;;
+		(\?)
+			bail_usage
+			;;
+	esac
+done
+
+# Make sure that we don't run more than one mbsyncrc instance.
+MBSYNCRC_LOCK="$MBSYNCRC.lock"
+if [ -f "$MBSYNCRC_LOCK" ]
+then
+	pid="$(cat "$MBSYNCRC_LOCK")"
+	if ( ps --pid="$pid" -o args 2>/dev/null | grep "mbsync-script" &>/dev/null )
+	then
+		bail "mbsync already running as pid $pid"
+	fi
+	rm -f "$MBSYNCRC_LOCK"
+fi
+! [ -e "$MBSYNCRC_LOCK" ] || bail "$MBSYNCRC_LOCK exists and is not a file."
+
+# Set up our temporary mbsyncrc.
+TMP_MBSYNCRC="$(mktemp --tmpdir mbsyncrc-helper.XXXXX)"
+chmod 0600 "$TMP_MBSYNCRC"
+trap "{ rm -rf '$TMP_MBSYNCRC'; exit 255; }" SIGINT SIGTERM
+
+# Execute PassCmd lines and store them inside the "$TMP_MBSYNCRC". This isn't
+# particularly pretty but it does allow us to make the interval handling
+# un-attended.
+while read -u 3 line
+do
+	if ( echo "$line" | grep -iv '^PassCmd' &>/dev/null )
+	then
+		echo "$line"
+		continue
+	fi
+	cmd="$(echo "$line" | sed -E 's|^PassCmd[[:space:]]+\+?(.*)$|\1|gi')"
+	printf 'Pass "%q"\n' "$(eval sh -c "$cmd")"
+done 3<"$MBSYNCRC" >"$TMP_MBSYNCRC"
+
+# We have to generate a new script in order to be able to use setsid(1). This
+# script just runs "mbsync" in a loop.
+TMP_SCRIPT="$(mktemp --tmpdir mbsync-script.XXXXX)"
+cat >"$TMP_SCRIPT" <<EOS
+#!/bin/bash
+# Auto-generated as part of mbsync-helper.
+# Copyright (C) 2017 Aleksa Sarai
+# Licensed under GPLv3-or-later.
+
+rm "$TMP_SCRIPT"
+echo \$\$ > "$MBSYNCRC_LOCK"
+trap "{ rm -rf '$TMP_MBSYNCRC' '$MBSYNCRC_LOCK'; exit; }" SIGINT SIGTERM EXIT
+
+while true
+do
+	mbsync -c '$TMP_MBSYNCRC' -a
+	sleep '$INTERVAL'
+done
+EOS
+chmod 0700 "$TMP_SCRIPT"
+
+# Run our "mbsync" helper with our generated mbsyncrc file.
+setsid "$TMP_SCRIPT" &>/dev/null </dev/null &

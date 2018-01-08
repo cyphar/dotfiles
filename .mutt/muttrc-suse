@@ -16,7 +16,7 @@
 
 # muttrc-suse -- configuration for <asarai@suse.com> with alias smutt.
 
-set my_profile="SUSE"
+set my_profile="suse"
 set pgp_sign_as="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
 source $HOME/.mutt/muttrc
 
@@ -34,12 +34,13 @@ color indicator     brightcolor46   default
 
 # Configuration for inbox. There's no point in using offlineimap for mailbox,
 # because generally they have okay connectivity.
-set folder="imaps://imap.suse.de:993"
+set folder="$my_mailroot/$my_profile"
 set smtp_url="smtp://$my_name@imap.suse.de:587"
-set spoolfile="+INBOX"
+set spoolfile="+inbox"
+set trash="+trash"
+# TODO: These are probably broken...
 set record="!/Sent"
 set postponed="!/Drafts"
-set trash="!/Trash"
 
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with

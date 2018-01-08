@@ -114,5 +114,10 @@ alias ..5="cd ../../../../.."
 setopt autocd
 
 # Mutt mailboxes.
-alias pmutt="mutt -F $HOME/.mutt/muttrc-personal"
-alias smutt="mutt -F $HOME/.mutt/muttrc-suse"
+function _mutt_wrapper() {
+	mbsync-helper -c "$HOME/.mbsyncrc-$1" || :
+	mutt -F "$HOME/.mutt/muttrc-$1"
+	kill -9 "$(cat "$HOME/.mbsyncrc-$1.lock")"
+}
+alias pmutt="_mutt_wrapper personal"
+alias smutt="_mutt_wrapper suse"

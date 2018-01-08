@@ -56,6 +56,7 @@ OPTIONS = {
 	"redshift":  (YES, [".config/redshift.conf"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
 	"mutt":      (YES, [".mutt/"]),
+	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
 }
 
 # Stdio helpers.
@@ -191,7 +192,7 @@ def main():
 
 		# Ask if they wish to install the program.
 		response = _ask("Do you wish to install '%s' [%s]?" % (option, default))
-		install = _response_bool(response)
+		install = _response_bool(response, default=_response_bool(default))
 
 		# Add to the chosen list if it works.
 		if install:
@@ -222,8 +223,11 @@ def main():
 			return retval
 
 	# Run setup scripts for the distribution.
-	_info("Executing distribution scripts.")
-	retval |= _run_script("dist/install.sh")
+	default = NO
+	response = _ask("Do you wish to run distribution-specific scripts [%s]?" % (default,))
+	if _response_bool(response, default=_response_bool(default)):
+		_info("Executing distribution scripts.")
+		retval |= _run_script("dist/install.sh")
 	return retval
 
 if __name__ == "__main__":

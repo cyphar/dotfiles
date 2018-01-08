@@ -16,11 +16,12 @@
 
 # muttrc-personal -- configuration for <cyphar@cyphar.com> with alias pmutt.
 
-set my_profile="Personal"
+set my_profile="personal"
 set pgp_sign_as="6FA1B3E3F9A18CDCBE6A2CF54A7BE7BF70DE9B9F"
 source $HOME/.mutt/muttrc
 
 set my_name="cyphar"
+#set my_username="$my_name@mailbox.org"
 set my_username="$my_name@cyphar.com"
 set from=$my_username
 
@@ -39,19 +40,17 @@ color indicator     brightcolor51   default
 
 # Configuration for inbox. There's no point in using offlineimap for mailbox,
 # because generally they have okay connectivity.
-#set folder="imaps://imap.mailbox.org:993"
+set folder="$my_mailroot/$my_profile"
 #set smtp_url="smtp://$my_username@smtp.mailbox.org:587"
-set folder="imaps://imap.gmail.com:993"
 set smtp_url="smtps://$my_username@smtp.gmail.com:456"
-set spoolfile="+Inbox"
-set record="+Sent"
-set postponed="+Drafts"
-set trash="+Trash"
+set spoolfile="+inbox"
+set trash="+trash"
+# TODO: These are probably broken...
+set record="+sent"
+set postponed="+drafts"
 
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with
 # KeePassXC's CLI interface).
-set imap_user=$my_username
-#set imap_pass=`keepassxc-helper "Email/Mailbox cyphar"`
-set imap_pass=`keepassxc-helper -a "MuttPassword" "Email/Gmail cyphar"`
-set smtp_pass=$imap_pass
+#set smtp_pass=`keepassxc-helper "Email/Mailbox cyphar"`
+set smtp_pass=`keepassxc-helper -a "MuttPassword" "Email/Gmail cyphar"`
