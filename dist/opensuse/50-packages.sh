@@ -42,7 +42,7 @@ packages=(
 	# Container-related packages.
 	"skopeo" "umoci" "runc"
 	# Basic graphics stack and environment.
-	"i3" "i3lock" "i3status" "dmenu" "ImageMagick" "xorg-x11-server"
+	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "compton"
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "dina-bitmap-fonts"
 	# Graphical programs.
