@@ -18,8 +18,9 @@
 # Enable alias option completion.
 setopt completealiases
 
-# Some weird distros don't symlink vi -> vim.
-# This is wrong.
+# Some weird distros don't symlink vi -> vim (-> nvim). This is wrong. Also add
+# an alias for "v" just for my own sanity.
+alias v="vi"
 alias vi="vim"
 alias vim="nvim"
 
