@@ -1,4 +1,3 @@
-" dotfiles: a collection of configuration files
 " dotfiles: collection of my personal dotfiles [code]
 " Copyright (C) 2012-2017 Aleksa Sarai <cyphar@cyphar.com>
 "
@@ -79,9 +78,16 @@ let mapleader = "?"
 " Basic stuff.
 set hidden
 set autoread
-set number
 set noerrorbells
 set nowrap
+
+" Line numbering.
+set number relativenumber
+augroup NumberToggle
+	au!
+	au BufEnter,FocusGained,InsertLeave * set   relativenumber
+	au BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " I don't use arrow keys.
 map  <up>    <nop>
