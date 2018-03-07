@@ -148,7 +148,7 @@ bar {
 }
 
 # Background is handled by feh.
-exec_always --no-startup-id "feh --bg-scale /usr/share/backgrounds/default.jpg"
+exec_always --no-startup-id "feh --bg-scale /usr/share/wallpapers/default.jpg"
 
 # Tile colours.
 # class                 border  backgr. text    indicator
