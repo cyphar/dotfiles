@@ -116,6 +116,7 @@ setopt autocd
 
 # Mutt mailboxes.
 function _mutt_wrapper() {
+	mkdir -p "$HOME/mail/$1"
 	mbsync-helper -c "$HOME/.mbsyncrc-$1" || :
 	mutt -F "$HOME/.mutt/muttrc-$1"
 	kill -9 "$(cat "$HOME/.mbsyncrc-$1.lock")"
