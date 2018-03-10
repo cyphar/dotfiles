@@ -45,6 +45,7 @@ packages=(
 	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "compton"
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "dina-bitmap-fonts"
+	"xbacklight"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
 	# Good-to-haves.
