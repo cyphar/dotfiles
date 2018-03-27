@@ -24,7 +24,7 @@ IMAPAccount mailbox
 Host imap.mailbox.org
 Port 993
 User "cyphar@mailbox.org"
-PassCmd +"keepassxc-helper 'Email/Mailbox cyphar'"
+PassCmd +"keepassxc-helper 'Personal/Email/Mailbox cyphar'"
 SSLType IMAPS
 SSLVersions TLSv1.2
 
@@ -35,10 +35,10 @@ Account mailbox
 IMAPAccount gmail
 Host imap.gmail.com
 Port 993
-User "cyphar@mailbox.org"
-PassCmd +"keepassxc-helper -a 'MuttPassword' 'Email/Gmail cyphar'"
+User "cyphar@cyphar.com"
+PassCmd +"keepassxc-helper -a 'MuttPassword' 'Personal/Email/Gmail cyphar'"
 SSLType IMAPS
-SSLVersions TLSv1 TLSv1.1 TLSv1.2
+SSLVersions TLSv1.2
 
 IMAPStore gmail-remote
 Account gmail

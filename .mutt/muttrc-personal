@@ -52,5 +52,5 @@ set postponed="+drafts"
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with
 # KeePassXC's CLI interface).
-#set smtp_pass=`keepassxc-helper "Email/Mailbox cyphar"`
-set smtp_pass=`keepassxc-helper -a "MuttPassword" "Email/Gmail cyphar"`
+#set smtp_pass=`keepassxc-helper "Personal/Email/Mailbox cyphar"`
+set smtp_pass=`keepassxc-helper -a "MuttPassword" "Personal/Email/Gmail cyphar"`
