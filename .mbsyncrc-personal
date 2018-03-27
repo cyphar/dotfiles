@@ -19,11 +19,10 @@ Path "~/mail/personal"
 Inbox "~/mail/personal/inbox"
 Trash "trash"
 
-# Mailbox.org configuration.
 IMAPAccount mailbox
 Host imap.mailbox.org
 Port 993
-User "cyphar@mailbox.org"
+User "cyphar@cyphar.com"
 PassCmd +"keepassxc-helper 'Personal/Email/Mailbox cyphar'"
 SSLType IMAPS
 SSLVersions TLSv1.2
@@ -31,23 +30,10 @@ SSLVersions TLSv1.2
 IMAPStore mailbox-remote
 Account mailbox
 
-# Gmail configuration.
-IMAPAccount gmail
-Host imap.gmail.com
-Port 993
-User "cyphar@cyphar.com"
-PassCmd +"keepassxc-helper -a 'MuttPassword' 'Personal/Email/Gmail cyphar'"
-SSLType IMAPS
-SSLVersions TLSv1.2
-
-IMAPStore gmail-remote
-Account gmail
-
-# At the moment I'm still using gmail.
 Channel personal
-Master :gmail-remote:
-#Master :mailbox-remote:
+Master :mailbox-remote:
 Slave :personal-local:
 Sync All
+Expunge Both
 Create Both
 CopyArrivalDate yes

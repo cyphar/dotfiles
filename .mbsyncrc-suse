@@ -34,5 +34,6 @@ Channel suse
 Master :susede-remote:
 Slave :suse-local:
 Sync All
+Expunge Both
 Create Both
 CopyArrivalDate yes
