@@ -42,7 +42,8 @@ bindsym $mod+Shift+Return exec "$term -e '$bin/zsh-raw'"
 
 # Lock the i3 session.
 bindsym $mod+p exec "$bin/lockmyi3"
-bindsym $mod+Shift+p exec "$bin/lockmyi3 -- -d"
+# Switch away from the i3 session (and lock it too).
+bindsym $mod+x exec "$bin/lockmyi3 -g"
 
 # Kill focused window.
 bindsym $mod+Shift+q kill

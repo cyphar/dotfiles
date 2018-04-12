@@ -15,16 +15,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+set -e -o pipefail
+
 # Output help page.
 function _help() {
 cat <<EOH
-usage: lockmyi3 [-h] [-p <size=20>] [options]...
+usage: lockmyi3 [-gh] [-p <size=20>] [options]...
 
 Locks your screen with i3lock, using a pixelated version of the current screen
 as the background. The semantics of the "current screen" are borrowed from
 ImageMagick's 'import -screen -window root' options.
 
 Options:
+  -g           -- Switch-to-greeter after screen lock.
   -p <size=20> -- Set the the size of each blocky pixel to <size> (in pixels).
   options      -- Options that are passed through to i3lock.
 EOH
@@ -37,14 +40,19 @@ function _calc() {
 
 # Get the options.
 local __block_size=20
-while getopts "p:h" __opt; do
+local __switch_to_greeter=
+while getopts "ghp:" __opt; do
 	case "$__opt" in
-		(p)
-			__block_size="${OPTARG}"
+		(g)
+			__switch_to_greeter=1
 			;;
 		(h)
 			_help
-			exit 0;;
+			exit 0
+			;;
+		(p)
+			__block_size="${OPTARG}"
+			;;
 	esac
 done
 
@@ -57,11 +65,11 @@ read __screen_x __screen_y <<<$(xrandr -q | awk '
 $1 == "Screen" {
 	# Line is of the form:
 	#   Screen 0: minimum 8 x 8, current 3840 x 1080, maximum 32767 x 32767
-	for(i = 1; i <= NF && $i != "current"; i++)
+	for (i = 1; i <= NF && $i != "current"; i++)
 		;
 
 	# We did not find "current".
-	if($i != "current")
+	if ($i != "current")
 		exit 1;
 
 	# Output the dimensions (there may be a trailing comma).
@@ -82,3 +90,10 @@ i3lock $* -i \
 	          -scale '!'"${__reduced_x}x${__reduced_y}" \
 	          -scale '!'"${__screen_x}x${__screen_y}" \
 	          png:-)
+
+# Switch greeters if we have been asked to. There isn't really a nice way of
+# doing this that is agnostic to DM (since gdmflexiserver is GNOME specific).
+# So we just use dm-tool -- screw it. Note that dm-tool is *not* secure (the
+# tty is just switched -- your old session is trivially accessible) and you
+# must always pair it with i3lock.
+[[ "$__switch_to_greeter" ]] && dm-tool switch-to-greeter
