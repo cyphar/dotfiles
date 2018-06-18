@@ -17,7 +17,7 @@
 # muttrc-suse -- configuration for <asarai@suse.com> with alias smutt.
 
 set my_profile="suse"
-set pgp_sign_as="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
+set pgp_default_key="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
 source $HOME/.mutt/muttrc
 
 set my_name="asarai"

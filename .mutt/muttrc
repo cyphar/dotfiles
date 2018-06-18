@@ -52,7 +52,6 @@ set crypt_autosign
 set postpone_encrypt
 set pgp_auto_decode
 set pgp_self_encrypt
-#set pgp_self_encrypt_as=$pgp_sign_as
 set nosmime_is_default
 
 # Show threads.
