@@ -51,6 +51,6 @@ packages=(
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
-	"mutt" "zenity" "isync"
+	"neomutt" "zenity" "isync"
 )
 sudo zypper install "${packages[@]}"

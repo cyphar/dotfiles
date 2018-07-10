@@ -42,7 +42,7 @@ set ssl_force_tls
 set ssl_starttls
 
 # Disable bad crypto. Anything pre-TLSv1 is broken.
-set nossl_use_sslv2
+ifdef ssl_use_sslv2 'set nossl_use_sslv2' # No longer included in 1.10.0.
 set nossl_use_sslv3
 
 # PGP-related options.
@@ -64,7 +64,7 @@ set compose_format=" [$my_profile] > Compose %> < %l <  "
 set pager_format=" [$my_profile] > %.20n > %s %>  [%Z] < %P %c <  "
 set index_format="%Z %{$my_date_format} %-20.20n (%?l?%4l&%4c?) %s"
 set status_chars="-*%A"
-set status_format=" %r$my_profile%r > %f >%?u? +%u(%n+%o)?%?d? -%d?%?p? ^%p? >%?t? *%t \\>? %>  < %s/%S < %P %?M?%M/?%m <  "
+set status_format=" %r$my_profile%r > %f >%?u? %u(%n+%o)?%?d? -%d?%?p? ^%p?%?t? *%t? > %>  < %s/%S < %P %?M?%M/?%m <  "
 
 # Include my default colour scheme. Accents (status and indicator) will be
 # overridden by the individual muttrc-$box configurations.
