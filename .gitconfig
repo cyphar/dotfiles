@@ -24,7 +24,7 @@
 	abbrev = 12
 
 	# Whitespace.
-	whitespace=trailing-space,space-before-tab
+	whitespace = trailing-space,space-before-tab
 
 [user]
 	# XXX: Change this when you're using these configs.
@@ -90,6 +90,9 @@
 	lla = !"lla() { git log --pretty=format:'%aN <%ae>' $1 | sort | uniq -c | sort -k1 -nr; }; lla"
 	llc = !"llc() { git log --pretty=format:'%cN <%ce>' $1 | sort | uniq -c | sort -k1 -nr; }; llc"
 
+	# Email wrapper.
+	se = "send-email --no-format-patch --no-chain-reply-to"
+
 [color]
 	# Enable colours because we're not in the 80s anymore, Toto.
 	ui = true
@@ -131,3 +134,13 @@
 [apply]
 	# Make sure whitespace is clean when we commit it.
 	whitespace = fix
+
+[sendemail]
+	identity = cyphar
+
+[sendemail.cyphar]
+	smtpDomain = "[redacted]"
+	smtpUser = cyphar@cyphar.com
+	smtpServer = smtp.mailbox.org
+	smtpServerPort = 465
+	smtpEncryption = tls
