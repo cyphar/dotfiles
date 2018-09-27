@@ -15,7 +15,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 MaildirStore personal-local
-Path "~/mail/personal"
+Subfolders Verbatim
+Path "~/mail/personal/"
 Inbox "~/mail/personal/inbox"
 Trash "trash"
 
@@ -30,10 +31,21 @@ SSLVersions TLSv1.2
 IMAPStore mailbox-remote
 Account mailbox
 
-Channel personal
+Channel personal-all
 Master :mailbox-remote:
 Slave :personal-local:
 Sync All
 Expunge Both
 Create Both
 CopyArrivalDate yes
+
+Channel personal-sent
+Master :mailbox-remote:Sent
+Slave :personal-local:sent
+Sync All
+Expunge Both
+Create Both
+CopyArrivalDate yes
+
+Group personal
+Channels personal-all personal-sent
