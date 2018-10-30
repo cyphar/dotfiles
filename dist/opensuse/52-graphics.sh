@@ -27,4 +27,4 @@ sudo sed -i 's|^DISPLAYMANAGER=.*|DISPLAYMANAGER="lightdm"|g' /etc/sysconfig/dis
 # Set up our wallpaper. By default we swap from the openSUSE one, but to avoid
 # copyright problems I don't include any given wallpaper here.
 sudo mkdir -p /usr/share/wallpapers
-sudo sed -i 's|^#?background=.*|background=/usr/share/wallpapers/default.jpg' /etc/lightdm/lightdm-gtk-greeter.conf
+sudo sed -i 's|^#?background=.*|background=/usr/share/wallpapers/default.jpg|g' /etc/lightdm/lightdm-gtk-greeter.conf
