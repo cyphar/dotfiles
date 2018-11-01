@@ -116,10 +116,11 @@ setopt autocd
 
 # Mutt mailboxes.
 function _mutt_wrapper() {
-	mkdir -p "$HOME/mail/$1"
-	mbsync-helper -c "$HOME/.mbsyncrc-$1" || :
-	neomutt -F "$HOME/.mutt/muttrc-$1"
-	kill -9 "$(cat "$HOME/.mbsyncrc-$1.lock")"
+	box="$1" && shift
+	mkdir -p "$HOME/mail/$box"
+	mbsync-helper -c "$HOME/.mbsyncrc-$box" || :
+	neomutt -F "$HOME/.mutt/muttrc-$box" "$@"
+	kill -9 "$(cat "$HOME/.mbsyncrc-$box.lock")"
 }
 alias pmutt="_mutt_wrapper personal"
 alias smutt="_mutt_wrapper suse"
