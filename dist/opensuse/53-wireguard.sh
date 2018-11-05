@@ -1,6 +1,6 @@
 #!/bin/bash
 # dotfiles: collection of my personal dotfiles [code]
-# Copyright (C) 2017-2018 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2018 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,14 +17,20 @@
 
 set -e
 
-# Enable graphics.
-sudo systemctl enable display-manager
-sudo systemctl set-default graphical
+echo ">> set up wireguard [deku]"
+echo "wireguard" >/etc/modules-load.d/99-wireguard.conf
+[ -f /etc/wireguard/wg-deku.conf ] && exit 0
 
-# Set lightdm as the default displaymanager.
-sudo sed -i 's|^DISPLAYMANAGER=.*|DISPLAYMANAGER="lightdm"|g' /etc/sysconfig/displaymanager
+PRIVATE_KEY="$(wg genkey)"
+PUBLIC_KEY="$(wg pubkey <<<"$PRIVATE_KEY")"
 
-# Set up our wallpaper. By default we swap from the openSUSE one, but to avoid
-# copyright problems I don't include any given wallpaper here.
-sudo mkdir -p /usr/share/wallpapers
-sudo sed -i 's|^#?background=.*|background=/usr/share/wallpapers/default.jpg|g' /etc/lightdm/lightdm-gtk-greeter.conf
+cat > /etc/wireguard/wg-deku.conf <<EOF
+[Interface]
+PrivateKey = $PRIVATE_KEY
+
+[Peer]
+PublicKey = Sg0C5MLDoFN3h5peMOoK+W5zK5hXEVtH8BIPX9N7/1A=
+AllowedIPs = 0.0.0.0/0
+Endpoint = dot.cyphar.com:51820
+EOF
+echo ">> wireguard pubkey [register with deku]: $PUBLIC_KEY"

@@ -27,9 +27,10 @@ sudo zypper mr -p 98 repo-debug repo-oss repo-source repo-update
 
 # Set of repos needed for a base system.
 echo ">> zypper addrepo [repos]"
-zypper repos vndr-vlc    &>/dev/null || sudo zypper addrepo -f "http://download.videolan.org/pub/vlc/SuSE/${OPENSUSE_DISTRO#openSUSE_}" vndr-vlc
-zypper repos obs-termite &>/dev/null || sudo zypper addrepo -f "obs://home:hurricanehernandez:termite" obs-termite
-zypper repos obs-fs      &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
+zypper repos vndr-vlc      &>/dev/null || sudo zypper addrepo -f -p 97 "http://download.videolan.org/pub/vlc/SuSE/${OPENSUSE_DISTRO#openSUSE_}" vndr-vlc
+zypper repos obs-termite   &>/dev/null || sudo zypper addrepo -f "obs://home:hurricanehernandez:termite" obs-termite
+zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
+zypper repos obs-wireguard &>/dev/null || sudo zypper addrepo -f "obs://network:vpn:wireguard" obs-wireguard
 sudo zypper ref
 
 # Set of packages we need for a base system.
@@ -40,7 +41,7 @@ packages=(
 	"mosh" "rsync" "ranger" "alsa-utils" "weechat" "make" "exfat-utils"
 	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool"
 	# Container-related packages.
-	"skopeo" "umoci" "runc"
+	"skopeo" "umoci" "runc" "docker"
 	# Basic graphics stack and environment.
 	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "compton"
@@ -48,6 +49,8 @@ packages=(
 	"xbacklight"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
+	# WireGuard
+	"wireguard-kmp-default" "wireguard-tools"
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
