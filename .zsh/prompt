@@ -48,21 +48,21 @@ function __generate_prompt() {
 	# that case `git` is faster and easier.
 	function __git_info() {
 		function __find_git() {
-			local __current="$1"
+			local current="$1"
 
 			# Search up the directory tree for '.git'.
-			while [[ "${__current}" != "/" ]]; do
-				if [[ -d "${__current}/.git" ]]; then
-					echo "${__current}/.git"
+			while [[ "${current}" != "/" ]]; do
+				if [[ -d "${current}/.git" ]]; then
+					echo "${current}/.git"
 					return 0
 				fi
 
-				__current="$(dirname -- "${__current}")"
+				current="$(dirname -- "${current}")"
 			done
 
 			# Check for '/.git'.
-			if [[ -d "${__current}/.git" ]]; then
-				echo "${__current}/.git"
+			if [[ -d "${current}/.git" ]]; then
+				echo "${current}/.git"
 				return 0
 			fi
 
@@ -71,38 +71,38 @@ function __generate_prompt() {
 
 		# Get the current branch ref from '.git/HEAD' and '.git/refs/heads'.
 		function __get_branch() {
-			local __gitdir="$1"
+			local gitdir="$1"
 
-			if (grep -v "^ref: refs/heads/.*$" -- "${__gitdir}/HEAD" &>/dev/null); then
+			if (grep -v "^ref: refs/heads/.*$" -- "${gitdir}/HEAD" &>/dev/null); then
 				# Detached state -- no branch name.
 				return 1
 			fi
 
 			# Get the ref path.
-			local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
+			local refbranch="$(cut -d' ' -f2 -- "${gitdir}/HEAD")"
 
-			# Yield the actual branch name from the __refpath.
-			echo "${__refpath#refs/heads/}"
+			# Yield the actual branch name from the refbranch.
+			echo "${refbranch#refs/heads/}"
 			return 0
 		}
 
 		# Get short commit hash.
 		function __get_short_ref() {
-			local __gitdir="$1"
-			local __ref
+			local gitdir="$1"
+			local refhash
 
 			# Detached state -- ref is in 'ref'.
-			if ! (__get_branch "${__gitdir}" &>/dev/null); then
-				__ref="$(< "${__gitdir}/HEAD")"
+			if ! (__get_branch "${gitdir}" &>/dev/null); then
+				refhash="$(< "${gitdir}/HEAD")"
 			else
 				# Get the ref path.
-				local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
+				local refbranch="$(cut -d' ' -f2 -- "${gitdir}/HEAD")"
 
-				# Check that the __refpath exists.
-				if ! [[ -f "${__gitdir}/${__refpath}" ]]; then
+				# Check that the refbranch exists.
+				if ! [[ -f "${gitdir}/${refbranch}" ]]; then
 					# If not, we might be on a commit in a packed ref.
 					# Fallback to `git` in this case -- we can't do better.
-					__ref="$(git rev-parse --verify HEAD)"
+					refhash="$(git rev-parse --verify HEAD)"
 
 					# We don't have a commit.
 					if [[ "$?" != 0 ]]; then
@@ -110,14 +110,14 @@ function __generate_prompt() {
 					fi
 				else
 					# Get the commit hash from the ref path.
-					__ref="$(< "${__gitdir}/${__refpath}")"
+					refhash="$(< "${gitdir}/${refbranch}")"
 				fi
 			fi
 
 			# Shorten the ref to 12 characters.
 			# Why 12? Because that's what the kernel tells us is good.
 			# In Linus we trust.
-			echo "$__ref[1,12]"
+			echo "$refhash[1,12]"
 			return 0
 		}
 
@@ -125,29 +125,29 @@ function __generate_prompt() {
 		# things like symlinks into subdirectories of git repositories (because
 		# `pwd` lies to you). Fix this by using the `pwd` command which isn't
 		# magical.
-		local __pwd="$(command pwd)"
+		local real_pwd="$(command pwd)"
 
-		if (__find_git "${__pwd}" &>/dev/null); then
+		if (__find_git "${real_pwd}" &>/dev/null); then
 			# Get the closest git directory.
-			local __gitdir="$(__find_git "${__pwd}")"
+			local gitdir="$(__find_git "${real_pwd}")"
 
 			# Figure out if in detached state.
-			local __info
-			if (__get_branch "${__gitdir}" &>/dev/null); then
-				__info="%{$fg_bold[magenta]%}$(__get_branch "${__gitdir}")%{$reset_color%}"
+			local refinfo
+			if (__get_branch "${gitdir}" &>/dev/null); then
+				refinfo="%{$fg_bold[magenta]%}$(__get_branch "${gitdir}")%{$reset_color%}"
 			else
-				__info="%{$fg_bold[red]%}{detached}%{$reset_color%}"
+				refinfo="%{$fg_bold[red]%}{detached}%{$reset_color%}"
 			fi
 
 			# Figure out short ref.
-			local __ref
-			if (__get_short_ref "${__gitdir}" &>/dev/null); then
-				__ref="%{$fg[magenta]%}$(__get_short_ref "${__gitdir}")%{$reset_color%}"
+			local refhash
+			if (__get_short_ref "${gitdir}" &>/dev/null); then
+				refhash="%{$fg[magenta]%}$(__get_short_ref "${gitdir}")%{$reset_color%}"
 			else
-				__ref="%{$fg[red]%}000000000000%{$reset_color%}"
+				refhash="%{$fg[red]%}000000000000%{$reset_color%}"
 			fi
 
-			echo " git:(${__info}:${__ref})"
+			echo " git:(${refinfo}:${refhash})"
 		fi
 	}
 
@@ -157,21 +157,21 @@ function __generate_prompt() {
 		# We don't implement parsing (I don't clone big hg project often enough
 		# to care).
 		function __find_hg() {
-			local __current="$1"
+			local current="$1"
 
 			# Search up the directory tree for '.git'.
-			while [[ "${__current}" != "/" ]]; do
-				if [[ -d "${__current}/.hg" ]]; then
-					echo "${__current}/.hg"
+			while [[ "${current}" != "/" ]]; do
+				if [[ -d "${current}/.hg" ]]; then
+					echo "${current}/.hg"
 					return 0
 				fi
 
-				__current="$(dirname -- "${__current}")"
+				current="$(dirname -- "${current}")"
 			done
 
 			# Check for '/.hg'.
-			if [[ -d "${__current}/.hg" ]]; then
-				echo "${__current}/.hg"
+			if [[ -d "${current}/.hg" ]]; then
+				echo "${current}/.hg"
 				return 0
 			fi
 
@@ -182,27 +182,27 @@ function __generate_prompt() {
 		# things like symlinks into subdirectories of git repositories (because
 		# `pwd` lies to you). Fix this by using the `pwd` command which isn't
 		# magical.
-		local __pwd="$(command pwd)"
+		local real_pwd="$(command pwd)"
 
-		if (__find_hg "${__pwd}" && hg status &>/dev/null); then
-			local __branch="$(hg branch)"
-			local __ref="$(hg id | cut -d' ' -f1)"
+		if (__find_hg "${real_pwd}" && hg status &>/dev/null); then
+			local refbranch="$(hg branch)"
+			local refhash="$(hg id | cut -d' ' -f1)"
 
-			echo " hg:(%{$fg_bold[magenta]%}${__branch}%{$reset_color%}:%{$fg[magenta]%}${__ref}%{$reset_color%})"
+			echo " hg:(%{$fg_bold[magenta]%}${refbranch}%{$reset_color%}:%{$fg[magenta]%}${refhash}%{$reset_color%})"
 		fi
 	}
 
 	# Get the last part of the given path, with tilde replacement.
 	function __nice_path() {
-		local __path="$1"
+		local current_path="$1"
 
-		if [[ "${__path}" == "${HOME}" ]]; then
-			__path="~"
+		if [[ "${current_path}" == "${HOME}" ]]; then
+			current_path="~"
 		else
-			__path="$(basename ${__path})"
+			current_path="$(basename "${current_path}")"
 		fi
 
-		echo "${__path}"
+		echo "${current_path}"
 	}
 
 	# Path information.
@@ -210,14 +210,14 @@ function __generate_prompt() {
 
 	# Return prompt based on exit code of last command.
 	function __ret_prompt() {
-		local __exit_code="$1"
-		local __prompt="%#"
+		local exit_code="$1"
+		local prompt="%#"
 
-		if [[ "${__exit_code}" != "0" ]]; then
-			__prompt="%{$fg_bold[red]%}${__prompt}%{$reset_color%}"
+		if [[ "${exit_code}" != "0" ]]; then
+			prompt="%{$fg_bold[red]%}${prompt}%{$reset_color%}"
 		fi
 
-		echo "${__prompt} "
+		echo "${prompt} "
 	}
 	ret_prompt="$(__ret_prompt "${exit_code}")"
 
