@@ -82,7 +82,7 @@ function __generate_prompt() {
 			local __refpath="$(cut -d' ' -f2 -- "${__gitdir}/HEAD")"
 
 			# Yield the actual branch name from the __refpath.
-			echo "$(basename -- "${__refpath}")"
+			echo "${__refpath#refs/heads/}"
 			return 0
 		}
 
