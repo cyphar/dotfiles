@@ -17,6 +17,9 @@
 
 set -e -o pipefail
 
+lockimg="$(mktemp --tmpdir lockymi3-img.XXXXXX.png)"
+trap "rm -f $lockimg" EXIT
+
 # Output help page.
 function _help() {
 cat <<EOH
@@ -81,15 +84,14 @@ $1 == "Screen" {
 local __reduced_x=$(_calc "${__screen_x}/${__block_size}")
 local __reduced_y=$(_calc "${__screen_y}/${__block_size}")
 
-# Actually do the locking (generate the image without temporary files to not
-# clutter the filesystem). Since `convert -scale` doesn't do blurring, scaling
+# Actually do the locking. Since `convert -scale` doesn't do blurring, scaling
 # down and then back up is an efficient method of producing a pixelated image.
-i3lock $* -i \
-	<(import -screen -window root -silent png:- | \
-	  convert png:- \
-	          -scale '!'"${__reduced_x}x${__reduced_y}" \
-	          -scale '!'"${__screen_x}x${__screen_y}" \
-	          png:-)
+import -screen -window root -silent png:- | \
+	convert png:- \
+		-scale '!'"${__reduced_x}x${__reduced_y}" \
+		-scale '!'"${__screen_x}x${__screen_y}" \
+		"png:$lockimg"
+i3lock $* -i "$lockimg"
 
 # Switch greeters if we have been asked to. There isn't really a nice way of
 # doing this that is agnostic to DM (since gdmflexiserver is GNOME specific).
