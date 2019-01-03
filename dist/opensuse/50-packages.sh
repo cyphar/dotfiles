@@ -31,9 +31,12 @@ zypper repos vndr-vlc      &>/dev/null || sudo zypper addrepo -f -p 97 "http://d
 zypper repos obs-termite   &>/dev/null || sudo zypper addrepo -f "obs://home:hurricanehernandez:termite" obs-termite
 zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
 zypper repos obs-wireguard &>/dev/null || sudo zypper addrepo -f "obs://network:vpn:wireguard" obs-wireguard
+zypper repos obs-hardware  &>/dev/null || sudo zypper addrepo -f "obs://hardware" obs-hardware
 sudo zypper ref
 
 # Set of packages we need for a base system.
+# TODO: Make it possible to specify whether it's a workstation or server.
+
 echo ">> zypper install [packages]"
 packages=(
 	# Basic cli tools necessary.
@@ -55,5 +58,7 @@ packages=(
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
 	"neomutt" "zenity" "isync"
+	# Android.
+	"android-tools"
 )
 sudo zypper install "${packages[@]}"
