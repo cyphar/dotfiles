@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e
+set -Eeuo pipefail
 
 # Set our shell to be zsh.
 sudo usermod -s/bin/zsh $USER

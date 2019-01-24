@@ -15,11 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e
+set -Eeuo pipefail
 
 echo ">> set up wireguard [deku]"
-echo "wireguard" >/etc/modules-load.d/99-wireguard.conf
-[ -f /etc/wireguard/wg-deku.conf ] && exit 0
+echo "wireguard" | sudo tee /etc/modules-load.d/99-wireguard.conf >/dev/null
+
+if ! [ -f /etc/wireguard/wg-deku.conf ]
+then
 
 PRIVATE_KEY="$(wg genkey)"
 PUBLIC_KEY="$(wg pubkey <<<"$PRIVATE_KEY")"
@@ -34,3 +36,5 @@ AllowedIPs = 0.0.0.0/0
 Endpoint = dot.cyphar.com:51820
 EOF
 echo ">> wireguard pubkey [register with deku]: $PUBLIC_KEY"
+
+fi

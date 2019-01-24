@@ -15,9 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e
+set -Eeuo pipefail
 
 echo ">> configure timezone and ntpd"
-timedatectl set-timezone 'Australia/Sydney'
-timedatectl set-local-rtc false
-timedatectl set-ntp true
+sudo timedatectl set-timezone 'Australia/Sydney'
+sudo timedatectl set-local-rtc false
+sudo timedatectl set-ntp true

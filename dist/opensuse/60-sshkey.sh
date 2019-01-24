@@ -15,5 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+set -Eeuo pipefail
+
 # Generate a new ed25519 key if one isn't already available.
 [[ -f "$HOME/.ssh/id_ed25519" ]] || ssh-keygen -t ed25519
