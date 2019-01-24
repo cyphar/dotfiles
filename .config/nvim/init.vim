@@ -81,6 +81,9 @@ set autoread
 set noerrorbells
 set nowrap
 
+" Put swap files inside the same directory as the file.
+set directory=.
+
 " Line numbering.
 set number relativenumber
 augroup NumberToggle
