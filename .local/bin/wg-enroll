@@ -1,0 +1,64 @@
+#!/bin/zsh
+# wg-enroll: enroll a new wireguard client
+# Copyright (C) 2019 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+set -Eeuo pipefail
+
+function bail() {
+        echo "$@" >&2
+        exit 2
+}
+
+# Configurable parts.
+NETWORKID="${NETWORKID:-43}"
+CONFIG="${CONFIG:-/etc/wireguard/wg-zion.conf}"
+
+# Not exactly pretty...
+local CLIENT_SECKEY="$(wg genkey)"
+local CLIENT_PUBKEY="$(wg pubkey <<<"$CLIENT_SECKEY")"
+local PRESHAREDKEY="$(wg genpsk)"
+
+[[ -n "$CLIENT_PUBKEY" ]] || bail "ERROR: Failed to generate public key using $CLIENT_SECKEY."
+
+# TODO: Parse TOML properly...
+local NEW_DEVICEID="$(($(grep "\[Peer\]" "$CONFIG" | wc -l) + 1))"
+local SERVER_PUBKEY="$(grep "PrivateKey = " "$CONFIG" | sed -E 's/^[^=]*= (.*)$/\1/' | wg pubkey)"
+
+# Add to configuration.
+(
+cat "$CONFIG"
+cat <<EOF
+
+# device-$NEW_DEVICEID.cyphar.com
+[Peer]
+PublicKey = $(wg pubkey <<<"$CLIENT_SECKEY")
+PreSharedKey = $PRESHAREDKEY
+AllowedIPs = 10.$NETWORKID.$NEW_DEVICEID.1/32
+EOF
+) | sponge "$CONFIG"
+
+# Generate QR code for new device.
+qrencode -t ansiutf8 <<EOF
+[Interface]
+Address = 10.$NETWORKID.$NEW_DEVICEID.1/16
+PrivateKey = $CLIENT_SECKEY
+
+[Peer]
+Endpoint = zion.node.cyphar.com:51820
+PublicKey = $SERVER_PUBKEY
+PreSharedKey = $PRESHAREDKEY
+AllowedIPs = 0.0.0.0/0
+EOF
