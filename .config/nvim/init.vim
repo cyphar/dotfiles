@@ -81,6 +81,9 @@ set autoread
 set noerrorbells
 set nowrap
 
+" SENTENCE DOUBLE-SPACING SHOULDN'T BE THE DEFAULT.
+set nojoinspaces
+
 " Put swap files inside the same directory as the file.
 set directory=.
 
