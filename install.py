@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # dotfiles: collection of my personal dotfiles [code]
-# Copyright (C) 2012-2018 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,12 +30,6 @@ NO = "no"
 is_yes = lambda s: s.lower() in {YES, "y", "yes", "true"}
 is_no  = lambda s: s.lower() in {NO, "n", "no", "false"}
 
-# Install options, modified by command-line flags.
-PREFIX = os.path.expanduser("~")
-CLOBBER = True
-FRAGILE = False
-HOOK_DIR = "hooks"
-
 # Hook constants.
 HOOK_BEFORE = "before"
 HOOK_AFTER = "after"
@@ -61,48 +55,48 @@ OPTIONS = {
 
 # Stdio helpers.
 
-def _warn(*args, **kwargs):
+def warn_user(*args, **kwargs):
 	print("[!]", *args, **kwargs)
 
-def _info(*args, **kwargs):
+def info_user(*args, **kwargs):
 	print("[*]", *args, **kwargs)
 
-def _ask(prompt, **kwargs):
+def ask_user(prompt, **kwargs):
 	return input("[?] %s " % (prompt,), **kwargs) or ""
 
 
 # File helpers.
 
-def _exists(path):
+def path_exists(path):
 	try:
 		os.stat(path)
 	except FileNotFoundError:
 		return False
 	return True
 
-def _sanitise(path):
+def path_sanitise(path):
 	path = os.path.join(path, "")
 	path = os.path.dirname(path)
 	return path
 
 # Returns the last path component.
-def _safe_basename(path):
-	path = _sanitise(path)
+def safe_basename(path):
+	path = path_sanitise(path)
 	path = os.path.basename(path)
 	return path
 
 # Returns the path minus the last component.
-def _safe_dirname(path):
-	path = _sanitise(path)
+def safe_dirname(path):
+	path = path_sanitise(path)
 	path = os.path.dirname(path)
 	return path
 
 # Makes the set of directories, ignoring permission issues.
-def _makedirs(path, *args, **kwargs):
-	if not _exists(path):
+def makedirs(path, *args, **kwargs):
+	if not path_exists(path):
 		os.makedirs(path, *args, **kwargs)
 
-def _copy(source, target, clobber=True):
+def path_copy(source, target, clobber=True):
 	"""
 	Copies source (regardless of inode type) to target.
 	Where target is the directory the source will be copied to.
@@ -113,23 +107,23 @@ def _copy(source, target, clobber=True):
 	st_src = os.stat(source)
 
 	# Generate target path.
-	basename = _safe_basename(source)
+	basename = safe_basename(source)
 	target_path = os.path.join(target, basename)
 
 	# Check if we are about to clobber the destination.
-	if _exists(target_path) and not clobber:
-		_warn("Target path '%s' already exists! Skipping." % (target_path,))
+	if path_exists(target_path) and not clobber:
+		warn_user("Target path '%s' already exists! Skipping." % (target_path,))
 
 	# Directories are a magic case.
 	if stat.S_ISDIR(st_src.st_mode):
 		# Make an empty slot for the children.
-		if not _exists(target_path):
+		if not path_exists(target_path):
 			os.mkdir(target_path)
 
 		# Recursively copy all of the files.
 		for child in os.listdir(source):
 			child = os.path.join(source, child)
-			_copy(child, target_path)
+			path_copy(child, target_path)
 
 	# Regular files (and symlinks).
 	else:
@@ -142,46 +136,42 @@ def _copy(source, target, clobber=True):
 
 # Main install script and helpers.
 
-def _run_script(script):
-	# Ignore non-existant scripts.
-	if not _exists(script):
-		return 0
-
-	# You trust me, right? :P
-	return subprocess.call([script])
-
-def _run_hook(ctx, hook):
-	script = os.path.join(HOOK_DIR, ctx, hook)
-	ret = _run_script(script)
-	if ret != 0:
-		_warn("%s hook for '%s' returned with non-zero error code: %d" % (ctx.title(), hook, ret))
-	return ret
-
-def _response_bool(response, default=True):
+def response_bool(response, default=True):
 	if is_yes(response):
 		return True
 	elif is_no(response):
 		return False
+	elif not response:
+		return default
 
-	return default
+def run_script(script):
+	# Ignore non-existant scripts.
+	if not path_exists(script):
+		return 0
+	return subprocess.call([script])
 
-def _install(target, files):
-	# Run before hook.
-	if _run_hook(HOOK_BEFORE, target):
+def run_hook(config, ctx, hook):
+	script = os.path.join(config.hook_dir, ctx, hook)
+	ret = run_script(script)
+	if ret != 0:
+		warn_user("%s hook for '%s' returned with non-zero error code: %d" % (ctx.title(), hook, ret))
+	return ret
+
+def do_install(config, target, files):
+	if run_hook(config, HOOK_BEFORE, target):
 		return 1
 
 	for _file in files:
 		# Deal with leading directories in path.
-		prefix = os.path.join(PREFIX, _safe_dirname(_file))
-		_makedirs(prefix, exist_ok=True)
+		prefix = os.path.join(config.prefix, safe_dirname(_file))
+		makedirs(prefix, exist_ok=True)
 
-		# Copy the file to its new PREFIX.
-		_copy(_file, prefix, clobber=CLOBBER)
+		# Copy the file to its new prefix.
+		path_copy(_file, prefix, clobber=config.clobber)
 
-	# Run after hook.
-	return _run_hook(HOOK_AFTER, target)
+	return run_hook(config, HOOK_AFTER, target)
 
-def main():
+def main(config):
 	# Chosen list.
 	chosen = []
 
@@ -191,8 +181,10 @@ def main():
 		default, files = value
 
 		# Ask if they wish to install the program.
-		response = _ask("Do you wish to install '%s' [%s]?" % (option, default))
-		install = _response_bool(response, default=_response_bool(default))
+		install = None
+		while install is None:
+			response = ask_user("Do you wish to install '%s' [%s]?" % (option, default))
+			install = response_bool(response, default=response_bool(default))
 
 		# Add to the chosen list if it works.
 		if install:
@@ -202,8 +194,8 @@ def main():
 	if not chosen:
 		return 0
 
-	# Make sure that the PREFIX path is real.
-	_makedirs(PREFIX, exist_ok=True)
+	# Make sure that the prefix path is real.
+	makedirs(config.prefix, exist_ok=True)
 
 	# We want to return a non-zero error code in case of any error, but still
 	# blindly blunder on installing orthogonal components.
@@ -212,56 +204,50 @@ def main():
 	# Actually install the buggers.
 	for choice in chosen:
 		# Print information to the user.
-		_info("Installing '%s'." % (choice,))
+		info_user("Installing '%s'." % (choice,))
 
 		# Install the files.
 		_, files = OPTIONS[choice]
-		retval |= _install(choice, files)
+		retval |= do_install(config, choice, files)
 
-		if FRAGILE and retval:
-			_warn("Cowardly refusing to continue installation, because '%s' failed." % (choice,))
+		if config.fragile and retval:
+			warn_user("Cowardly refusing to continue installation, because '%s' failed." % (choice,))
 			return retval
 
 	# Run setup scripts for the distribution.
-	default = NO
-	response = _ask("Do you wish to run distribution-specific scripts [%s]?" % (default,))
-	if _response_bool(response, default=_response_bool(default)):
-		_info("Executing distribution scripts.")
-		retval |= _run_script("dist/install.sh")
+	install_dist = None
+	while install_dist is None:
+		default = NO
+		response = ask_user("Do you wish to run distribution-specific scripts [%s]?" % (default,))
+		install_dist = response_bool(response, default=response_bool(default))
+	if install_dist:
+		info_user("Executing distribution scripts.")
+		retval |= run_script("dist/install.sh")
+
+	# All done!
 	return retval
 
 if __name__ == "__main__":
 	def __atstart__():
-		# Something, something scoping?
-		global PREFIX
-		global CLOBBER
-		global FRAGILE
-		global HOOK_DIR
-
 		# Set up argument parser.
 		parser = argparse.ArgumentParser()
-		parser.add_argument("--prefix", dest="prefix", type=str, default=PREFIX)
-		parser.add_argument("--hook-dir", dest="hook_dir", type=str, default=HOOK_DIR)
-		parser.add_argument("-nc", "--no-clobber", dest="clobber", action="store_const", const=False, default=CLOBBER)
-		parser.add_argument("-c", "--clobber", dest="clobber", action="store_const", const=True, default=CLOBBER)
-		parser.add_argument("-nf", "--no-fragile", dest="fragile", action="store_const", const=False, default=FRAGILE)
-		parser.add_argument("-f", "--fragile", dest="fragile", action="store_const", const=True, default=FRAGILE)
+		parser.add_argument("--install", dest="install", type=str, default=None)
+		parser.add_argument("--prefix", dest="prefix", type=str, default=os.path.expanduser("~"))
+		parser.add_argument("--hook-dir", dest="hook_dir", type=str, default="hooks")
+		# Boolean setting for clobber.
+		parser.add_argument("-nc", "--no-clobber", dest="clobber", action="store_const", const=False, default=True)
+		parser.add_argument("-c", "--clobber", dest="clobber", action="store_const", const=True, default=True)
+		# Boolean setting for fragile.
+		parser.add_argument("-nf", "--no-fragile", dest="fragile", action="store_const", const=False, default=False)
+		parser.add_argument("-f", "--fragile", dest="fragile", action="store_const", const=True, default=False)
 
 		# Get arguments.
 		args = parser.parse_args()
+		# Fix up options.
+		args.prefix = os.path.expanduser(args.prefix)
 
-		# Change options.
-		PREFIX = os.path.expanduser(args.prefix)
-		CLOBBER = args.clobber
-		FRAGILE = args.fragile
-		HOOK_DIR = args.hook_dir
+		# XXX: Should I add a banner saying "read the code before you execute it"?
 
-	# Run wrapper and clean up.
+		# Run main program.
+		sys.exit(main(args))
 	__atstart__()
-	del __atstart__
-
-	# XXX: Should I add a banner saying "read the code before you execute it"?
-
-	# Run main program.
-	retval = main()
-	sys.exit(retval)
