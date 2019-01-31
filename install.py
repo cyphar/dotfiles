@@ -51,6 +51,7 @@ OPTIONS = {
 	"keepassxc": (YES, [".config/keepassxc/"]),
 	"mutt":      (YES, [".mutt/"]),
 	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
+	"ssh":       (YES, [".ssh/config"]),
 }
 
 # Stdio helpers.
