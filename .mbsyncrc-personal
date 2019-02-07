@@ -31,7 +31,7 @@ SSLVersions TLSv1.2
 IMAPStore mailbox-remote
 Account mailbox
 
-Channel personal-all
+Channel personal-inbox
 Master :mailbox-remote:
 Slave :personal-local:
 Sync All
@@ -48,4 +48,4 @@ Create Both
 CopyArrivalDate yes
 
 Group personal
-Channels personal-all personal-sent
+Channels personal-inbox personal-sent
