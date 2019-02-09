@@ -2,7 +2,6 @@
 " Maintainer:   Honza Pokorny <http://honza.ca>
 " Version:      0.5
 
-
 if exists("b:current_syntax")
     finish
 endif

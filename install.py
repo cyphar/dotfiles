@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# dotfiles: collection of my personal dotfiles [code]
+# dotfiles: collection of my personal dotfiles
 # Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify

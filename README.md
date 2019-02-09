@@ -22,16 +22,12 @@ If you'd like to figure out what packages are required please take a look at
 `dist/opensuse/50-packages.sh`.
 
 ## License ##
-Apart from files where specifically specified (e.g vim plugins), any scripts
-associated with this dotfiles repo have been released under the GNU GPLv3 or
-later. Any non-functional works (purely configuration data) is released under
-the MIT/X11 license. Each file is marked conspicuously to make the license used
-clear.
 
-GNU GPLv3 or later:
+Apart from files where specifically specified (e.g vim plugins), all files are
+licensed under the GNU GPLv3 or later.
 
 ```
-dotfiles: collection of my personal dotfiles [code]
+dotfiles: collection of my personal dotfiles
 Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
 
 This program is free software: you can redistribute it and/or modify
@@ -46,29 +42,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-```
-
-MIT/X11 License:
-
-```
-dotfiles: collection of my dotfiles [configuration]
-Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-* The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
