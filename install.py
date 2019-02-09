@@ -41,17 +41,18 @@ OPTIONS = {
 	"fonts":     (YES, [".fonts/", ".fonts.conf.d/"]),
 	"git":       (YES, [".gitconfig"]),
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
+	"keepassxc": (YES, [".config/keepassxc/"]),
+	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
+	"mutt":      (YES, [".mutt/"]),
 	"neovim":    (YES, [".config/nvim/"]),
+	"notmuch":   (YES, [".notmuch-config"]),
 	"python":    (YES, [".pythonrc.py"]),
+	"redshift":  (YES, [".config/redshift.conf"]),
+	"ssh":       (YES, [".ssh/config"]),
 	"termite":   (YES, [".config/termite/"]),
 	"tmux":      (YES, [".tmux.conf"]),
 	"wget":      (YES, [".wgetrc"]),
 	"zsh":       (YES, [".profile", ".zsh/", ".zshrc"]),
-	"redshift":  (YES, [".config/redshift.conf"]),
-	"keepassxc": (YES, [".config/keepassxc/"]),
-	"mutt":      (YES, [".mutt/"]),
-	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
-	"ssh":       (YES, [".ssh/config"]),
 }
 
 # Stdio helpers.
