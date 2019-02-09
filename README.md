@@ -32,7 +32,7 @@ GNU GPLv3 or later:
 
 ```
 dotfiles: collection of my personal dotfiles [code]
-Copyright (C) 2012-2018 Aleksa Sarai <cyphar@cyphar.com>
+Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ MIT/X11 License:
 
 ```
 dotfiles: collection of my dotfiles [configuration]
-Copyright (C) 2012-2018 Aleksa Sarai <cyphar@cyphar.com>
+Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

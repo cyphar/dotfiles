@@ -1,6 +1,6 @@
 #!/bin/bash
 # dotfiles: collection of my personal dotfiles [code]
-# Copyright (C) 2018 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2019 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
