@@ -33,6 +33,9 @@ set mbox_type=Maildir
 set my_mailroot="$HOME/mail"
 set folder="$my_mailroot/$my_profile"
 
+# Notmuch.
+set nm_default_uri="$my_mailroot"
+
 # Don't ever do email operations over cleartext. Note that ssl_force_tls *does*
 # also force STARTTLS, and will cause connection attempts to fail if it cannot
 # establish a STARTTLS (or any other STARTTLS) connection. The documentation

@@ -140,4 +140,4 @@
 	smtpUser = cyphar@cyphar.com
 	smtpServer = smtp.mailbox.org
 	smtpServerPort = 465
-	smtpEncryption = tls
+	smtpEncryption = ssl
