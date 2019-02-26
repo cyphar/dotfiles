@@ -18,13 +18,73 @@
 set -Eeuo pipefail
 
 function bail() {
-        echo "$@" >&2
-        exit 2
+	echo "$@" >&2
+	exit 2
 }
 
-# Configurable parts.
-NETWORKID="${NETWORKID:-43}"
-CONFIG="${CONFIG:-/etc/wireguard/wg-zion.conf}"
+function usage() {
+	bail "usage: wg-enroll [-C <config-root=$CONFIG_ROOT>]\n" \
+	     "                [-F <endpoint=$SERVER_ENDPOINT>]\n" \
+	     "                [-i <interface=$CONFIG_NAME>]\n" \
+	     "                [-n <network-id=$NETWORKID>]\n" \
+	     "                [-o <format=$OUTPUT>]"
+}
+
+local NETWORKID=0
+local CONFIG_ROOT="/etc/wireguard"
+local CONFIG_NAME="wg-$HOST"
+local SERVER_ENDPOINT="$(< /etc/hostname)"
+local OUTPUT="qr"
+
+while getopts "C:F:i:n:o:h" opt; do
+	case "$opt" in
+		C)
+			CONFIG_ROOT="$OPTARG"
+			;;
+		F)
+			SERVER_ENDPOINT="$OPTARG"
+			;;
+		i)
+			CONFIG_NAME="$OPTARG"
+			;;
+		n)
+			NETWORKID="$OPTARG"
+			;;
+		o)
+			OUTPUT="$OPTARG"
+			;;
+		h)
+			usage
+			;;
+		\:)
+			echo "missing argument: -$OPTARG" >&2
+			usage
+			;;
+		\?)
+			echo "invalid option: -$OPTARG" >&2
+			usage
+			;;
+	esac
+done
+
+function qrencode_cat() {
+	qrencode -t ansiutf8
+}
+
+local formatter=
+case "$OUTPUT" in
+	qr)
+		formatter=qrencode_cat
+		;;
+	text)
+		formatter=cat
+		;;
+	*)
+		bail "unknown formatter $OUTPUT"
+		;;
+esac
+
+local CONFIG="$CONFIG_ROOT/$CONFIG_NAME.conf"
 
 # Not exactly pretty...
 local CLIENT_SECKEY="$(wg genkey)"
@@ -51,13 +111,13 @@ EOF
 ) | sponge "$CONFIG"
 
 # Generate QR code for new device.
-qrencode -t ansiutf8 <<EOF
+"$formatter" <<EOF
 [Interface]
 Address = 10.$NETWORKID.$NEW_DEVICEID.1/16
 PrivateKey = $CLIENT_SECKEY
 
 [Peer]
-Endpoint = zion.node.cyphar.com:51820
+Endpoint = $SERVER_ENDPOINT:51820
 PublicKey = $SERVER_PUBKEY
 PreSharedKey = $PRESHAREDKEY
 AllowedIPs = 0.0.0.0/0
