@@ -27,7 +27,8 @@ function usage() {
 	     "                [-F <endpoint=$SERVER_ENDPOINT>]\n" \
 	     "                [-i <interface=$CONFIG_NAME>]\n" \
 	     "                [-n <network-id=$NETWORKID>]\n" \
-	     "                [-o <format=$OUTPUT>]"
+	     "                [-o <format=$OUTPUT>]\n" \
+	     "                [-P <client-public>]"
 }
 
 local NETWORKID=0
@@ -36,7 +37,10 @@ local CONFIG_NAME="wg-$HOST"
 local SERVER_ENDPOINT="$(< /etc/hostname)"
 local OUTPUT="qr"
 
-while getopts "C:F:i:n:o:h" opt; do
+local CLIENT_SECKEY=""
+local CLIENT_PUBKEY=""
+
+while getopts "C:F:i:n:o:P:h" opt; do
 	case "$opt" in
 		C)
 			CONFIG_ROOT="$OPTARG"
@@ -52,6 +56,9 @@ while getopts "C:F:i:n:o:h" opt; do
 			;;
 		o)
 			OUTPUT="$OPTARG"
+			;;
+		P)
+			CLIENT_PUBKEY="$OPTARG"
 			;;
 		h)
 			usage
@@ -86,9 +93,14 @@ esac
 
 local CONFIG="$CONFIG_ROOT/$CONFIG_NAME.conf"
 
-# Not exactly pretty...
-local CLIENT_SECKEY="$(wg genkey)"
-local CLIENT_PUBKEY="$(wg pubkey <<<"$CLIENT_SECKEY")"
+# Only generate a key if it's not provided. Generating keys for users is quite
+# dodgy already, but is required in order to make the setup require no
+# round-trips or manual editing.
+if [ -z "$CLIENT_PUBKEY" ]
+then
+	CLIENT_SECKEY="$(wg genkey)"
+	CLIENT_PUBKEY="$(wg pubkey <<<"$CLIENT_SECKEY")"
+fi
 local PRESHAREDKEY="$(wg genpsk)"
 
 [[ -n "$CLIENT_PUBKEY" ]] || bail "ERROR: Failed to generate public key using $CLIENT_SECKEY."
@@ -104,7 +116,7 @@ cat <<EOF
 
 # device-$NEW_DEVICEID.cyphar.com
 [Peer]
-PublicKey = $(wg pubkey <<<"$CLIENT_SECKEY")
+PublicKey = $CLIENT_PUBKEY
 PreSharedKey = $PRESHAREDKEY
 AllowedIPs = 10.$NETWORKID.$NEW_DEVICEID.1/32
 EOF
