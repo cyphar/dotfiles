@@ -93,6 +93,20 @@ esac
 
 local CONFIG="$CONFIG_ROOT/$CONFIG_NAME.conf"
 
+# If there is no config already there, we need to quickly set it up.
+if ! [ -f "$CONFIG" ]
+then
+	# XXX: Make this configuration less annoying.
+	HOST_NIC="${HOST_NIC:-eth0}"
+	cat >"$CONFIG" <<-EOF
+	[Interface]
+	ListenPort = 51820
+	PrivateKey = $(wg genkey)
+	PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o $HOST_NIC -j MASQUERADE
+	PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o $HOST_NIC -j MASQUERADE
+	EOF
+fi
+
 # Only generate a key if it's not provided. Generating keys for users is quite
 # dodgy already, but is required in order to make the setup require no
 # round-trips or manual editing.
