@@ -1,0 +1,98 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set -Eeuo pipefail
+
+function bail() {
+	echo "battery-level: $@" >&2
+	exit 1
+}
+
+function usage() {
+	cat >&2 <<-EOF
+	usage: battery-level [-h] [-x <command>] <conditions>...
+
+	Check the given conditions against the current battery level, exiting with
+	a non-zero exit code if any of the conditions are not met.
+
+	-x is a shorthand for ( battery-level <args> && <command> ||: )
+
+	There are only a few supported conditions, and they are specified using the
+	syntax <type>:<cond>:
+
+	  status:          Status is (grep -i) matched against <cond>.
+	  capacity_level:  Capacity-level is (grep -i) matched against <cond>.
+	  capacity:        Capacity (percent) is arithmetically compared to the
+	                   given <cond> as though it had been passed to
+	                   (( \$capacity <cond> )).
+
+	The primary usecase is to add something like the following to /etc/crontab:
+
+	  * * * * * battery-level -x "systemctl suspend" 'status:discharging' 'capacity:<3'
+	EOF
+}
+
+# Get the options.
+local COMMAND=
+while getopts "x:h" OPT; do
+	case "$OPT" in
+		(x)
+			COMMAND="$OPTARG"
+			;;
+		(h)
+			usage
+			exit 0;;
+	esac
+done
+
+# Get the set of conditions.
+shift "$(($OPTIND - 1))"
+local conditions=("$@")
+
+# What batteries are present in the system?
+local batteries=()
+for dir in /sys/class/power_supply/*
+do
+	grep -qi "^battery$" "$dir/type" || continue
+	batteries+=("$dir")
+done
+
+# We only support single-battery mode.
+[[ "${#batteries[@]}" -gt 0 ]] || bail "No batteries found."
+[[ "${#batteries[@]}" -eq 1 ]] || bail "More than one battery found: ${batteries[@]}"
+local battery="${batteries[@]}"
+
+# Let's evalute the conditionals...
+local error=
+for cond in "${conditions[@]}"
+do
+	cond_type="$(cut -d: -f1  <<<"$cond")"
+	cond_body="$(cut -d: -f2- <<<"$cond")"
+	case "$cond_type" in
+		(status|capacity_level)
+			grep -qi "^$cond_body$" <"$battery/$cond_type" || error=1
+			;;
+		(capacity)
+			(( $(<"$battery/capacity") $cond_body )) || error=1
+			;;
+	esac
+done
+
+# No command, just exit with the current error state.
+[ -n "$COMMAND" ] || exit "$error"
+# Run the command if there was no error.
+[ -n "$error" ] || exec zsh -c "$COMMAND"
