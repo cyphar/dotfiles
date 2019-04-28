@@ -26,6 +26,20 @@ function log() {
 	echo "INFO:" "$@" >&2
 }
 
+function generate_addresses() {
+	local DEVICEID="${1:-0}"
+	local MASK="${2:-32}"
+
+	# The two arguments are {NETWORKID, DEVICEID}.
+	IPV4_FORMAT="10.%d.%d.1"
+	IPV6_FORMAT="fd42:dead:beef:%.2x%.2x::1"
+
+	# Generate our addresses.
+	ipv4="$(printf "$IPV4_FORMAT" "$NETWORKID" "$DEVICEID")"
+	ipv6="$(printf "$IPV6_FORMAT" "$NETWORKID" "$DEVICEID")"
+	echo "$ipv4/$MASK,$ipv6/$MASK"
+}
+
 function usage() {
 	bail "usage: wg-enroll [-C <config-root=$CONFIG_ROOT>]\n" \
 	     "                [-F <endpoint=$SERVER_ENDPOINT>]\n" \
@@ -77,6 +91,7 @@ while getopts "C:F:i:n:o:P:h" opt; do
 			;;
 	esac
 done
+local NETWORKID_HEX="$(printf '%.2x' "$NETWORKID")"
 
 function qrencode_cat() {
 	qrencode -t ansiutf8
@@ -106,10 +121,23 @@ then
 	log "Generating $CONFIG header (host_nic=$HOST_NIC)."
 	cat >"$CONFIG" <<-EOF
 	[Interface]
+	Address = $(generate_addresses)
 	ListenPort = 51820
 	PrivateKey = $(wg genkey)
-	PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o $HOST_NIC -j MASQUERADE
-	PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o $HOST_NIC -j MASQUERADE
+	# IPv4
+	PostUp   = iptables -A FORWARD -i %i -j ACCEPT
+	PostUp   = iptables -A FORWARD -o %i -j ACCEPT
+	PostUp   = iptables -t nat -A POSTROUTING -o $HOST_NIC -j MASQUERADE
+	PostDown = iptables -D FORWARD -i %i -j ACCEPT
+	PostDown = iptables -D FORWARD -o %i -j ACCEPT
+	PostDown = iptables -t nat -D POSTROUTING -o $HOST_NIC -j MASQUERADE
+	# IPv6
+	PostUp   = ip6tables -A FORWARD -i %i -j ACCEPT
+	PostUp   = ip6tables -A FORWARD -o %i -j ACCEPT
+	PostUp   = ip6tables -t nat -A POSTROUTING -o $HOST_NIC -j MASQUERADE
+	PostDown = ip6tables -D FORWARD -i %i -j ACCEPT
+	PostDown = ip6tables -D FORWARD -o %i -j ACCEPT
+	PostDown = ip6tables -t nat -D POSTROUTING -o $HOST_NIC -j MASQUERADE
 	EOF
 fi
 
@@ -135,17 +163,18 @@ log "Updating $CONFIG for client (10.$NETWORKID.$NEW_DEVICEID.1)."
 (
 cat "$CONFIG" - <<EOF
 
-# device-$NEW_DEVICEID.cyphar.com
+# device-$NEW_DEVICEID
 [Peer]
 PublicKey = $CLIENT_PUBKEY
 PreSharedKey = $PRESHAREDKEY
-AllowedIPs = 10.$NETWORKID.$NEW_DEVICEID.1/32
+AllowedIPs = $(generate_addresses "$NEW_DEVICEID")
 EOF
 ) | sponge "$CONFIG"
 
 # Ensure that ip_forward=1 is set.
-log "Ensuring net.ipv4.ip_forward is enabled."
-sysctl -w net.ipv4.ip_forward=1 >/dev/null || bail "Failed to set net.ipv4.ip_forward=1."
+log "Ensuring IP forwarding is enabled."
+sysctl -w net.ipv4.ip_forward=1          >/dev/null || bail "Failed to set net.ipv4.ip_forward=1."
+sysctl -w net.ipv6.conf.all.forwarding=1 >/dev/null || bail "Failed to set net.ipv6.conf.all.forwarding=1."
 
 # Update the configuration of the interface.
 log "Restarting host-side wireguard interface with new $CONFIG."
@@ -155,12 +184,12 @@ systemctl restart "wg-quick@$CONFIG_NAME" || bail "Failed to restart wg-quick@$C
 printf "=== CONFIGURATION ===\n\n"
 "$formatter" <<EOF
 [Interface]
-Address = 10.$NETWORKID.$NEW_DEVICEID.1/16
+Address = $(generate_addresses "$NEW_DEVICEID" 16)
 PrivateKey = $CLIENT_SECKEY
 
 [Peer]
 Endpoint = $SERVER_ENDPOINT:51820
 PublicKey = $SERVER_PUBKEY
 PreSharedKey = $PRESHAREDKEY
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 0.0.0.0/0,::/0
 EOF
