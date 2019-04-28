@@ -171,17 +171,8 @@ AllowedIPs = $(generate_addresses "$NEW_DEVICEID")
 EOF
 ) | sponge "$CONFIG"
 
-# Ensure that ip_forward=1 is set.
-log "Ensuring IP forwarding is enabled."
-sysctl -w net.ipv4.ip_forward=1          >/dev/null || bail "Failed to set net.ipv4.ip_forward=1."
-sysctl -w net.ipv6.conf.all.forwarding=1 >/dev/null || bail "Failed to set net.ipv6.conf.all.forwarding=1."
-
-# Update the configuration of the interface.
-log "Restarting host-side wireguard interface with new $CONFIG."
-systemctl restart "wg-quick@$CONFIG_NAME" || bail "Failed to restart wg-quick@$CONFIG_NAME"
-
 # Generate QR code for new device.
-printf "=== CONFIGURATION ===\n\n"
+echo "-----BEGIN WIREGUARD CONFIG BLOCK-----"
 "$formatter" <<EOF
 [Interface]
 Address = $(generate_addresses "$NEW_DEVICEID" 16)
@@ -193,3 +184,20 @@ PublicKey = $SERVER_PUBKEY
 PreSharedKey = $PRESHAREDKEY
 AllowedIPs = 0.0.0.0/0,::/0
 EOF
+echo "-----END WIREGUARD CONFIG BLOCK-----"
+
+# We must do all host modifications and reloads *after* we've given the user
+# their new configuration. Otherwise if someone is replacing their Wireguard
+# config over a Wireguard connection they'll be in trouble.
+log "Please copy the above configuration to your newly-enrolled device."
+log "Press the [ENTER] key when you are done, so the server can reload its configuration."
+read
+
+# Ensure that ip_forward=1 is set.
+log "Ensuring IP forwarding is enabled."
+sysctl -w net.ipv4.ip_forward=1          >/dev/null || bail "Failed to set net.ipv4.ip_forward=1."
+sysctl -w net.ipv6.conf.all.forwarding=1 >/dev/null || bail "Failed to set net.ipv6.conf.all.forwarding=1."
+
+# Update the configuration of the interface.
+log "Restarting host-side wireguard interface with new $CONFIG."
+systemctl restart "wg-quick@$CONFIG_NAME" || bail "Failed to restart wg-quick@$CONFIG_NAME"
