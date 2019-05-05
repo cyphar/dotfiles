@@ -28,16 +28,16 @@ function log() {
 
 function generate_addresses() {
 	local DEVICEID="${1:-0}"
-	local MASK="${2:-32}"
+	local MASKv4=32 MASKv6=64
 
 	# The two arguments are {NETWORKID, DEVICEID}.
-	IPV4_FORMAT="10.%d.%d.1"
-	IPV6_FORMAT="fd42:dead:beef:%.2x%.2x::1"
+	IPv4_FORMAT="10.%d.%d.1"
+	IPv6_FORMAT="fd42:dead:beef:%.2x%.2x::1"
 
 	# Generate our addresses.
-	ipv4="$(printf "$IPV4_FORMAT" "$NETWORKID" "$DEVICEID")"
-	ipv6="$(printf "$IPV6_FORMAT" "$NETWORKID" "$DEVICEID")"
-	echo "$ipv4/$MASK,$ipv6/$MASK"
+	IPv4="$(printf "$IPv4_FORMAT" "$NETWORKID" "$DEVICEID")"
+	IPv6="$(printf "$IPv6_FORMAT" "$NETWORKID" "$DEVICEID")"
+	echo "$IPv4/$MASKv4,$IPv6/$MASKv6"
 }
 
 function usage() {
@@ -175,7 +175,7 @@ EOF
 echo "-----BEGIN WIREGUARD CONFIG BLOCK-----"
 "$formatter" <<EOF
 [Interface]
-Address = $(generate_addresses "$NEW_DEVICEID" 16)
+Address = $(generate_addresses "$NEW_DEVICEID")
 PrivateKey = $CLIENT_SECKEY
 
 [Peer]
