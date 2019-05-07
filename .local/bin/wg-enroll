@@ -26,9 +26,13 @@ function log() {
 	echo "INFO:" "$@" >&2
 }
 
+function public_ip() {
+	dig +short myip.opendns.com @resolver1.opendns.com
+}
+
 function generate_addresses() {
 	local DEVICEID="${1:-0}"
-	local MASKv4=32 MASKv6=64
+	local MASKv4=32 MASKv6=128
 
 	# The two arguments are {NETWORKID, DEVICEID}.
 	IPv4_FORMAT="10.%d.%d.1"
@@ -52,7 +56,7 @@ function usage() {
 local NETWORKID=0
 local CONFIG_ROOT="/etc/wireguard"
 local CONFIG_NAME="wg-$(hostname -s)"
-local SERVER_ENDPOINT="$(hostname -f)"
+local SERVER_ENDPOINT="$(hostname -f || public_ip)"
 local OUTPUT="text"
 
 local CLIENT_SECKEY=""
