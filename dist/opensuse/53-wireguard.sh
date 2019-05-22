@@ -17,24 +17,5 @@
 
 set -Eeuo pipefail
 
-echo ">> set up wireguard [deku]"
+echo ">> set up wireguard"
 echo "wireguard" | sudo tee /etc/modules-load.d/99-wireguard.conf >/dev/null
-
-if ! [ -f /etc/wireguard/wg-deku.conf ]
-then
-
-PRIVATE_KEY="$(wg genkey)"
-PUBLIC_KEY="$(wg pubkey <<<"$PRIVATE_KEY")"
-
-cat > /etc/wireguard/wg-deku.conf <<EOF
-[Interface]
-PrivateKey = $PRIVATE_KEY
-
-[Peer]
-PublicKey = Sg0C5MLDoFN3h5peMOoK+W5zK5hXEVtH8BIPX9N7/1A=
-AllowedIPs = 0.0.0.0/0
-Endpoint = dot.cyphar.com:51820
-EOF
-echo ">> wireguard pubkey [register with deku]: $PUBLIC_KEY"
-
-fi

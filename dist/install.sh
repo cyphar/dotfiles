@@ -37,7 +37,7 @@ source /etc/os-release
 
 # Export the information from os-release.
 export OS_NAME="$NAME" OS_ID="$ID" OS_ID_LIKE="$ID_LIKE" \
-	OS_VERSION_ID="$VERSION_ID" OS_PRETTY_NAME="$OS_PRETTY_NAME"
+	OS_VERSION_ID="$VERSION_ID" OS_PRETTY_NAME="$PRETTY_NAME"
 
 # Run all of the respective hooks.
 info "Installing for distribution $OS_ID ($OS_NAME)."
