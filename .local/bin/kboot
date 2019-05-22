@@ -1,0 +1,152 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# kboot is a qemu wrapper that allows us to boot a test kernel (with
+# out-of-tree modules) within a VM for fast kernel development.
+
+set -Eeuo pipefail
+
+QEMU="qemu-system-x86_64"
+KERNEL_STORE="$HOME/build/kernel"
+mkdir -p "$KERNEL_STORE"
+
+function bail() {
+	echo "kboot: $@" >&2
+	exit 1
+}
+
+function usage() {
+	cat >&2 <<-EOF
+	usage: kboot help
+	       kboot install
+	       kboot build [-m <module>]... [-b <binary>]... [<version>]
+	       kboot boot [<version>]
+
+	KERNEL_STORE=$KERNEL_STORE
+
+	Boots a kernel inside QEMU (useful for testing purposes). There are a few
+	subcommands used for kboot:
+
+	  help: Show this help message.
+
+	  install: Install an already-built Linux tree, and build a basic initramfs.
+	           This command must be run within a checkout of the Linux source,
+	           and already be built with "make bzImage modules"). By default,
+	           this will run "build" as well (but you can re-run it
+	           explicitly).
+
+	  build: Builds an initramfs for the given <version>. If you want to add
+	         any extra modules, you should specify them using -m and add them
+	         to \$KERNEL_STORE/<version>/mods/. If you need a specific binary
+	         in the initramfs, you can specify it with -b.
+
+	  boot: Boots the <version> kernel using $QEMU. All I/O is done to the
+	        terminal (ctrl-a+c to get the QEMU management shell).
+
+	A normal user would probably be happy with just doing this:
+
+	  % kboot install
+	  % kboot boot
+	  ...
+
+	If <version> is not specified, the latest version (in terms of mtime) is
+	used.
+	EOF
+}
+
+function latest_version() {
+	basename "$(ls -t "$KERNEL_STORE" | head -1)"
+}
+
+function cmd_help() {
+	echo "kboot help" "$@"
+	[ "$#" -eq 0 ] || bail "Too many arguments to 'kboot install'."
+
+	usage
+	exit 0
+}
+
+function cmd_install() {
+	echo "kboot install" "$@"
+	[ "$#" -eq 0 ] || bail "Too many arguments to 'kboot install'."
+
+	local version="$(make kernelrelease)"
+	local store="$KERNEL_STORE/$version"
+	mkdir -p "$store"
+
+	set -x
+	cp arch/x86/boot/bzImage "$store/vmlinuz"
+	make INSTALL_MOD_PATH="$store/mods/" modules_install
+	touch "$store"
+	cmd_build "$version"
+}
+
+function cmd_build() {
+	echo "kboot build" "$@"
+
+	local modules=()
+	local binaries=()
+	local version="$(latest_version)"
+	while getopts "m:b:" OPT; do
+		case "$OPT" in
+			(m)
+				modules+=("$OPTARG")
+				;;
+			(b)
+				binaries+=("$OPTARG")
+				;;
+		esac
+	done
+
+	# [<version>]
+	[ "$OPTIND" -lt 1 ] || shift "$(($OPTIND - 1))"
+	[ "$#" -le 1 ] || bail "Too many arguments to 'kboot build'."
+	[ "$#" -lt 1 ] || version="$1"
+
+	local store="$KERNEL_STORE/$version"
+	set -x
+	/sbin/depmod -a --basedir "$store/mods/" "$version"
+	dracut --kver "$version" --kmoddir "$store/mods/lib/modules/$version" \
+		--modules "bash base shutdown network ifcfg" \
+		--add-drivers "configfs ${modules[@]}" \
+		--install "ps grep ${binaries[@]}" \
+		--no-hostonly --no-hostonly-cmdline \
+		--force "$store/initramfs"
+}
+
+function cmd_boot() {
+	echo "kboot boot" "$@"
+	local version="$(latest_version)"
+
+	# [<version>]
+	[ "$#" -le 1 ] || bail "Too many arguments to 'kboot boot'."
+	[ "$#" -lt 1 ] || version="$1"
+
+	local store="$KERNEL_STORE/$version"
+	set -x
+	"$QEMU" -enable-kvm -m 2048 -smp 2 \
+		-kernel "$store/vmlinuz" -initrd "$store/initramfs" \
+		-nographic -append "ip=dhcp rd.shell=1 console=ttyS0" \
+		-device e1000,netdev=network0 \
+		-netdev user,id=network0
+}
+
+[ "$#" -ge 1 ] || bail "Missing <cmd> argument, run 'kboot help'."
+
+# Run the command with rest of the arguments -- a poor man's subcommand.
+fn="cmd_$1" ; shift
+"$fn" "$@"
