@@ -17,7 +17,7 @@
 # muttrc-personal -- configuration for <cyphar@cyphar.com> with alias pmutt.
 
 set my_profile="personal"
-set pgp_default_key="6FA1B3E3F9A18CDCBE6A2CF54A7BE7BF70DE9B9F"
+set pgp_default_key="C9C370B246B09F6DBCFC744C34401015D1D2D386"
 source $HOME/.mutt/muttrc
 
 set my_name="cyphar"
