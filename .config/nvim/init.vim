@@ -168,6 +168,9 @@ let delimitMate_jump_expansion = 1
 let delimitMate_smart_quotes = 1
 let delimitMate_balance_matchpairs = 1
 
+" Enable rustfmt-on-save.
+let g:rustfmt_autosave = 1
+
 " Easier tab management.
 map <leader>n :tabprev<cr>
 map <leader>m :tabnext<cr>

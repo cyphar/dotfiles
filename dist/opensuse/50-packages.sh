@@ -54,6 +54,8 @@ packages=(
 	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
 	# WireGuard
 	"wireguard-kmp-default" "wireguard-tools" "net-tools-deprecated"
+	# Rust
+	"rust" "rustfmt" "cargo" "cargo-vendor"
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
