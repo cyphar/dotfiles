@@ -26,18 +26,9 @@
 [submodule ".config/nvim/bundle/nerdtree"]
 	path = .config/nvim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule ".config/nvim/bundle/multiple-cursors"]
-	path = .config/nvim/bundle/multiple-cursors
-	url = https://github.com/terryma/vim-multiple-cursors.git
-[submodule ".config/nvim/bundle/fugitive"]
-	path = .config/nvim/bundle/fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule ".config/nvim/bundle/csapprox"]
 	path = .config/nvim/bundle/csapprox
 	url = https://github.com/vim-scripts/CSApprox
-[submodule ".config/nvim/bundle/git"]
-	path = .config/nvim/bundle/git
-	url = https://github.com/tpope/vim-git.git
 [submodule ".config/nvim/bundle/supertab"]
 	path = .config/nvim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
