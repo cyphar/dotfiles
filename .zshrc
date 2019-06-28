@@ -29,7 +29,7 @@ if (tmux -V &>/dev/null); then
 
 		# Create the session if it doesn't exist.
 		if ! (tmux has-session -t "${__tmux_session}" &>/dev/null); then
-			tmux new-session -t "${__tmux_session}" -d -c "$HOME" -- "${SHELL}"
+			tmux new-session -t "${__tmux_session}" -d -c "$HOME"
 		fi
 
 		# Switch to tmux session.
