@@ -1,0 +1,27 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set -Eeuxo pipefail
+
+MODS="${MODS-yes}"
+release="$(make kernelrelease)"
+
+[ -z "$MODS" ] || sudo make modules_install
+sudo pesign -s -f -c yavin.dot.cyphar.com \
+	-i arch/x86/boot/bzImage -o "/boot/vmlinuz-$release"
+sudo dracut -f "/boot/initrd-$release" "$release"
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
