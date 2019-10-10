@@ -40,16 +40,23 @@ set ruler
 " Seriously. Talk about a security hole.
 set nomodeline
 
-" Make the whitespace RED
-au ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-au BufWinEnter,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-" Can slow things down, but show whitespace as red while typing.
-au InsertCharPre * match ExtraWhitespace /\s\+$/
+augroup trailing_whitespace_show
+	autocmd!
+	" Make trailing whitespace red.
+	autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+	autocmd BufWinEnter,InsertEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+	" Can slow things down, but show trailing whitespace as red while typing.
+	autocmd InsertCharPre * match ExtraWhitespace /\s\+$/
+augroup END
 
-" Crush that whitespace.
-" This can be a problem for formats that depend on trailing whitespace (see:
-" git format-patch). In such cases, just use `noa w` when saving.
-au FileWritePre,FileAppendPre,FilterWritePre,BufWritePre * :%s/\s\+$//ge
+augroup trailing_whitespace_kill
+	autocmd!
+	" Delete all trailing whitespace on-save.
+	autocmd FileWritePre,FileAppendPre,FilterWritePre,BufWritePre *
+		\ let w:wv = winsaveview() |
+		\ :%s/\s\+$//e             |
+		\ call winrestview(w:wv)
+augroup END
 
 " Hopefully I can remove this some day when 80 characters is no longer the
 " standard.
@@ -89,10 +96,10 @@ set directory=.
 
 " Line numbering.
 set number relativenumber
-augroup NumberToggle
-	au!
-	au BufEnter,FocusGained,InsertLeave * set   relativenumber
-	au BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup relativenumber_toggle
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave * set   relativenumber
+	autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
 " I don't use arrow keys.
@@ -128,15 +135,15 @@ if !has('gui_running')
 	set ttimeoutlen=10
 	augroup FastEscape
 		autocmd!
-		au InsertEnter * set timeoutlen=0
-		au InsertLeave * set timeoutlen=1000
+		autocmd InsertEnter * set timeoutlen=0
+		autocmd InsertLeave * set timeoutlen=1000
 	augroup END
 endif
 
 " Paste-related stuff.
 set pastetoggle=<F10>
 set clipboard+=unnamedplus
-au InsertLeave * set nopaste
+autocmd InsertLeave * set nopaste
 
 " Scrolling is crucial.
 set scrolloff=8
