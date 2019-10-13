@@ -15,9 +15,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 MaildirStore suse-local
-Path "~/mail/suse"
+SubFolders Verbatim
+Path "~/mail/suse/"
 Inbox "~/mail/suse/inbox"
-Trash "trash"
+Trash "Trash"
 
 IMAPAccount susede
 Host imap.suse.de
@@ -33,6 +34,7 @@ Account susede
 Channel suse
 Master :susede-remote:
 Slave :suse-local:
+Pattern * !Spam
 Sync All
 Expunge Both
 Create Both

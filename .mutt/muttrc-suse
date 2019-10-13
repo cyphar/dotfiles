@@ -37,7 +37,7 @@ color indicator     brightcolor46   default
 set folder="$my_mailroot/$my_profile"
 set smtp_url="smtp://$my_name@imap.suse.de:587"
 set spoolfile="+inbox"
-set trash="+trash"
+set trash="+Trash"
 # TODO: These are probably broken...
 set record="!/Sent"
 set postponed="!/Drafts"
