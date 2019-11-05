@@ -59,7 +59,8 @@ set nosmime_is_default
 
 # Show threads.
 set sort=threads
-set sort_aux=last-date-received
+# Sort by the *sent* date.
+set sort_aux=last-date
 
 # Formatting of menus.
 set date_format=$my_date_format
