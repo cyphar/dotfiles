@@ -18,15 +18,3 @@
 augroup trailing_whitespace_kill
 	autocmd!
 augroup END
-
-" Make append() look like it's inserting after the current line.
-function! AppendLine(text)
-	let w:wv = winsaveview()
-	call append('.', a:text)
-	call winrestview(w:wv)
-endfunction
-
-" Some helpful macros while dealing with LKML.
-map <leader>Ks :call AppendLine("Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
-map <leader>Ka :call      AppendLine("Acked-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
-map <leader>Kr :call   AppendLine("Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>

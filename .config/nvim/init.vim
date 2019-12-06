@@ -178,6 +178,18 @@ let delimitMate_balance_matchpairs = 1
 " Enable rustfmt-on-save.
 let g:rustfmt_autosave = 1
 
+" Make append() look like it's inserting after the current line.
+function! AppendLine(text)
+	let w:wv = winsaveview()
+	call append('.', a:text)
+	call winrestview(w:wv)
+endfunction
+
+" Some helpful macros while dealing with LKML.
+map <leader>Ks :call AppendLine("Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
+map <leader>Ka :call      AppendLine("Acked-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
+map <leader>Kr :call   AppendLine("Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
+
 " Easier tab management.
 map <leader>n :tabprev<cr>
 map <leader>m :tabnext<cr>
