@@ -184,7 +184,8 @@ function __generate_prompt() {
 		# magical.
 		local real_pwd="$(command pwd)"
 
-		if (__find_hg "${real_pwd}" && hg status &>/dev/null); then
+		if (__find_hg "${real_pwd}" &>/dev/null && hg status &>/dev/null); then
+			# TODO: Switch to reading ~/.hg directly to avoid Python overhead.
 			local refbranch="$(hg branch)"
 			local refhash="$(hg id | cut -d' ' -f1)"
 
