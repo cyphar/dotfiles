@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [global]
-	font = Dina 10
+	font = "Source Code Pro" 9
 
     # Allow a small subset of html markup:
     #   <b>bold</b>

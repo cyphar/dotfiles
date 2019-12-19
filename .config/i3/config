@@ -21,8 +21,8 @@ set $mod Mod4
 set $bin .local/bin
 set $term termite
 
-# Use Dina (a very nice font IMO).
-font pango:Dina 9
+# I'd prefer Dina but it's broken on openSUSE...
+font pango:Source Code Pro 9
 
 # Make things usable.
 workspace_auto_back_and_forth yes

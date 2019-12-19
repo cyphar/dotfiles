@@ -15,7 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 [options]
-font = Dina 8
+font = Source Code Pro 9
 allow_bold = true
 
 scroll_on_output = true
