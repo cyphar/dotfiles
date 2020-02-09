@@ -21,7 +21,7 @@
 
 set -e
 
-INTERVAL=5
+INTERVAL="15m"
 MBSYNCRC="$HOME/.mbsyncrc"
 
 # Output help page.
