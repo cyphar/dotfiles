@@ -16,6 +16,7 @@
 
 # Set the Super key as the modifier.
 set $mod Mod4
+set $alt Mod1
 
 # Set the variables.
 set $bin .local/bin
@@ -105,8 +106,10 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # Reload / restart i3.
-bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
+# Reload autorandr setup.
+bindsym $mod+Control+r exec "autorandr -c"
+bindsym $mod+Control+Shift+r exec "autorandr --load mobile"
 
 # Exits i3 -- with nagging to make sure you didn't do it by accident.
 bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Yes' 'i3-msg exit'"
