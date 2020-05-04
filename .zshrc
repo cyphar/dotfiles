@@ -73,3 +73,6 @@ setopt histignoredups no_sharehistory
 if (keychain --version 2>/dev/null); then
 	eval $(keychain --eval --agents ssh -Q --quiet --nogui "${HOME}/.ssh/id_ed25519")
 fi
+
+# Make sure "git commit" will actually show you pinentry...
+export GPG_TTY="$(tty)"

@@ -35,6 +35,9 @@
 	# authored.
 	gpgsign = true
 
+[gpg]
+	program = gpg2
+
 [alias]
 	# Very useful aliases for getting the state of a repo.
 	id = "rev-parse --verify HEAD"
