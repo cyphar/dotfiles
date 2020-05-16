@@ -217,6 +217,12 @@ inoremap <leader>d <c-\><c-o>:read !date<cr>
 noremap <leader>sc :setlocal spell! spelllang=en_au<cr>
 inoremap <leader>sc <c-\><c-o>:setlocal spell! spelllang=en_au<cr>
 
+" Increment and decrement lists.
+nnoremap + <C-a>
+vnoremap + g<C-a>gv
+nnoremap - <C-x>
+vnoremap - g<C-x>gv
+
 " Reselect the deselected blocks in visual mode.
 vnoremap < <gv
 vnoremap > >gv
