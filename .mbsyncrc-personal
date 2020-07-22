@@ -24,7 +24,7 @@ IMAPAccount mailbox
 Host imap.mailbox.org
 Port 993
 User "cyphar@cyphar.com"
-PassCmd +"keepassxc-helper 'Personal/Email/Mailbox cyphar'"
+PassCmd +"keepassxc-helper '/Shared/Email/Mailbox'"
 SSLType IMAPS
 SSLVersions TLSv1.2
 

@@ -80,8 +80,26 @@ ENTRY="$1"
 # Get keepass version. In 2.3.0 and later the API has changed quite a lot.
 KEEPASSXC_VERSION="$(keepassxc-cli --version)"
 
-# Cannot use --attributes in older KeePassXC versions.
-[[ "$ATTRIBUTE" == "Password" ]] || version_isolder "2.3.0" "$KEEPASSXC_VERSION" || bail "Cannot use --attributes with pre-2.3.0 KeePassXC versions."
+if [[ "$ATTRIBUTE" == "Password" ]]
+then
+	# If the requested entry is under /Shared (which is shared through the
+	# SecretService DBus API) and is a Password, then we can request it through
+	# the API without asking for the database password.
+	if [[ "$ENTRY" =~ ^/Shared/ ]]
+	then
+		# SecretService entries don't have the "/Shared" prefix.
+		SS_ENTRY="${ENTRY#"/Shared"}"
+		if ( secret-tool lookup Path "$SS_ENTRY" &>/dev/null )
+		then
+			secret-tool lookup Path "$SS_ENTRY"
+			exit 0
+		fi
+	fi
+elif ( version_isolder "2.3.0" "$KEEPASSXC_VERSION" )
+then
+	# Cannot use --attributes in older KeePassXC versions.
+	bail "Cannot use --attributes with pre-2.3.0 KeePassXC versions."
+fi
 
 RETRY_NUM=0
 RETRY_MAX=3

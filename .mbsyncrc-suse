@@ -24,7 +24,7 @@ IMAPAccount susede
 Host imap.suse.de
 Port 993
 User "asarai@suse.de"
-PassCmd +"keepassxc-helper 'Work/SUSE/SUSE Email'"
+PassCmd +"keepassxc-helper '/Shared/Email/SUSE'"
 SSLType IMAPS
 SSLVersions TLSv1 TLSv1.1 TLSv1.2
 

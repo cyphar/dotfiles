@@ -45,6 +45,4 @@ set postponed="!/Drafts"
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with
 # KeePassXC's CLI interface).
-set imap_user=$my_username
-set imap_pass=`keepassxc-helper "Work/SUSE/SUSE Email"`
-set smtp_pass=$imap_pass
+set smtp_pass=`keepassxc-helper "/Shared/Email/SUSE"`

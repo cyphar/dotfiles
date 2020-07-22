@@ -59,8 +59,8 @@ packages=(
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
-	"neomutt" "zenity" "isync"
+	"neomutt" "zenity" "isync" "secret-tool"
 	# Android.
-	"android-tools"
+	#"android-tools"
 )
 sudo zypper install "${packages[@]}"
