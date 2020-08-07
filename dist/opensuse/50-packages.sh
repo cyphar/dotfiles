@@ -30,8 +30,8 @@ echo ">> zypper addrepo [repos]"
 zypper repos vndr-vlc      &>/dev/null || sudo zypper addrepo -f -p 97 "http://download.videolan.org/pub/vlc/SuSE/${OPENSUSE_DISTRO#openSUSE_}" vndr-vlc
 zypper repos obs-termite   &>/dev/null || sudo zypper addrepo -f "obs://home:hurricanehernandez:termite" obs-termite
 zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
-zypper repos obs-wireguard &>/dev/null || sudo zypper addrepo -f "obs://network:vpn:wireguard" obs-wireguard
-zypper repos obs-android   &>/dev/null || sudo zypper addrepo -f "obs://home:cyphar:android" obs-android
+# XXX: Android dev tools are broken on openSUSE...
+#zypper repos obs-android   &>/dev/null || sudo zypper addrepo -f "obs://home:cyphar:android" obs-android
 sudo zypper ref
 
 # Set of packages we need for a base system.
@@ -42,25 +42,25 @@ packages=(
 	# Basic cli tools necessary.
 	"neovim" "tmux" "zsh" "git" "gcc" "go" "keychain" "figlet" "gpg2" "python3"
 	"mosh" "rsync" "ranger" "alsa-utils" "weechat" "make" "exfat-utils"
-	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool"
+	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool" "bpftrace"
 	# Container-related packages.
-	"skopeo" "umoci" "runc" "lxc" "lxd"
+	"skopeo" "umoci" "runc" "docker" "lxc" "lxd"
 	# Basic graphics stack and environment.
 	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
-	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "compton"
-	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "dina-bitmap-fonts"
+	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "picom"
+	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "cozette-fonts"
 	"xbacklight"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
-	# WireGuard
-	"wireguard-kmp-default" "wireguard-tools" "net-tools-deprecated"
+	# WireGuard is built into openSUSE's kernel now...
+	"wireguard-tools" "net-tools-deprecated"
 	# Rust
-	"rust" "rustfmt" "cargo" "cargo-vendor"
+	"rust" "rustfmt" "cargo"
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
 	"neomutt" "zenity" "isync" "secret-tool"
-	# Android.
+	# XXX: Android dev tools are broken on openSUSE.
 	#"android-tools"
 )
 sudo zypper install "${packages[@]}"
