@@ -38,7 +38,7 @@ HOOK_AFTER = "after"
 OPTIONS = {
 	"bin":       (YES, [".local/bin/"]),
 	"dunst":     (YES, [".config/dunst/"]),
-	"fonts":     (YES, [".fonts/", ".fonts.conf.d/"]),
+	"fonts":     (YES, [".config/fontconfig/"]),
 	"git":       (YES, [".gitconfig"]),
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
