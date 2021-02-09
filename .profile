@@ -23,3 +23,8 @@ if [ -n "${ZSH_VERSION}" ]; then
 		. "${HOME}/.zshrc"
 	fi
 fi
+
+# enable ibus support
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus

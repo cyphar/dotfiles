@@ -18,7 +18,6 @@
 set $mod Mod4
 set $alt Mod1
 
-# Set the variables.
 set $bin .local/bin
 set $term termite
 
@@ -163,3 +162,6 @@ exec_always "compton -cCGb -o0"
 
 # Run redshiftd.
 exec_always "$bin/redshiftd"
+
+# Start ibus-damon.
+exec_always "ibus-daemon -drx"
