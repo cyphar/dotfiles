@@ -46,6 +46,7 @@ OPTIONS = {
 	"mutt":      (YES, [".mutt/"]),
 	"neovim":    (YES, [".config/nvim/"]),
 	"notmuch":   (YES, [".notmuch-config"]),
+	"mpv":       (YES, [".config/mpv/"]),
 	"python":    (YES, [".pythonrc.py"]),
 	"redshift":  (YES, [".config/redshift.conf"]),
 	"ssh":       (YES, [".ssh/config"]),

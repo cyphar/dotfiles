@@ -50,3 +50,6 @@
 [submodule ".config/nvim/bundle/bats"]
 	path = .config/nvim/bundle/bats
 	url = https://github.com/vim-scripts/bats.vim.git
+[submodule ".config/mpv/scripts/subs2srs"]
+	path = .config/mpv/scripts/subs2srs
+	url = https://github.com/Ajatt-Tools/mpvacious.git
