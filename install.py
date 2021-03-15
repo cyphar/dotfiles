@@ -175,23 +175,27 @@ def do_install(config, target, files):
 	return run_hook(config, HOOK_AFTER, target)
 
 def main(config):
-	# Chosen list.
-	chosen = []
+	if config.list_groups:
+		for group in OPTIONS:
+			print(group)
+		return 0
 
-	# Ask user which targets they'd like.
-	for option, value in OPTIONS.items():
-		# Unpack option.
-		default, files = value
+	chosen = config.groups
+	if not chosen:
+		# Ask user which targets they'd like.
+		for option, value in OPTIONS.items():
+			# Unpack option.
+			default, files = value
 
-		# Ask if they wish to install the program.
-		install = None
-		while install is None:
-			response = ask_user("Do you wish to install '%s' [%s]?" % (option, default))
-			install = response_bool(response, default=response_bool(default))
+			# Ask if they wish to install the program.
+			install = None
+			while install is None:
+				response = ask_user("Do you wish to install '%s' [%s]?" % (option, default))
+				install = response_bool(response, default=response_bool(default))
 
-		# Add to the chosen list if it works.
-		if install:
-			chosen.append(option)
+			# Add to the chosen list if it works.
+			if install:
+				chosen.append(option)
 
 	# Nothing chosen to be installed.
 	if not chosen:
@@ -234,7 +238,6 @@ if __name__ == "__main__":
 	def __atstart__():
 		# Set up argument parser.
 		parser = argparse.ArgumentParser()
-		parser.add_argument("--install", dest="install", type=str, default=None)
 		parser.add_argument("--prefix", dest="prefix", type=str, default=os.path.expanduser("~"))
 		parser.add_argument("--hook-dir", dest="hook_dir", type=str, default="hooks")
 		# Boolean setting for clobber.
@@ -243,13 +246,14 @@ if __name__ == "__main__":
 		# Boolean setting for fragile.
 		parser.add_argument("-nf", "--no-fragile", dest="fragile", action="store_const", const=False, default=False)
 		parser.add_argument("-f", "--fragile", dest="fragile", action="store_const", const=True, default=False)
+		# Control which groups to install?
+		parser.add_argument("--list-groups", dest="list_groups", action="store_const", const=True, default=False)
+		parser.add_argument("groups", nargs='*', default=[], help="The set of groups to install.")
 
 		# Get arguments.
 		args = parser.parse_args()
 		# Fix up options.
 		args.prefix = os.path.expanduser(args.prefix)
-
-		# XXX: Should I add a banner saying "read the code before you execute it"?
 
 		# Run main program.
 		sys.exit(main(args))
