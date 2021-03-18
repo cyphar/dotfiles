@@ -53,3 +53,6 @@
 [submodule ".config/mpv/scripts/subs2srs"]
 	path = .config/mpv/scripts/subs2srs
 	url = https://github.com/Ajatt-Tools/mpvacious.git
+[submodule ".config/mpv/scripts/sub_skip"]
+	path = .config/mpv/scripts/sub-pause-skip
+	url = https://github.com/Ben-Kerman/mpv-sub-scripts
