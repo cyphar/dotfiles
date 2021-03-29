@@ -32,7 +32,7 @@ zypper repos obs-termite   &>/dev/null || sudo zypper addrepo -f "obs://home:hur
 zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
 # XXX: Android dev tools are broken on openSUSE...
 #zypper repos obs-android   &>/dev/null || sudo zypper addrepo -f "obs://home:cyphar:android" obs-android
-sudo zypper ref
+sudo zypper --gpg-auto-import-keys ref
 
 # Set of packages we need for a base system.
 # TODO: Make it possible to specify whether it's a workstation or server.
@@ -51,7 +51,8 @@ packages=(
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "cozette-fonts"
 	"xbacklight"
 	# Graphical programs.
-	"keepassxc" "firefox" "vlc" "termite" "redshift" "libreoffice" "zathura"
+	"keepassxc" "firefox" "vlc" "mpv" "termite" "redshift" "libreoffice"
+	"zathura" "evince"
 	# WireGuard is built into openSUSE's kernel now...
 	"wireguard-tools" "net-tools-deprecated"
 	# Rust
