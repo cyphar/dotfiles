@@ -50,7 +50,7 @@ OPTIONS = {
 	"python":    (YES, [".pythonrc.py"]),
 	"redshift":  (YES, [".config/redshift.conf"]),
 	"ssh":       (YES, [".ssh/config"]),
-	"termite":   (YES, [".config/termite/"]),
+	"alacritty": (YES, [".config/alacritty/"]),
 	"tmux":      (YES, [".tmux.conf"]),
 	"wget":      (YES, [".wgetrc"]),
 	"zsh":       (YES, [".profile", ".zsh/", ".zshrc"]),

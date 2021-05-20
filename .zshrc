@@ -53,7 +53,7 @@ fi
 export PATH="${PATH}:${HOME}/.local/bin"
 export EDITOR="nvim"
 export PAGER="less"
-export TERMINAL="termite"
+export TERMINAL="alacritty"
 
 # Make go ... work. This is inspired by how runc0m handles things.
 export GOPATH="${HOME}/.local"

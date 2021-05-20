@@ -19,7 +19,7 @@ set $mod Mod4
 
 # Set the variables.
 set $bin .local/bin
-set $term termite
+set $term alacritty
 
 font pango:Cozette 9
 

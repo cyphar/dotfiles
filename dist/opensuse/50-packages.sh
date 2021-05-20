@@ -28,7 +28,6 @@ sudo zypper mr -p 98 repo-debug repo-oss repo-source repo-update
 # Set of repos needed for a base system.
 echo ">> zypper addrepo [repos]"
 zypper repos vndr-vlc      &>/dev/null || sudo zypper addrepo -f -p 97 "http://download.videolan.org/pub/vlc/SuSE/${OPENSUSE_DISTRO#openSUSE_}" vndr-vlc
-zypper repos obs-termite   &>/dev/null || sudo zypper addrepo -f "obs://home:cyphar:termite" obs-termite
 zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
 zypper repos obs-hardware  &>/dev/null || sudo zypper addrepo -f "obs://hardware" obs-hardware
 sudo zypper --gpg-auto-import-keys ref
@@ -50,7 +49,7 @@ packages=(
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "cozette-fonts"
 	"xbacklight"
 	# Graphical programs.
-	"keepassxc" "firefox" "vlc" "mpv" "termite" "redshift" "libreoffice"
+	"keepassxc" "firefox" "vlc" "mpv" "alacritty" "redshift" "libreoffice"
 	"zathura" "evince"
 	# WireGuard is built into openSUSE's kernel now...
 	"wireguard-tools" "net-tools-deprecated"
