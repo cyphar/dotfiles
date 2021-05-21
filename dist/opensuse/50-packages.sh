@@ -27,9 +27,9 @@ sudo zypper mr -p 98 repo-debug repo-oss repo-source repo-update
 
 # Set of repos needed for a base system.
 echo ">> zypper addrepo [repos]"
-zypper repos vndr-vlc      &>/dev/null || sudo zypper addrepo -f -p 97 "http://download.videolan.org/pub/vlc/SuSE/${OPENSUSE_DISTRO#openSUSE_}" vndr-vlc
-zypper repos obs-fs        &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
-zypper repos obs-hardware  &>/dev/null || sudo zypper addrepo -f "obs://hardware" obs-hardware
+zypper repos packman-essentials &>/dev/null || sudo zypper addrepo -fp 97 "https://ftp.gwdg.de/pub/linux/misc/packman/suse/$OPENSUSE_DISTRO/Essentials" packman-essentials
+zypper repos obs-fs             &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
+zypper repos obs-hardware       &>/dev/null || sudo zypper addrepo -f "obs://hardware" obs-hardware
 sudo zypper --gpg-auto-import-keys ref
 
 # Set of packages we need for a base system.
@@ -47,12 +47,12 @@ packages=(
 	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "picom"
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "cozette-fonts"
-	"xbacklight"
+	"xbacklight" "xclip"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "mpv" "alacritty" "redshift" "libreoffice"
 	"zathura" "evince"
-	# WireGuard is built into openSUSE's kernel now...
-	"wireguard-tools" "net-tools-deprecated"
+	# Networking.
+	"wireguard-tools" "net-tools-deprecated" "NetworkManager-applet"
 	# Rust
 	"rust" "rustfmt" "cargo"
 	# Good-to-haves.
