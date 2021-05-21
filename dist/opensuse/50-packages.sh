@@ -51,6 +51,8 @@ packages=(
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "mpv" "alacritty" "redshift" "libreoffice"
 	"zathura" "evince"
+	# To make my phone work...
+	"android-tools"
 	# Networking.
 	"wireguard-tools" "net-tools-deprecated" "NetworkManager-applet"
 	# Rust
@@ -61,7 +63,5 @@ packages=(
 	"neomutt" "zenity" "isync" "secret-tool"
 	# Japanese input.
 	ibus{,-gtk{,3},-mozc{,-candidate-window}}
-	# XXX: Android dev tools are broken on openSUSE.
-	#"android-tools"
 )
 sudo zypper install "${packages[@]}"
