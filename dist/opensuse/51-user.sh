@@ -18,8 +18,16 @@
 set -Eeuo pipefail
 
 # Set our shell to be zsh.
-sudo usermod -s/bin/zsh $USER
+sudo usermod -s/bin/zsh "$USER"
+
+# Set up our ~/.local/src gopath.
+if [[ -e "$HOME/.local/src" && ! -L "$HOME/.local/src" ]]
+then
+	echo "Skipping ~/.local/src setup (already exists)."
+else
+	ln -sfT "../src" "$HOME/.local/src"
+fi
 
 # Add ourselves to the docker group, if it exists (we no longer install Docker
 # by default).
-sudo usermod -a -G docker $USER || :
+sudo usermod -a -G docker "$USER" || :
