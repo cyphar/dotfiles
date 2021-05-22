@@ -36,11 +36,6 @@ Options:
 EOH
 }
 
-# Helper to calculate simple expressions.
-function _calc() {
-	bc -q <<<"$1"
-}
-
 # Get the options.
 local __block_size=20
 local __switch_to_greeter=
@@ -60,7 +55,7 @@ while getopts "ghp:" __opt; do
 done
 
 # Get pass-through options.
-shift $(_calc "${OPTIND}-1")
+shift "$((OPTIND-1))"
 
 # Gets the (width, height) of the screen.
 read __screen_x __screen_y <<<$(xrandr -q | awk '
@@ -81,8 +76,8 @@ $1 == "Screen" {
 }' | tr -d ,)
 
 # Calculate the "reduced" height and width for the down-scaling.
-local __reduced_x=$(_calc "${__screen_x}/${__block_size}")
-local __reduced_y=$(_calc "${__screen_y}/${__block_size}")
+local __reduced_x="$((__screen_x/__block_size))"
+local __reduced_y="$((__screen_y/__block_size))"
 
 # Actually do the locking. Since `convert -scale` doesn't do blurring, scaling
 # down and then back up is an efficient method of producing a pixelated image.
