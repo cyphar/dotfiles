@@ -55,8 +55,6 @@ packages=(
 	"android-tools"
 	# Networking.
 	"wireguard-tools" "net-tools-deprecated" "NetworkManager-applet"
-	# Rust
-	"rust" "rustfmt" "cargo"
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
@@ -65,3 +63,9 @@ packages=(
 	ibus{,-gtk{,3},-mozc{,-candidate-window}}
 )
 sudo zypper install "${packages[@]}"
+
+# Install rust with rustup. I don't like "curl | sh" either, and they don't
+# seem to have any signature verification either. Hopefully they fix this soon
+# <https://github.com/rust-lang/rustup/issues/2028>.
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+"$HOME/.cargo/bin/rustup" toolchain install nightly

@@ -76,3 +76,6 @@ fi
 
 # Make sure "git commit" will actually show you pinentry...
 export GPG_TTY="$(tty)"
+
+# Use cargo environment if applicable.
+[ -e "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
