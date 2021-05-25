@@ -59,8 +59,8 @@ packages=(
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
 	"neomutt" "zenity" "isync" "secret-tool"
-	# Japanese input.
-	ibus{,-gtk{,3},-mozc{,-candidate-window}}
+	# Japanese input and packages.
+	"qolibri" ibus{,-gtk{,3},-mozc{,-candidate-window}}
 )
 sudo zypper install "${packages[@]}"
 
