@@ -104,10 +104,10 @@ window:
 # Font configuration
 font:
   normal:
-    family: Cozette
+    family: terminal
     style: Regular
   bold:
-    family: Cozette
+    family: terminal
     style: Bold
 
   # Italic font face
@@ -132,8 +132,10 @@ font:
     # The `style` can be specified to pick a specific face.
     #style: Bold Italic
 
-  # Point size
-  size: 10.0
+  # NOTE: This size is set so that Cozette and M+ will have the same apparent
+  #       size. Turns out that Cozette doesn't actually change size with this
+  #       setting.
+  size: 4.5
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
