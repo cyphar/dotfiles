@@ -30,6 +30,7 @@ echo ">> zypper addrepo [repos]"
 zypper repos packman-essentials &>/dev/null || sudo zypper addrepo -fp 97 "https://ftp.gwdg.de/pub/linux/misc/packman/suse/$OPENSUSE_DISTRO/Essentials" packman-essentials
 zypper repos obs-fs             &>/dev/null || sudo zypper addrepo -f "obs://filesystems" obs-fs
 zypper repos obs-hardware       &>/dev/null || sudo zypper addrepo -f "obs://hardware" obs-hardware
+zypper repos obs-vc             &>/dev/null || sudo zypper addrepo -fp 97 "obs://Virtualization:containers" obs-vc
 sudo zypper --gpg-auto-import-keys ref
 
 # Set of packages we need for a base system.
@@ -41,13 +42,14 @@ packages=(
 	"neovim" "tmux" "zsh" "git" "gcc" "go" "keychain" "figlet" "gpg2" "python3"
 	"mosh" "rsync" "ranger" "alsa-utils" "weechat" "make" "exfat-utils"
 	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool" "bpftrace"
+	"moreutils" "qpdf"
 	# Container-related packages.
 	"skopeo" "umoci" "runc" "docker" "lxc" "lxd"
 	# Basic graphics stack and environment.
 	"i3" "i3lock" "i3status" "dmenu" "feh" "ImageMagick" "xorg-x11-server"
 	"xf86-video-intel" "xf86-input-keyboard" "xf86-input-mouse" "picom"
 	"xf86-input-libinput" "lightdm" "lightdm-gtk-greeter" "cozette-fonts"
-	"xbacklight" "xclip"
+	"xbacklight" "xclip" "scrot"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "mpv" "alacritty" "redshift" "libreoffice"
 	"zathura" "evince"
@@ -58,7 +60,9 @@ packages=(
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
-	"neomutt" "zenity" "isync" "secret-tool"
+	"neomutt" "zenity" "isync" "secret-tool" "notmuch"
+	# openSUSE
+	"osc"
 	# Japanese input and packages.
 	"qolibri" ibus{,-gtk{,3},-mozc{,-candidate-window}}
 )
