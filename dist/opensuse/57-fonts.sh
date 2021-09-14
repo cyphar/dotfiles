@@ -36,6 +36,7 @@ fonts=(
 	mplus-fonts
 	monapo-fonts
 	noto-sans-gothic-fonts
+	noto-sans-{jp,tc,sc,kr}-fonts-full
 	ipa-{{ex-,p}{gothic,mincho},uigothic,{,p}gothic-{bold,italic,bolditalic}}-fonts
 	adobe-sourcehan{serif,sans}-{cn,jp,kr,tw}-fonts
 )
