@@ -38,6 +38,9 @@
 [gpg]
 	program = gpg2
 
+[init]
+	defaultBranch = "main"
+
 [alias]
 	# Very useful aliases for getting the state of a repo.
 	id = "rev-parse --verify HEAD"
