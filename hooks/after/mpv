@@ -21,7 +21,7 @@ echo "[*] Updating mpvacious."
 
 pushd "$HOME/.config/mpv/scripts/"
 
-MPVACIOUS_VERSION="7cbe7f8768115b5945d77cf7afc324d4b0fd888b" # v0.16 + my patches
+MPVACIOUS_VERSION="146c890f20cadde38424b385cb13c401ebe982ee" # v0.16+
 [[ -d "mpvacious" ]] || git clone https://github.com/Ajatt-Tools/mpvacious.git
 pushd "mpvacious"
 git fetch origin
