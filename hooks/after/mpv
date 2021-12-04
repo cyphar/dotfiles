@@ -18,12 +18,17 @@
 set -Eeuo pipefail
 
 echo "[*] Updating mpvacious."
-
 pushd "$HOME/.config/mpv/scripts/"
-
 MPVACIOUS_VERSION="146c890f20cadde38424b385cb13c401ebe982ee" # v0.16+
 [[ -d "mpvacious" ]] || git clone https://github.com/Ajatt-Tools/mpvacious.git
 pushd "mpvacious"
 git fetch origin
 git checkout "$MPVACIOUS_VERSION"
+popd
+
+echo "[*] Updating youtube-dl (yt-dlp)."
+YTDL_VERSION="2021.12.01"
+pushd "$HOME/.local/bin"
+curl -SLo yt-dlp "https://github.com/yt-dlp/yt-dlp/releases/download/$YTDL_VERSION/yt-dlp"
+chmod +x yt-dlp
 popd
