@@ -80,30 +80,6 @@ ENTRY="$1"
 # Get keepass version. In 2.3.0 and later the API has changed quite a lot.
 KEEPASSXC_VERSION="$(keepassxc-cli --version)"
 
-# If the requested entry is under /Shared (which is shared through the
-# SecretService DBus API) and is a Password, then we can request it through
-# the API without asking for the database password.
-if [[ "$ENTRY" =~ ^/Shared/ ]]
-then
-	# SecretService entries don't have the "/Shared" prefix.
-	SS_ENTRY="${ENTRY#"/Shared"}"
-
-	if [[ "$ATTRIBUTE" == "Password" ]]
-	then
-		#output="$(secret-tool lookup Path "$SS_ENTRY")"
-		cmd='secret-tool lookup Path "$SS_ENTRY"'
-	else
-		#output="$(secret-tool search Path "$SS_ENTRY" 2>&1 | grep -oP "^attribute.$ATTRIBUTE\s*=\s*\K.*$")"
-		cmd='secret-tool search Path "$SS_ENTRY" 2>&1 | grep -oP "^attribute.$ATTRIBUTE\s*=\s*\K.*$"'
-	fi
-
-	if ( eval "$cmd" &>/dev/null )
-	then
-		eval "$cmd"
-		exit 0
-	fi
-fi
-
 if ( version_isolder "$KEEPASSXC_VERSION" "2.3.0" )
 then
 	# Cannot use --attributes in older KeePassXC versions.
@@ -111,9 +87,33 @@ then
 fi
 
 RETRY_NUM=0
-RETRY_MAX=3
+RETRY_MAX=5
 while true
 do
+	# If the requested entry is under /Shared (which is shared through the
+	# SecretService DBus API) and is a Password, then we can request it through
+	# the API without asking for the database password.
+	if [[ "$ENTRY" =~ ^/Shared/ ]]
+	then
+		# SecretService entries don't have the "/Shared" prefix.
+		SS_ENTRY="${ENTRY#"/Shared"}"
+
+		if [[ "$ATTRIBUTE" == "Password" ]]
+		then
+			#output="$(secret-tool lookup Path "$SS_ENTRY")"
+			cmd='secret-tool lookup Path "$SS_ENTRY"'
+		else
+			#output="$(secret-tool search Path "$SS_ENTRY" 2>&1 | grep -oP "^attribute.$ATTRIBUTE\s*=\s*\K.*$")"
+			cmd='secret-tool search Path "$SS_ENTRY" 2>&1 | grep -oP "^attribute.$ATTRIBUTE\s*=\s*\K.*$"'
+		fi
+
+		if ( eval "$cmd" &>/dev/null )
+		then
+			eval "$cmd"
+			exit 0
+		fi
+	fi
+
 	if [ "$RETRY_NUM" -eq 0 ]
 	then
 		PROMPT="Password for '$KDBX': "
@@ -123,13 +123,18 @@ do
 	else
 		bail "Could not unlock '$KDBX': bad password."
 	fi
-	RETRY_NUM="$(($RETRY_NUM + 1))"
 
 	# Get the password.
 	#DISPLAY="${DISPLAY:?DISPLAY is not set.}"
 	#DB_PASSWORD="$(zenity --password --title="KeePassXC Password" --display="$DISPLAY" 2>/dev/null)"
 	read -rs "DB_PASSWORD?$PROMPT" ; printf '\n' >&2
-	[[ "$DB_PASSWORD" ]] || bail "Empty passwords are not accepted."
+	if [[ -z "$DB_PASSWORD" ]]
+	then
+		echo "Empty passwords are not accepted." >&2
+		continue
+	fi
+
+	RETRY_NUM="$(($RETRY_NUM + 1))"
 
 	# Make sure the password actually works and then Get the thing we wanted from
 	# KeePassXC.
