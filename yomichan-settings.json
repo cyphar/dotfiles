@@ -1,12 +1,18 @@
 {
     "version": 0,
-    "date": "2021-12-04 03:05:45",
+    "date": "2022-05-29 03:32:45",
     "url": "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/",
     "manifest": {
-        "applications": null,
+        "applications": {
+            "gecko": {
+                "id": "alex@foosoft.net",
+                "strict_max_version": null,
+                "strict_min_version": "57.0",
+                "update_url": null
+            }
+        },
         "author": "Alex Yatskov",
         "browser_specific_settings": {
-            "edge": null,
             "gecko": {
                 "id": "alex@foosoft.net",
                 "strict_max_version": null,
@@ -15,11 +21,13 @@
             }
         },
         "description": "Japanese dictionary with Anki integration",
+        "developer": null,
         "homepage_url": null,
+        "install_origins": null,
         "manifest_version": 2,
         "name": "Yomichan",
         "short_name": null,
-        "version": "21.10.31.1",
+        "version": "22.4.4.0",
         "background": {
             "page": "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/background.html",
             "persistent": true
@@ -39,6 +47,7 @@
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/app/popup-factory.js",
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/app/popup-proxy.js",
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/app/popup-window.js",
+                    "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/app/theme-controller.js",
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/comm/api.js",
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/comm/cross-frame-api.js",
                     "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/comm/frame-ancestry-handler.js",
@@ -60,26 +69,10 @@
                     "file://*/*"
                 ],
                 "run_at": "document_idle"
-            },
-            {
-                "all_frames": true,
-                "css": null,
-                "exclude_globs": null,
-                "exclude_matches": null,
-                "include_globs": null,
-                "js": [
-                    "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/js/document-start.js"
-                ],
-                "match_about_blank": true,
-                "matches": [
-                    "http://docs.google.com/*",
-                    "https://docs.google.com/*"
-                ],
-                "run_at": "document_start"
             }
         ],
         "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; img-src blob: 'self'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *",
-        "developer": null,
+        "granted_host_permissions": false,
         "hidden": false,
         "icons": {
             "16": "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/images/icon16.png",
@@ -94,7 +87,8 @@
         "minimum_chrome_version": "57.0.0.0",
         "minimum_opera_version": null,
         "optional_permissions": [
-            "clipboardRead"
+            "clipboardRead",
+            "webNavigation"
         ],
         "options_ui": {
             "browser_style": true,
@@ -130,6 +124,7 @@
             "default_title": "Yomichan",
             "theme_icons": null
         },
+        "page_action": null,
         "chrome_settings_overrides": null,
         "commands": {
             "toggleTextScanning": {
@@ -173,7 +168,6 @@
         },
         "devtools_page": null,
         "omnibox": null,
-        "page_action": null,
         "sidebar_action": null,
         "chrome_url_overrides": null,
         "default_locale": null,
@@ -190,7 +184,7 @@
             "os": "linux"
         }
     },
-    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:94.0) Gecko/20100101 Firefox/94.0",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0",
     "permissions": {
         "origins": [
             "<all_urls>"
@@ -206,7 +200,7 @@
         ]
     },
     "options": {
-        "version": 15,
+        "version": 18,
         "profiles": [
             {
                 "name": "Default",
@@ -235,7 +229,7 @@
                         "glossaryLayoutMode": "compact",
                         "mainDictionary": "明鏡国語辞典",
                         "popupTheme": "dark",
-                        "popupOuterTheme": "default",
+                        "popupOuterTheme": "light",
                         "customPopupCss": "",
                         "customPopupOuterCss": "",
                         "enableWanakana": true,
@@ -252,7 +246,7 @@
                         "frequencyDisplayMode": "split-tags-grouped",
                         "termDisplayMode": "ruby",
                         "sortFrequencyDictionary": null,
-                        "sortFrequencyDictionaryOrder": "descending"
+                        "sortFrequencyDictionaryOrder": "ascending"
                     },
                     "popupWindow": {
                         "width": 400,
@@ -273,18 +267,18 @@
                                 "voice": ""
                             },
                             {
+                                "type": "custom-json",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
+                                "voice": ""
+                            },
+                            {
                                 "type": "jpod101",
                                 "url": "",
                                 "voice": ""
                             },
                             {
                                 "type": "jpod101-alternate",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "custom-json",
-                                "url": "http://localhost:50505/{term}/{reading}",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
                                 "voice": ""
                             }
                         ],
@@ -352,7 +346,10 @@
                         "enableOnPopupExpressions": false,
                         "enableOnSearchPage": true,
                         "enableSearchTags": false,
-                        "layoutAwareScan": false
+                        "layoutAwareScan": false,
+                        "matchTypePrefix": false,
+                        "hidePopupOnCursorExit": false,
+                        "hidePopupOnCursorExitDelay": 0
                     },
                     "translation": {
                         "convertHalfWidthCharacters": "variant",
@@ -368,13 +365,6 @@
                     },
                     "dictionaries": [
                         {
-                            "name": "旺文社国語辞典 第十一版 画像無し",
-                            "priority": 4,
-                            "enabled": false,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
                             "name": "明鏡国語辞典",
                             "priority": 3,
                             "enabled": true,
@@ -389,14 +379,21 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "新明解国語辞典　第五版",
+                            "name": "大辞林 第三版",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "大辞林 第三版",
+                            "name": "新明解国語辞典　第七版",
+                            "priority": 1,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "デジタル大辞泉",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
@@ -424,9 +421,16 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "Kanjium Pitch Accents",
+                            "name": "アクセント辞典",
                             "priority": 0,
                             "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Kanjium Pitch Accents",
+                            "priority": 0,
+                            "enabled": false,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
@@ -467,6 +471,13 @@
                         },
                         {
                             "name": "Wikipedia",
+                            "priority": 0,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Youtube",
                             "priority": 0,
                             "enabled": true,
                             "allowSecondarySearches": false,
@@ -607,6 +618,34 @@
                             {
                                 "enabled": true,
                                 "character1": "…",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︒",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︕",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︖",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︙",
                                 "character2": null,
                                 "includeCharacterAtStart": false,
                                 "includeCharacterAtEnd": true
@@ -872,7 +911,7 @@
                         "glossaryLayoutMode": "compact",
                         "mainDictionary": "明鏡国語辞典",
                         "popupTheme": "dark",
-                        "popupOuterTheme": "default",
+                        "popupOuterTheme": "light",
                         "customPopupCss": "",
                         "customPopupOuterCss": "",
                         "enableWanakana": true,
@@ -889,7 +928,7 @@
                         "frequencyDisplayMode": "split-tags-grouped",
                         "termDisplayMode": "ruby",
                         "sortFrequencyDictionary": null,
-                        "sortFrequencyDictionaryOrder": "descending"
+                        "sortFrequencyDictionaryOrder": "ascending"
                     },
                     "popupWindow": {
                         "width": 400,
@@ -910,18 +949,18 @@
                                 "voice": ""
                             },
                             {
+                                "type": "custom-json",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
+                                "voice": ""
+                            },
+                            {
                                 "type": "jpod101",
                                 "url": "",
                                 "voice": ""
                             },
                             {
                                 "type": "jpod101-alternate",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "custom-json",
-                                "url": "http://localhost:50505/{term}/{reading}",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
                                 "voice": ""
                             }
                         ],
@@ -950,7 +989,7 @@
                                 }
                             },
                             {
-                                "include": "",
+                                "include": "mouse0",
                                 "exclude": "",
                                 "types": {
                                     "mouse": false,
@@ -980,7 +1019,7 @@
                         "selectText": true,
                         "alphanumeric": true,
                         "autoHideResults": false,
-                        "delay": 20,
+                        "delay": 300,
                         "hideDelay": 0,
                         "length": 10,
                         "deepDomScan": true,
@@ -989,7 +1028,10 @@
                         "enableOnPopupExpressions": false,
                         "enableOnSearchPage": true,
                         "enableSearchTags": false,
-                        "layoutAwareScan": false
+                        "layoutAwareScan": false,
+                        "matchTypePrefix": false,
+                        "hidePopupOnCursorExit": false,
+                        "hidePopupOnCursorExitDelay": 0
                     },
                     "translation": {
                         "convertHalfWidthCharacters": "variant",
@@ -1005,13 +1047,6 @@
                     },
                     "dictionaries": [
                         {
-                            "name": "旺文社国語辞典 第十一版 画像無し",
-                            "priority": 4,
-                            "enabled": false,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
                             "name": "明鏡国語辞典",
                             "priority": 3,
                             "enabled": true,
@@ -1026,14 +1061,21 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "新明解国語辞典　第五版",
+                            "name": "大辞林 第三版",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "大辞林 第三版",
+                            "name": "新明解国語辞典　第七版",
+                            "priority": 1,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "デジタル大辞泉",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
@@ -1061,9 +1103,16 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "Kanjium Pitch Accents",
+                            "name": "アクセント辞典",
                             "priority": 0,
                             "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Kanjium Pitch Accents",
+                            "priority": 0,
+                            "enabled": false,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
@@ -1104,6 +1153,13 @@
                         },
                         {
                             "name": "Wikipedia",
+                            "priority": 0,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Youtube",
                             "priority": 0,
                             "enabled": true,
                             "allowSecondarySearches": false,
@@ -1155,7 +1211,7 @@
                             "fields": {}
                         },
                         "duplicateScope": "collection",
-                        "checkForDuplicates": true,
+                        "checkForDuplicates": false,
                         "fieldTemplates": "{{#*inline \"glossary-single\"}}\n    {{~#unless brief~}}\n        {{~#scope~}}\n            {{~#set \"any\" false}}{{/set~}}\n            {{~#each definitionTags~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!\" redundant))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{name}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/each~}}\n            {{~#unless noDictionaryTag~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!==\" dictionary (get \"previousDictionary\")))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{dictionary}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/unless~}}\n            {{~#if (get \"any\")}})</i> {{/if~}}\n        {{~/scope~}}\n        {{~#if only~}}({{#each only}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} only) {{/if~}}\n    {{~/unless~}}\n    {{~#if (op \"<=\" glossary.length 1)~}}\n        {{#each glossary}}{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}{{/each}}\n    {{~else if @root.compactGlossaries~}}\n        {{#each glossary}}{{#multiLine}}{{.}}{{/multiLine}}{{#unless @last}}, {{/unless}}{{/each}}\n    {{~else~}}\n        <ul>{{#each glossary}}<li>{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}</li>{{/each}}</ul>\n    {{~/if~}}\n    {{~#set \"previousDictionary\" dictionary~}}{{~/set~}}\n{{/inline}}\n\n{{#*inline \"audio\"}}\n    {{~#if (hasMedia \"audio\")~}}\n        [sound:{{#getMedia \"audio\"}}{{/getMedia}}]\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"character\"}}\n    {{~definition.character~}}\n{{/inline}}\n\n{{#*inline \"dictionary\"}}\n    {{~definition.dictionary~}}\n{{/inline}}\n\n{{#*inline \"expression\"}}\n    {{~#if merge~}}\n        {{~#if modeTermKana~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~else~}}\n                {{~#each definition.expression~}}\n                    {{{.}}}\n                    {{~#unless @last}}、{{/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~#each definition.expression~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~/if~}}\n    {{~else~}}\n        {{~#if modeTermKana~}}\n            {{~#if definition.reading~}}\n                {{definition.reading}}\n            {{~else~}}\n                {{definition.expression}}\n            {{~/if~}}\n        {{~else~}}\n            {{definition.expression}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furigana}}{{{.}}}{{/furigana~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furigana}}{{{definition}}}{{/furigana}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana-plain\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furiganaPlain}}{{{.}}}{{/furiganaPlain~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furiganaPlain}}{{{definition}}}{{/furiganaPlain}}\n    {{~/if~}}\n{{/inline}}\n\n{{~#*inline \"glossary\"~}}\n    <div style=\"text-align: left;\">\n    {{~#scope~}}\n        {{~#if (op \"===\" definition.type \"term\")~}}\n            {{~> glossary-single definition brief=brief noDictionaryTag=noDictionaryTag ~}}\n        {{~else if (op \"||\" (op \"===\" definition.type \"termGrouped\") (op \"===\" definition.type \"termMerged\"))~}}\n            {{~#if (op \">\" definition.definitions.length 1)~}}\n                <ol>{{~#each definition.definitions~}}<li>{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}</li>{{~/each~}}</ol>\n            {{~else~}}\n                {{~#each definition.definitions~}}{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}{{~/each~}}\n            {{~/if~}}\n        {{~else if (op \"===\" definition.type \"kanji\")~}}\n            {{~#if (op \">\" definition.glossary.length 1)~}}\n                <ol>{{#each definition.glossary}}<li>{{.}}</li>{{/each}}</ol>\n            {{~else~}}\n                {{~#each definition.glossary~}}{{.}}{{~/each~}}\n            {{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n    </div>\n{{~/inline~}}\n\n{{#*inline \"glossary-no-dictionary\"}}\n    {{~> glossary noDictionaryTag=true ~}}\n{{/inline}}\n\n{{#*inline \"glossary-brief\"}}\n    {{~> glossary brief=true ~}}\n{{/inline}}\n\n{{#*inline \"kunyomi\"}}\n    {{~#each definition.kunyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"onyomi\"}}\n    {{~#each definition.onyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"reading\"}}\n    {{~#unless modeTermKana~}}\n        {{~#if merge~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~definition.reading~}}\n        {{~/if~}}\n    {{~/unless~}}\n{{/inline}}\n\n{{#*inline \"sentence\"}}\n    {{~#if definition.cloze}}{{definition.cloze.sentence}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-prefix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.prefix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-body\"}}\n    {{~#if definition.cloze}}{{definition.cloze.body}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-suffix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.suffix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"tags\"}}\n    {{~#mergeTags definition group merge}}{{this}}{{/mergeTags~}}\n{{/inline}}\n\n{{#*inline \"url\"}}\n    <a href=\"{{definition.url}}\">{{definition.url}}</a>\n{{/inline}}\n\n{{#*inline \"screenshot\"}}\n    {{~#if (hasMedia \"screenshot\")~}}\n        <img src=\"{{#getMedia \"screenshot\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"document-title\"}}\n    {{~context.document.title~}}\n{{/inline}}\n\n{{! Pitch Accents }}\n{{#*inline \"pitch-accent-item\"}}\n    {{~#pronunciation format=format reading=reading downstepPosition=position nasalPositions=nasalPositions devoicePositions=devoicePositions~}}{{~/pronunciation~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-item-disambiguation\"}}\n    {{~#scope~}}\n        {{~#set \"exclusive\" (spread exclusiveExpressions exclusiveReadings)}}{{/set~}}\n        {{~#if (op \">\" (property (get \"exclusive\") \"length\") 0)~}}\n            {{~#set \"separator\" \"\"~}}{{/set~}}\n            <em>({{#each (get \"exclusive\")~}}\n                {{~#get \"separator\"}}{{/get~}}{{{.}}}\n            {{~/each}} only) </em>\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-list\"}}\n    {{~#if (op \">\" pitchCount 0)~}}\n        {{~#if (op \">\" pitchCount 1)~}}<ol>{{~/if~}}\n        {{~#each pitches~}}\n            {{~#each pitches~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}<li>{{~/if~}}\n                    {{~> pitch-accent-item-disambiguation~}}\n                    {{~> pitch-accent-item format=../../format~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}</li>{{~/if~}}\n            {{~/each~}}\n        {{~/each~}}\n        {{~#if (op \">\" pitchCount 1)~}}</ol>{{~/if~}}\n    {{~else~}}\n        No pitch accent data\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"pitch-accents\"}}\n    {{~> pitch-accent-list format='text'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-graphs\"}}\n    {{~> pitch-accent-list format='graph'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-positions\"}}\n    {{~> pitch-accent-list format='position'~}}\n{{/inline}}\n{{! End Pitch Accents }}\n\n{{#*inline \"clipboard-image\"}}\n    {{~#if (hasMedia \"clipboardImage\")~}}\n        <img src=\"{{#getMedia \"clipboardImage\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"clipboard-text\"}}\n    {{~#if (hasMedia \"clipboardText\")}}{{#getMedia \"clipboardText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"conjugation\"}}\n    {{~#if definition.reasons~}}\n        {{~#each definition.reasons~}}\n            {{~#if (op \">\" @index 0)}} « {{/if~}}\n            {{.}}\n        {{~/each~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"frequencies\"}}\n    {{~#if (op \">\" definition.frequencies.length 0)~}}\n        <ul style=\"text-align: left;\">\n        {{~#each definition.frequencies~}}\n            <li>\n            {{~#if (op \"!==\" ../definition.type \"kanji\")~}}\n                {{~#if (op \"||\" (op \">\" ../uniqueExpressions.length 1) (op \">\" ../uniqueReadings.length 1))~}}(\n                    {{~#furigana expression reading~}}{{~/furigana~}}\n                ) {{/if~}}\n            {{~/if~}}\n            {{~dictionary}}: {{frequency~}}\n            </li>\n        {{~/each~}}\n        </ul>\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"stroke-count\"}}\n    {{~#scope~}}\n        {{~#set \"found\" false}}{{/set~}}\n        {{~#each definition.stats.misc~}}\n            {{~#if (op \"===\" name \"strokes\")~}}\n                {{~#set \"found\" true}}{{/set~}}\n                Stroke count: {{value}}\n            {{~/if~}}\n        {{~/each~}}\n        {{~#if (op \"!\" (get \"found\"))~}}\n            Stroke count: Unknown\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech-pretty\"}}\n    {{~#if (op \"===\" . \"v1\")~}}Ichidan verb\n    {{~else if (op \"===\" . \"v5\")~}}Godan verb\n    {{~else if (op \"===\" . \"vk\")~}}Kuru verb\n    {{~else if (op \"===\" . \"vs\")~}}Suru verb\n    {{~else if (op \"===\" . \"vz\")~}}Zuru verb\n    {{~else if (op \"===\" . \"adj-i\")~}}I-adjective\n    {{~else if (op \"===\" . \"n\")~}}Noun\n    {{~else~}}{{.}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech\"}}\n    {{~#scope~}}\n        {{~#if (op \"!==\" definition.type \"kanji\")~}}\n            {{~#set \"first\" true}}{{/set~}}\n            {{~#each definition.expressions~}}\n                {{~#each wordClasses~}}\n                    {{~#unless (get (concat \"used_\" .))~}}\n                        {{~> part-of-speech-pretty . ~}}\n                        {{~#unless (get \"first\")}}, {{/unless~}}\n                        {{~#set (concat \"used_\" .) true~}}{{~/set~}}\n                        {{~#set \"first\" false~}}{{~/set~}}\n                    {{~/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n            {{~#if (get \"first\")~}}Unknown{{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"search-query\"}}\n    {{~#multiLine}}{{context.fullQuery}}{{/multiLine~}}\n{{/inline}}\n\n{{#*inline \"selection-text\"}}\n    {{~#if (hasMedia \"selectionText\")}}{{#getMedia \"selectionText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"sentence-furigana\"}}\n    {{~#if definition.cloze~}}\n        {{~#if (hasMedia \"textFurigana\" definition.cloze.sentence)~}}\n            {{#getMedia \"textFurigana\" definition.cloze.sentence escape=false}}{{/getMedia}}\n        {{~else~}}\n            {{definition.cloze.sentence}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{~> (lookup . \"marker\") ~}}",
                         "suspendNewCards": false,
                         "displayTags": "never",
@@ -1244,6 +1300,34 @@
                             {
                                 "enabled": true,
                                 "character1": "…",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︒",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︕",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︖",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︙",
                                 "character2": null,
                                 "includeCharacterAtStart": false,
                                 "includeCharacterAtEnd": true
@@ -1468,7 +1552,7 @@
                 }
             },
             {
-                "name": "Extension",
+                "name": "Extension / File",
                 "conditionGroups": [
                     {
                         "conditions": [
@@ -1478,630 +1562,7 @@
                                 "value": "^moz-extension://"
                             }
                         ]
-                    }
-                ],
-                "options": {
-                    "general": {
-                        "enable": true,
-                        "resultOutputMode": "group",
-                        "debugInfo": false,
-                        "maxResults": 32,
-                        "showAdvanced": true,
-                        "popupDisplayMode": "default",
-                        "popupWidth": 400,
-                        "popupHeight": 250,
-                        "popupHorizontalOffset": 0,
-                        "popupVerticalOffset": 10,
-                        "popupHorizontalOffset2": 10,
-                        "popupVerticalOffset2": 0,
-                        "popupHorizontalTextPosition": "below",
-                        "popupVerticalTextPosition": "before",
-                        "popupScalingFactor": 1,
-                        "popupScaleRelativeToPageZoom": false,
-                        "popupScaleRelativeToVisualViewport": true,
-                        "showGuide": false,
-                        "compactTags": false,
-                        "glossaryLayoutMode": "compact",
-                        "mainDictionary": "明鏡国語辞典",
-                        "popupTheme": "dark",
-                        "popupOuterTheme": "default",
-                        "customPopupCss": "",
-                        "customPopupOuterCss": "",
-                        "enableWanakana": true,
-                        "showPitchAccentDownstepNotation": true,
-                        "showPitchAccentPositionNotation": true,
-                        "showPitchAccentGraph": false,
-                        "showIframePopupsInRootFrame": true,
-                        "useSecurePopupFrameUrl": true,
-                        "usePopupShadowDom": true,
-                        "usePopupWindow": false,
-                        "popupCurrentIndicatorMode": "triangle",
-                        "popupActionBarVisibility": "auto",
-                        "popupActionBarLocation": "top",
-                        "frequencyDisplayMode": "split-tags-grouped",
-                        "termDisplayMode": "ruby",
-                        "sortFrequencyDictionary": null,
-                        "sortFrequencyDictionaryOrder": "descending"
                     },
-                    "popupWindow": {
-                        "width": 400,
-                        "height": 250,
-                        "left": 0,
-                        "top": 0,
-                        "useLeft": false,
-                        "useTop": false,
-                        "windowType": "popup",
-                        "windowState": "normal"
-                    },
-                    "audio": {
-                        "enabled": true,
-                        "sources": [
-                            {
-                                "type": "jisho",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "jpod101",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "jpod101-alternate",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "custom-json",
-                                "url": "http://localhost:50505/{term}/{reading}",
-                                "voice": ""
-                            }
-                        ],
-                        "volume": 100,
-                        "autoPlay": true
-                    },
-                    "scanning": {
-                        "inputs": [
-                            {
-                                "include": "shift",
-                                "exclude": "mouse0",
-                                "types": {
-                                    "mouse": true,
-                                    "touch": false,
-                                    "pen": false
-                                },
-                                "options": {
-                                    "showAdvanced": false,
-                                    "searchTerms": true,
-                                    "searchKanji": true,
-                                    "scanOnTouchMove": true,
-                                    "scanOnPenHover": true,
-                                    "scanOnPenPress": true,
-                                    "scanOnPenRelease": false,
-                                    "preventTouchScrolling": false
-                                }
-                            },
-                            {
-                                "include": "",
-                                "exclude": "",
-                                "types": {
-                                    "mouse": false,
-                                    "touch": true,
-                                    "pen": true
-                                },
-                                "options": {
-                                    "showAdvanced": false,
-                                    "searchTerms": true,
-                                    "searchKanji": true,
-                                    "scanOnTouchMove": true,
-                                    "scanOnPenHover": true,
-                                    "scanOnPenPress": true,
-                                    "scanOnPenRelease": false,
-                                    "preventTouchScrolling": true
-                                }
-                            }
-                        ],
-                        "preventMiddleMouse": {
-                            "onWebPages": false,
-                            "onPopupPages": false,
-                            "onSearchPages": false,
-                            "onSearchQuery": false
-                        },
-                        "touchInputEnabled": true,
-                        "pointerEventsEnabled": false,
-                        "selectText": true,
-                        "alphanumeric": true,
-                        "autoHideResults": false,
-                        "delay": 20,
-                        "hideDelay": 0,
-                        "length": 10,
-                        "deepDomScan": true,
-                        "popupNestingMaxDepth": 9999,
-                        "enablePopupSearch": false,
-                        "enableOnPopupExpressions": false,
-                        "enableOnSearchPage": true,
-                        "enableSearchTags": false,
-                        "layoutAwareScan": false
-                    },
-                    "translation": {
-                        "convertHalfWidthCharacters": "variant",
-                        "convertNumericCharacters": "false",
-                        "convertAlphabeticCharacters": "false",
-                        "convertHiraganaToKatakana": "variant",
-                        "convertKatakanaToHiragana": "variant",
-                        "collapseEmphaticSequences": "false",
-                        "textReplacements": {
-                            "searchOriginal": true,
-                            "groups": []
-                        }
-                    },
-                    "dictionaries": [
-                        {
-                            "name": "旺文社国語辞典 第十一版 画像無し",
-                            "priority": 4,
-                            "enabled": false,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "明鏡国語辞典",
-                            "priority": 3,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "ハイブリッド新辞林",
-                            "priority": 2,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "新明解国語辞典　第五版",
-                            "priority": 1,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "大辞林 第三版",
-                            "priority": 1,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "JMdict (English)",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "JMnedict",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "KANJIDIC (English)",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "Kanjium Pitch Accents",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "Anime & Jdrama Freq:",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "BCCWJ",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "Narou Freq",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "Netflix",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "VN Freq",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
-                            "name": "Wikipedia",
-                            "priority": 0,
-                            "enabled": true,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        }
-                    ],
-                    "parsing": {
-                        "enableScanningParser": true,
-                        "enableMecabParser": false,
-                        "selectedParser": "scan",
-                        "termSpacing": true,
-                        "readingMode": "hiragana"
-                    },
-                    "anki": {
-                        "enable": true,
-                        "server": "http://127.0.0.1:8765",
-                        "tags": [
-                            "yomichan"
-                        ],
-                        "screenshot": {
-                            "format": "png",
-                            "quality": 92
-                        },
-                        "terms": {
-                            "deck": "日本語::文::例文",
-                            "model": "Japanese Mined Sentences",
-                            "fields": {
-                                "SentKanji": "{cloze-prefix}<b>{cloze-body}</b>{cloze-suffix}",
-                                "SentFurigana": "",
-                                "SentEng": "",
-                                "SentAudio": "",
-                                "MorphManFocus": "",
-                                "VocabKanji": "{expression}",
-                                "VocabFurigana": "{furigana-plain}",
-                                "VocabPitchPattern": "{pitch-accents}",
-                                "VocabPitchNum": "{pitch-accent-positions}",
-                                "VocabDef": "{glossary}",
-                                "VocabDefMonolingual": "",
-                                "VocabAudio": "{audio}",
-                                "Image": "",
-                                "Notes": "",
-                                "Source": "",
-                                "MakeProductionCard": ""
-                            }
-                        },
-                        "kanji": {
-                            "deck": "",
-                            "model": "",
-                            "fields": {}
-                        },
-                        "duplicateScope": "collection",
-                        "checkForDuplicates": true,
-                        "fieldTemplates": "{{#*inline \"glossary-single\"}}\n    {{~#unless brief~}}\n        {{~#scope~}}\n            {{~#set \"any\" false}}{{/set~}}\n            {{~#each definitionTags~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!\" redundant))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{name}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/each~}}\n            {{~#unless noDictionaryTag~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!==\" dictionary (get \"previousDictionary\")))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{dictionary}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/unless~}}\n            {{~#if (get \"any\")}})</i> {{/if~}}\n        {{~/scope~}}\n        {{~#if only~}}({{#each only}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} only) {{/if~}}\n    {{~/unless~}}\n    {{~#if (op \"<=\" glossary.length 1)~}}\n        {{#each glossary}}{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}{{/each}}\n    {{~else if @root.compactGlossaries~}}\n        {{#each glossary}}{{#multiLine}}{{.}}{{/multiLine}}{{#unless @last}}, {{/unless}}{{/each}}\n    {{~else~}}\n        <ul>{{#each glossary}}<li>{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}</li>{{/each}}</ul>\n    {{~/if~}}\n    {{~#set \"previousDictionary\" dictionary~}}{{~/set~}}\n{{/inline}}\n\n{{#*inline \"audio\"}}\n    {{~#if (hasMedia \"audio\")~}}\n        [sound:{{#getMedia \"audio\"}}{{/getMedia}}]\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"character\"}}\n    {{~definition.character~}}\n{{/inline}}\n\n{{#*inline \"dictionary\"}}\n    {{~definition.dictionary~}}\n{{/inline}}\n\n{{#*inline \"expression\"}}\n    {{~#if merge~}}\n        {{~#if modeTermKana~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~else~}}\n                {{~#each definition.expression~}}\n                    {{{.}}}\n                    {{~#unless @last}}、{{/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~#each definition.expression~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~/if~}}\n    {{~else~}}\n        {{~#if modeTermKana~}}\n            {{~#if definition.reading~}}\n                {{definition.reading}}\n            {{~else~}}\n                {{definition.expression}}\n            {{~/if~}}\n        {{~else~}}\n            {{definition.expression}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furigana}}{{{.}}}{{/furigana~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furigana}}{{{definition}}}{{/furigana}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana-plain\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furiganaPlain}}{{{.}}}{{/furiganaPlain~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furiganaPlain}}{{{definition}}}{{/furiganaPlain}}\n    {{~/if~}}\n{{/inline}}\n\n{{~#*inline \"glossary\"~}}\n    <div style=\"text-align: left;\">\n    {{~#scope~}}\n        {{~#if (op \"===\" definition.type \"term\")~}}\n            {{~> glossary-single definition brief=brief noDictionaryTag=noDictionaryTag ~}}\n        {{~else if (op \"||\" (op \"===\" definition.type \"termGrouped\") (op \"===\" definition.type \"termMerged\"))~}}\n            {{~#if (op \">\" definition.definitions.length 1)~}}\n                <ol>{{~#each definition.definitions~}}<li>{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}</li>{{~/each~}}</ol>\n            {{~else~}}\n                {{~#each definition.definitions~}}{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}{{~/each~}}\n            {{~/if~}}\n        {{~else if (op \"===\" definition.type \"kanji\")~}}\n            {{~#if (op \">\" definition.glossary.length 1)~}}\n                <ol>{{#each definition.glossary}}<li>{{.}}</li>{{/each}}</ol>\n            {{~else~}}\n                {{~#each definition.glossary~}}{{.}}{{~/each~}}\n            {{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n    </div>\n{{~/inline~}}\n\n{{#*inline \"glossary-no-dictionary\"}}\n    {{~> glossary noDictionaryTag=true ~}}\n{{/inline}}\n\n{{#*inline \"glossary-brief\"}}\n    {{~> glossary brief=true ~}}\n{{/inline}}\n\n{{#*inline \"kunyomi\"}}\n    {{~#each definition.kunyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"onyomi\"}}\n    {{~#each definition.onyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"reading\"}}\n    {{~#unless modeTermKana~}}\n        {{~#if merge~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~definition.reading~}}\n        {{~/if~}}\n    {{~/unless~}}\n{{/inline}}\n\n{{#*inline \"sentence\"}}\n    {{~#if definition.cloze}}{{definition.cloze.sentence}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-prefix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.prefix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-body\"}}\n    {{~#if definition.cloze}}{{definition.cloze.body}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-suffix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.suffix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"tags\"}}\n    {{~#mergeTags definition group merge}}{{this}}{{/mergeTags~}}\n{{/inline}}\n\n{{#*inline \"url\"}}\n    <a href=\"{{definition.url}}\">{{definition.url}}</a>\n{{/inline}}\n\n{{#*inline \"screenshot\"}}\n    {{~#if (hasMedia \"screenshot\")~}}\n        <img src=\"{{#getMedia \"screenshot\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"document-title\"}}\n    {{~context.document.title~}}\n{{/inline}}\n\n{{! Pitch Accents }}\n{{#*inline \"pitch-accent-item\"}}\n    {{~#pronunciation format=format reading=reading downstepPosition=position nasalPositions=nasalPositions devoicePositions=devoicePositions~}}{{~/pronunciation~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-item-disambiguation\"}}\n    {{~#scope~}}\n        {{~#set \"exclusive\" (spread exclusiveExpressions exclusiveReadings)}}{{/set~}}\n        {{~#if (op \">\" (property (get \"exclusive\") \"length\") 0)~}}\n            {{~#set \"separator\" \"\"~}}{{/set~}}\n            <em>({{#each (get \"exclusive\")~}}\n                {{~#get \"separator\"}}{{/get~}}{{{.}}}\n            {{~/each}} only) </em>\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-list\"}}\n    {{~#if (op \">\" pitchCount 0)~}}\n        {{~#if (op \">\" pitchCount 1)~}}<ol>{{~/if~}}\n        {{~#each pitches~}}\n            {{~#each pitches~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}<li>{{~/if~}}\n                    {{~> pitch-accent-item-disambiguation~}}\n                    {{~> pitch-accent-item format=../../format~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}</li>{{~/if~}}\n            {{~/each~}}\n        {{~/each~}}\n        {{~#if (op \">\" pitchCount 1)~}}</ol>{{~/if~}}\n    {{~else~}}\n        No pitch accent data\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"pitch-accents\"}}\n    {{~> pitch-accent-list format='text'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-graphs\"}}\n    {{~> pitch-accent-list format='graph'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-positions\"}}\n    {{~> pitch-accent-list format='position'~}}\n{{/inline}}\n{{! End Pitch Accents }}\n\n{{#*inline \"clipboard-image\"}}\n    {{~#if (hasMedia \"clipboardImage\")~}}\n        <img src=\"{{#getMedia \"clipboardImage\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"clipboard-text\"}}\n    {{~#if (hasMedia \"clipboardText\")}}{{#getMedia \"clipboardText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"conjugation\"}}\n    {{~#if definition.reasons~}}\n        {{~#each definition.reasons~}}\n            {{~#if (op \">\" @index 0)}} « {{/if~}}\n            {{.}}\n        {{~/each~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"frequencies\"}}\n    {{~#if (op \">\" definition.frequencies.length 0)~}}\n        <ul style=\"text-align: left;\">\n        {{~#each definition.frequencies~}}\n            <li>\n            {{~#if (op \"!==\" ../definition.type \"kanji\")~}}\n                {{~#if (op \"||\" (op \">\" ../uniqueExpressions.length 1) (op \">\" ../uniqueReadings.length 1))~}}(\n                    {{~#furigana expression reading~}}{{~/furigana~}}\n                ) {{/if~}}\n            {{~/if~}}\n            {{~dictionary}}: {{frequency~}}\n            </li>\n        {{~/each~}}\n        </ul>\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"stroke-count\"}}\n    {{~#scope~}}\n        {{~#set \"found\" false}}{{/set~}}\n        {{~#each definition.stats.misc~}}\n            {{~#if (op \"===\" name \"strokes\")~}}\n                {{~#set \"found\" true}}{{/set~}}\n                Stroke count: {{value}}\n            {{~/if~}}\n        {{~/each~}}\n        {{~#if (op \"!\" (get \"found\"))~}}\n            Stroke count: Unknown\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech-pretty\"}}\n    {{~#if (op \"===\" . \"v1\")~}}Ichidan verb\n    {{~else if (op \"===\" . \"v5\")~}}Godan verb\n    {{~else if (op \"===\" . \"vk\")~}}Kuru verb\n    {{~else if (op \"===\" . \"vs\")~}}Suru verb\n    {{~else if (op \"===\" . \"vz\")~}}Zuru verb\n    {{~else if (op \"===\" . \"adj-i\")~}}I-adjective\n    {{~else if (op \"===\" . \"n\")~}}Noun\n    {{~else~}}{{.}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech\"}}\n    {{~#scope~}}\n        {{~#if (op \"!==\" definition.type \"kanji\")~}}\n            {{~#set \"first\" true}}{{/set~}}\n            {{~#each definition.expressions~}}\n                {{~#each wordClasses~}}\n                    {{~#unless (get (concat \"used_\" .))~}}\n                        {{~> part-of-speech-pretty . ~}}\n                        {{~#unless (get \"first\")}}, {{/unless~}}\n                        {{~#set (concat \"used_\" .) true~}}{{~/set~}}\n                        {{~#set \"first\" false~}}{{~/set~}}\n                    {{~/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n            {{~#if (get \"first\")~}}Unknown{{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"search-query\"}}\n    {{~#multiLine}}{{context.fullQuery}}{{/multiLine~}}\n{{/inline}}\n\n{{#*inline \"selection-text\"}}\n    {{~#if (hasMedia \"selectionText\")}}{{#getMedia \"selectionText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"sentence-furigana\"}}\n    {{~#if definition.cloze~}}\n        {{~#if (hasMedia \"textFurigana\" definition.cloze.sentence)~}}\n            {{#getMedia \"textFurigana\" definition.cloze.sentence escape=false}}{{/getMedia}}\n        {{~else~}}\n            {{definition.cloze.sentence}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{~> (lookup . \"marker\") ~}}",
-                        "suspendNewCards": false,
-                        "displayTags": "never",
-                        "duplicateScopeCheckAllModels": false
-                    },
-                    "sentenceParsing": {
-                        "scanExtent": 200,
-                        "terminationCharacters": [
-                            {
-                                "enabled": true,
-                                "character1": "「",
-                                "character2": "」",
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": false
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "『",
-                                "character2": "』",
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": false
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "\"",
-                                "character2": "\"",
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": false
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "'",
-                                "character2": "'",
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": false
-                            },
-                            {
-                                "enabled": true,
-                                "character1": ".",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "!",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "?",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "．",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "。",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "！",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "？",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            },
-                            {
-                                "enabled": true,
-                                "character1": "…",
-                                "character2": null,
-                                "includeCharacterAtStart": false,
-                                "includeCharacterAtEnd": true
-                            }
-                        ],
-                        "terminationCharacterMode": "custom"
-                    },
-                    "inputs": {
-                        "hotkeys": [
-                            {
-                                "action": "close",
-                                "argument": "",
-                                "key": "Escape",
-                                "modifiers": [],
-                                "scopes": [
-                                    "popup"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "focusSearchBox",
-                                "argument": "",
-                                "key": "Escape",
-                                "modifiers": [],
-                                "scopes": [
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "previousEntry",
-                                "argument": "3",
-                                "key": "PageUp",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "nextEntry",
-                                "argument": "3",
-                                "key": "PageDown",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "lastEntry",
-                                "argument": "",
-                                "key": "End",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "firstEntry",
-                                "argument": "",
-                                "key": "Home",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "previousEntry",
-                                "argument": "1",
-                                "key": "ArrowUp",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "nextEntry",
-                                "argument": "1",
-                                "key": "ArrowDown",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "historyBackward",
-                                "argument": "",
-                                "key": "KeyB",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "historyForward",
-                                "argument": "",
-                                "key": "KeyF",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "addNoteKanji",
-                                "argument": "",
-                                "key": "KeyK",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "addNoteTermKanji",
-                                "argument": "",
-                                "key": "KeyE",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "addNoteTermKana",
-                                "argument": "",
-                                "key": "KeyR",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "playAudio",
-                                "argument": "",
-                                "key": "KeyP",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "viewNote",
-                                "argument": "",
-                                "key": "KeyV",
-                                "modifiers": [
-                                    "alt"
-                                ],
-                                "scopes": [
-                                    "popup",
-                                    "search"
-                                ],
-                                "enabled": true
-                            },
-                            {
-                                "action": "copyHostSelection",
-                                "argument": "",
-                                "key": "KeyC",
-                                "modifiers": [
-                                    "ctrl"
-                                ],
-                                "scopes": [
-                                    "popup"
-                                ],
-                                "enabled": true
-                            }
-                        ]
-                    },
-                    "clipboard": {
-                        "enableBackgroundMonitor": false,
-                        "enableSearchPageMonitor": true,
-                        "autoSearchContent": true,
-                        "maximumSearchLength": 1000
-                    },
-                    "accessibility": {
-                        "forceGoogleDocsHtmlRendering": false
-                    }
-                }
-            },
-            {
-                "name": "file://",
-                "conditionGroups": [
                     {
                         "conditions": [
                             {
@@ -2136,7 +1597,7 @@
                         "glossaryLayoutMode": "compact",
                         "mainDictionary": "明鏡国語辞典",
                         "popupTheme": "dark",
-                        "popupOuterTheme": "default",
+                        "popupOuterTheme": "light",
                         "customPopupCss": "",
                         "customPopupOuterCss": "",
                         "enableWanakana": true,
@@ -2153,7 +1614,7 @@
                         "frequencyDisplayMode": "split-tags-grouped",
                         "termDisplayMode": "ruby",
                         "sortFrequencyDictionary": null,
-                        "sortFrequencyDictionaryOrder": "descending"
+                        "sortFrequencyDictionaryOrder": "ascending"
                     },
                     "popupWindow": {
                         "width": 400,
@@ -2174,18 +1635,18 @@
                                 "voice": ""
                             },
                             {
+                                "type": "custom-json",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
+                                "voice": ""
+                            },
+                            {
                                 "type": "jpod101",
                                 "url": "",
                                 "voice": ""
                             },
                             {
                                 "type": "jpod101-alternate",
-                                "url": "",
-                                "voice": ""
-                            },
-                            {
-                                "type": "custom-json",
-                                "url": "http://localhost:50505/{term}/{reading}",
+                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
                                 "voice": ""
                             }
                         ],
@@ -2253,7 +1714,10 @@
                         "enableOnPopupExpressions": false,
                         "enableOnSearchPage": true,
                         "enableSearchTags": false,
-                        "layoutAwareScan": false
+                        "layoutAwareScan": false,
+                        "matchTypePrefix": false,
+                        "hidePopupOnCursorExit": false,
+                        "hidePopupOnCursorExitDelay": 0
                     },
                     "translation": {
                         "convertHalfWidthCharacters": "variant",
@@ -2269,13 +1733,6 @@
                     },
                     "dictionaries": [
                         {
-                            "name": "旺文社国語辞典 第十一版 画像無し",
-                            "priority": 4,
-                            "enabled": false,
-                            "allowSecondarySearches": false,
-                            "definitionsCollapsible": "not-collapsible"
-                        },
-                        {
                             "name": "明鏡国語辞典",
                             "priority": 3,
                             "enabled": true,
@@ -2290,14 +1747,21 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "新明解国語辞典　第五版",
+                            "name": "大辞林 第三版",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "大辞林 第三版",
+                            "name": "新明解国語辞典　第七版",
+                            "priority": 1,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "デジタル大辞泉",
                             "priority": 1,
                             "enabled": true,
                             "allowSecondarySearches": false,
@@ -2325,9 +1789,16 @@
                             "definitionsCollapsible": "not-collapsible"
                         },
                         {
-                            "name": "Kanjium Pitch Accents",
+                            "name": "アクセント辞典",
                             "priority": 0,
                             "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Kanjium Pitch Accents",
+                            "priority": 0,
+                            "enabled": false,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
                         },
@@ -2372,6 +1843,13 @@
                             "enabled": true,
                             "allowSecondarySearches": false,
                             "definitionsCollapsible": "not-collapsible"
+                        },
+                        {
+                            "name": "Youtube",
+                            "priority": 0,
+                            "enabled": true,
+                            "allowSecondarySearches": false,
+                            "definitionsCollapsible": "not-collapsible"
                         }
                     ],
                     "parsing": {
@@ -2409,7 +1887,7 @@
                                 "VocabAudio": "{audio}",
                                 "Image": "",
                                 "Notes": "",
-                                "Source": "<p id=\"yomichan-source\">{document-title}</p>",
+                                "Source": "",
                                 "MakeProductionCard": ""
                             }
                         },
@@ -2419,7 +1897,7 @@
                             "fields": {}
                         },
                         "duplicateScope": "collection",
-                        "checkForDuplicates": true,
+                        "checkForDuplicates": false,
                         "fieldTemplates": "{{#*inline \"glossary-single\"}}\n    {{~#unless brief~}}\n        {{~#scope~}}\n            {{~#set \"any\" false}}{{/set~}}\n            {{~#each definitionTags~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!\" redundant))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{name}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/each~}}\n            {{~#unless noDictionaryTag~}}\n                {{~#if (op \"||\" (op \"!\" @root.compactTags) (op \"!==\" dictionary (get \"previousDictionary\")))~}}\n                    {{~#if (get \"any\")}}, {{else}}<i>({{/if~}}\n                    {{dictionary}}\n                    {{~#set \"any\" true}}{{/set~}}\n                {{~/if~}}\n            {{~/unless~}}\n            {{~#if (get \"any\")}})</i> {{/if~}}\n        {{~/scope~}}\n        {{~#if only~}}({{#each only}}{{.}}{{#unless @last}}, {{/unless}}{{/each}} only) {{/if~}}\n    {{~/unless~}}\n    {{~#if (op \"<=\" glossary.length 1)~}}\n        {{#each glossary}}{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}{{/each}}\n    {{~else if @root.compactGlossaries~}}\n        {{#each glossary}}{{#multiLine}}{{.}}{{/multiLine}}{{#unless @last}}, {{/unless}}{{/each}}\n    {{~else~}}\n        <ul>{{#each glossary}}<li>{{#formatGlossary ../dictionary}}{{{.}}}{{/formatGlossary}}</li>{{/each}}</ul>\n    {{~/if~}}\n    {{~#set \"previousDictionary\" dictionary~}}{{~/set~}}\n{{/inline}}\n\n{{#*inline \"audio\"}}\n    {{~#if (hasMedia \"audio\")~}}\n        [sound:{{#getMedia \"audio\"}}{{/getMedia}}]\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"character\"}}\n    {{~definition.character~}}\n{{/inline}}\n\n{{#*inline \"dictionary\"}}\n    {{~definition.dictionary~}}\n{{/inline}}\n\n{{#*inline \"expression\"}}\n    {{~#if merge~}}\n        {{~#if modeTermKana~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~else~}}\n                {{~#each definition.expression~}}\n                    {{{.}}}\n                    {{~#unless @last}}、{{/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~#each definition.expression~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~/if~}}\n    {{~else~}}\n        {{~#if modeTermKana~}}\n            {{~#if definition.reading~}}\n                {{definition.reading}}\n            {{~else~}}\n                {{definition.expression}}\n            {{~/if~}}\n        {{~else~}}\n            {{definition.expression}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furigana}}{{{.}}}{{/furigana~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furigana}}{{{definition}}}{{/furigana}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"furigana-plain\"}}\n    {{~#if merge~}}\n        {{~#each definition.expressions~}}\n            <span class=\"expression-{{termFrequency}}\">{{~#furiganaPlain}}{{{.}}}{{/furiganaPlain~}}</span>\n            {{~#unless @last}}、{{/unless~}}\n        {{~/each~}}\n    {{~else~}}\n        {{#furiganaPlain}}{{{definition}}}{{/furiganaPlain}}\n    {{~/if~}}\n{{/inline}}\n\n{{~#*inline \"glossary\"~}}\n    <div style=\"text-align: left;\">\n    {{~#scope~}}\n        {{~#if (op \"===\" definition.type \"term\")~}}\n            {{~> glossary-single definition brief=brief noDictionaryTag=noDictionaryTag ~}}\n        {{~else if (op \"||\" (op \"===\" definition.type \"termGrouped\") (op \"===\" definition.type \"termMerged\"))~}}\n            {{~#if (op \">\" definition.definitions.length 1)~}}\n                <ol>{{~#each definition.definitions~}}<li>{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}</li>{{~/each~}}</ol>\n            {{~else~}}\n                {{~#each definition.definitions~}}{{~> glossary-single . brief=../brief noDictionaryTag=../noDictionaryTag ~}}{{~/each~}}\n            {{~/if~}}\n        {{~else if (op \"===\" definition.type \"kanji\")~}}\n            {{~#if (op \">\" definition.glossary.length 1)~}}\n                <ol>{{#each definition.glossary}}<li>{{.}}</li>{{/each}}</ol>\n            {{~else~}}\n                {{~#each definition.glossary~}}{{.}}{{~/each~}}\n            {{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n    </div>\n{{~/inline~}}\n\n{{#*inline \"glossary-no-dictionary\"}}\n    {{~> glossary noDictionaryTag=true ~}}\n{{/inline}}\n\n{{#*inline \"glossary-brief\"}}\n    {{~> glossary brief=true ~}}\n{{/inline}}\n\n{{#*inline \"kunyomi\"}}\n    {{~#each definition.kunyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"onyomi\"}}\n    {{~#each definition.onyomi}}{{.}}{{#unless @last}}, {{/unless}}{{/each~}}\n{{/inline}}\n\n{{#*inline \"reading\"}}\n    {{~#unless modeTermKana~}}\n        {{~#if merge~}}\n            {{~#each definition.reading~}}\n                {{{.}}}\n                {{~#unless @last}}、{{/unless~}}\n            {{~/each~}}\n        {{~else~}}\n            {{~definition.reading~}}\n        {{~/if~}}\n    {{~/unless~}}\n{{/inline}}\n\n{{#*inline \"sentence\"}}\n    {{~#if definition.cloze}}{{definition.cloze.sentence}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-prefix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.prefix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-body\"}}\n    {{~#if definition.cloze}}{{definition.cloze.body}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"cloze-suffix\"}}\n    {{~#if definition.cloze}}{{definition.cloze.suffix}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"tags\"}}\n    {{~#mergeTags definition group merge}}{{this}}{{/mergeTags~}}\n{{/inline}}\n\n{{#*inline \"url\"}}\n    <a href=\"{{definition.url}}\">{{definition.url}}</a>\n{{/inline}}\n\n{{#*inline \"screenshot\"}}\n    {{~#if (hasMedia \"screenshot\")~}}\n        <img src=\"{{#getMedia \"screenshot\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"document-title\"}}\n    {{~context.document.title~}}\n{{/inline}}\n\n{{! Pitch Accents }}\n{{#*inline \"pitch-accent-item\"}}\n    {{~#pronunciation format=format reading=reading downstepPosition=position nasalPositions=nasalPositions devoicePositions=devoicePositions~}}{{~/pronunciation~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-item-disambiguation\"}}\n    {{~#scope~}}\n        {{~#set \"exclusive\" (spread exclusiveExpressions exclusiveReadings)}}{{/set~}}\n        {{~#if (op \">\" (property (get \"exclusive\") \"length\") 0)~}}\n            {{~#set \"separator\" \"\"~}}{{/set~}}\n            <em>({{#each (get \"exclusive\")~}}\n                {{~#get \"separator\"}}{{/get~}}{{{.}}}\n            {{~/each}} only) </em>\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-list\"}}\n    {{~#if (op \">\" pitchCount 0)~}}\n        {{~#if (op \">\" pitchCount 1)~}}<ol>{{~/if~}}\n        {{~#each pitches~}}\n            {{~#each pitches~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}<li>{{~/if~}}\n                    {{~> pitch-accent-item-disambiguation~}}\n                    {{~> pitch-accent-item format=../../format~}}\n                {{~#if (op \">\" ../../pitchCount 1)~}}</li>{{~/if~}}\n            {{~/each~}}\n        {{~/each~}}\n        {{~#if (op \">\" pitchCount 1)~}}</ol>{{~/if~}}\n    {{~else~}}\n        No pitch accent data\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"pitch-accents\"}}\n    {{~> pitch-accent-list format='text'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-graphs\"}}\n    {{~> pitch-accent-list format='graph'~}}\n{{/inline}}\n\n{{#*inline \"pitch-accent-positions\"}}\n    {{~> pitch-accent-list format='position'~}}\n{{/inline}}\n{{! End Pitch Accents }}\n\n{{#*inline \"clipboard-image\"}}\n    {{~#if (hasMedia \"clipboardImage\")~}}\n        <img src=\"{{#getMedia \"clipboardImage\"}}{{/getMedia}}\" />\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"clipboard-text\"}}\n    {{~#if (hasMedia \"clipboardText\")}}{{#getMedia \"clipboardText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"conjugation\"}}\n    {{~#if definition.reasons~}}\n        {{~#each definition.reasons~}}\n            {{~#if (op \">\" @index 0)}} « {{/if~}}\n            {{.}}\n        {{~/each~}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"frequencies\"}}\n    {{~#if (op \">\" definition.frequencies.length 0)~}}\n        <ul style=\"text-align: left;\">\n        {{~#each definition.frequencies~}}\n            <li>\n            {{~#if (op \"!==\" ../definition.type \"kanji\")~}}\n                {{~#if (op \"||\" (op \">\" ../uniqueExpressions.length 1) (op \">\" ../uniqueReadings.length 1))~}}(\n                    {{~#furigana expression reading~}}{{~/furigana~}}\n                ) {{/if~}}\n            {{~/if~}}\n            {{~dictionary}}: {{frequency~}}\n            </li>\n        {{~/each~}}\n        </ul>\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"stroke-count\"}}\n    {{~#scope~}}\n        {{~#set \"found\" false}}{{/set~}}\n        {{~#each definition.stats.misc~}}\n            {{~#if (op \"===\" name \"strokes\")~}}\n                {{~#set \"found\" true}}{{/set~}}\n                Stroke count: {{value}}\n            {{~/if~}}\n        {{~/each~}}\n        {{~#if (op \"!\" (get \"found\"))~}}\n            Stroke count: Unknown\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech-pretty\"}}\n    {{~#if (op \"===\" . \"v1\")~}}Ichidan verb\n    {{~else if (op \"===\" . \"v5\")~}}Godan verb\n    {{~else if (op \"===\" . \"vk\")~}}Kuru verb\n    {{~else if (op \"===\" . \"vs\")~}}Suru verb\n    {{~else if (op \"===\" . \"vz\")~}}Zuru verb\n    {{~else if (op \"===\" . \"adj-i\")~}}I-adjective\n    {{~else if (op \"===\" . \"n\")~}}Noun\n    {{~else~}}{{.}}\n    {{~/if~}}\n{{/inline}}\n\n{{#*inline \"part-of-speech\"}}\n    {{~#scope~}}\n        {{~#if (op \"!==\" definition.type \"kanji\")~}}\n            {{~#set \"first\" true}}{{/set~}}\n            {{~#each definition.expressions~}}\n                {{~#each wordClasses~}}\n                    {{~#unless (get (concat \"used_\" .))~}}\n                        {{~> part-of-speech-pretty . ~}}\n                        {{~#unless (get \"first\")}}, {{/unless~}}\n                        {{~#set (concat \"used_\" .) true~}}{{~/set~}}\n                        {{~#set \"first\" false~}}{{~/set~}}\n                    {{~/unless~}}\n                {{~/each~}}\n            {{~/each~}}\n            {{~#if (get \"first\")~}}Unknown{{~/if~}}\n        {{~/if~}}\n    {{~/scope~}}\n{{/inline}}\n\n{{#*inline \"search-query\"}}\n    {{~#multiLine}}{{context.fullQuery}}{{/multiLine~}}\n{{/inline}}\n\n{{#*inline \"selection-text\"}}\n    {{~#if (hasMedia \"selectionText\")}}{{#getMedia \"selectionText\"}}{{/getMedia}}{{/if~}}\n{{/inline}}\n\n{{#*inline \"sentence-furigana\"}}\n    {{~#if definition.cloze~}}\n        {{~#if (hasMedia \"textFurigana\" definition.cloze.sentence)~}}\n            {{#getMedia \"textFurigana\" definition.cloze.sentence escape=false}}{{/getMedia}}\n        {{~else~}}\n            {{definition.cloze.sentence}}\n        {{~/if~}}\n    {{~/if~}}\n{{/inline}}\n\n{{~> (lookup . \"marker\") ~}}",
                         "suspendNewCards": false,
                         "displayTags": "never",
@@ -2508,6 +1986,34 @@
                             {
                                 "enabled": true,
                                 "character1": "…",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︒",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︕",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︖",
+                                "character2": null,
+                                "includeCharacterAtStart": false,
+                                "includeCharacterAtEnd": true
+                            },
+                            {
+                                "enabled": true,
+                                "character1": "︙",
                                 "character2": null,
                                 "includeCharacterAtStart": false,
                                 "includeCharacterAtEnd": true
