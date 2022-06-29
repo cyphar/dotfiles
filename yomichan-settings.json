@@ -1,6 +1,6 @@
 {
     "version": 0,
-    "date": "2022-05-29 03:32:45",
+    "date": "2022-06-29 06:05:17",
     "url": "moz-extension://8482e5af-f034-4808-9c3b-d409c89f8d88/",
     "manifest": {
         "applications": {
@@ -125,7 +125,7 @@
             "theme_icons": null
         },
         "page_action": null,
-        "chrome_settings_overrides": null,
+        "sidebar_action": null,
         "commands": {
             "toggleTextScanning": {
                 "description": "Toggle text scanning on/off",
@@ -168,7 +168,7 @@
         },
         "devtools_page": null,
         "omnibox": null,
-        "sidebar_action": null,
+        "chrome_settings_overrides": null,
         "chrome_url_overrides": null,
         "default_locale": null,
         "l10n_resources": null,
@@ -184,7 +184,7 @@
             "os": "linux"
         }
     },
-    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0",
+    "userAgent": "Mozilla/5.0 (X11; Linux x86_64; rv:101.0) Gecko/20100101 Firefox/101.0",
     "permissions": {
         "origins": [
             "<all_urls>"
@@ -870,7 +870,7 @@
                 }
             },
             {
-                "name": "Extension (No Audio)",
+                "name": "Extension",
                 "conditionGroups": [
                     {
                         "conditions": [
@@ -878,11 +878,6 @@
                                 "type": "url",
                                 "operator": "matchRegExp",
                                 "value": "^moz-extension://"
-                            },
-                            {
-                                "type": "popupLevel",
-                                "operator": "equal",
-                                "value": "0"
                             }
                         ]
                     }
@@ -960,7 +955,7 @@
                             },
                             {
                                 "type": "jpod101-alternate",
-                                "url": "http://localhost:8770/?expression={term}&reading={reading}",
+                                "url": "",
                                 "voice": ""
                             }
                         ],
@@ -1552,17 +1547,8 @@
                 }
             },
             {
-                "name": "Extension / File",
+                "name": "File",
                 "conditionGroups": [
-                    {
-                        "conditions": [
-                            {
-                                "type": "url",
-                                "operator": "matchRegExp",
-                                "value": "^moz-extension://"
-                            }
-                        ]
-                    },
                     {
                         "conditions": [
                             {
@@ -1887,7 +1873,7 @@
                                 "VocabAudio": "{audio}",
                                 "Image": "",
                                 "Notes": "",
-                                "Source": "",
+                                "Source": "<p id=\"yomichan-source\">{document-title}</p>",
                                 "MakeProductionCard": ""
                             }
                         },
