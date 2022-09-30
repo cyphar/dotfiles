@@ -47,5 +47,14 @@ Expunge Both
 Create Both
 CopyArrivalDate yes
 
+Channel personal-archives
+Master :mailbox-remote:
+Slave :personal-local:
+Pattern Archives/*
+Sync All
+Expunge Both
+Create Both
+CopyArrivalDate yes
+
 Group personal
 Channels personal-inbox personal-sent
