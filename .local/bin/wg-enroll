@@ -32,16 +32,9 @@ function public_ip() {
 
 function generate_addresses() {
 	local DEVICEID="${1:-0}"
-	local MASKv4=32 MASKv6=128
-
-	# The two arguments are {NETWORKID, DEVICEID}.
-	IPv4_FORMAT="10.%d.%d.1"
-	IPv6_FORMAT="fd42:dead:beef:%.2x%.2x::1"
-
-	# Generate our addresses.
-	IPv4="$(printf "$IPv4_FORMAT" "$NETWORKID" "$DEVICEID")"
-	IPv6="$(printf "$IPv6_FORMAT" "$NETWORKID" "$DEVICEID")"
-	echo "$IPv4/$MASKv4,$IPv6/$MASKv6"
+	IPv4="$(printf "10.%d.%d.1/32"                "$NETWORKID" "$DEVICEID")"
+	IPv6="$(printf "fd42:dead:beef:%.2x%.2x::/64" "$NETWORKID" "$DEVICEID")"
+	echo "$IPv4,$IPv6"
 }
 
 function usage() {
