@@ -36,6 +36,7 @@ HOOK_AFTER = "after"
 
 # Install targets.
 OPTIONS = {
+	"alacritty": (YES, [".config/alacritty/"]),
 	"bin":       (YES, [".local/bin/"]),
 	"dunst":     (YES, [".config/dunst/"]),
 	"fonts":     (YES, [".config/fontconfig/"]),
@@ -43,14 +44,13 @@ OPTIONS = {
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
 	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
+	"mpv":       (YES, [".config/mpv/"]),
 	"mutt":      (YES, [".mutt/"]),
 	"neovim":    (YES, [".config/nvim/"]),
 	"notmuch":   (YES, [".notmuch-config"]),
-	"mpv":       (YES, [".config/mpv/"]),
 	"python":    (YES, [".pythonrc.py"]),
 	"redshift":  (YES, [".config/redshift.conf"]),
 	"ssh":       (YES, [".ssh/config"]),
-	"alacritty": (YES, [".config/alacritty/"]),
 	"tmux":      (YES, [".tmux.conf"]),
 	"wget":      (YES, [".wgetrc"]),
 	"zsh":       (YES, [".profile", ".zsh/", ".zshrc"]),
