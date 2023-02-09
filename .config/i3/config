@@ -44,6 +44,9 @@ bindsym $mod+Shift+q kill
 
 # Start dmenu.
 bindsym $mod+d exec "dmenu_run"
+# Take a screenshot (and copy to clipboard).
+bindsym $mod+t exec "maim -s -f png | xclip -selection clipboard -t image/png"
+bindsym $mod+Shift+t exec "maim -s -f png ~/screenshot-$(date '+%Y%m%dT%H%M%S').png"
 
 # Vim movements.
 bindsym $mod+h focus left
