@@ -20,9 +20,9 @@ set my_profile="suse"
 set pgp_default_key="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
 source $HOME/.mutt/muttrc
 
-set my_name="asarai"
-set my_username="$my_name@suse.de"
-set from=$my_username
+set my_email="asarai@suse.de"
+set from=$my_email
+set my_login="`keepassxc-helper -a UserName '/Shared/Email/SUSE'`"
 
 # I have quite a few aliases. These are all (mostly) public so I'll just keep
 # them in this config.
@@ -35,7 +35,7 @@ color indicator     brightcolor46   default
 # Configuration for inbox. There's no point in using offlineimap for mailbox,
 # because generally they have okay connectivity.
 set folder="$my_mailroot/$my_profile"
-set smtp_url="smtp://$my_name@imap.suse.de:587"
+set smtp_url="smtp://$my_login@imap.suse.de:587"
 set spoolfile="+inbox"
 set trash="+Trash"
 # TODO: These are probably broken...
@@ -45,4 +45,4 @@ set postponed="!/Drafts"
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with
 # KeePassXC's CLI interface).
-set smtp_pass="`keepassxc-helper "/Shared/Email/SUSE"`"
+set smtp_pass="`keepassxc-helper '/Shared/Email/SUSE'`"
