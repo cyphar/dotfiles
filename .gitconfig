@@ -71,6 +71,8 @@
 	# TODO: Improve this so it also works with Gogs and GitLab.
 	pr = !"pr() { git fetch origin pull/$1/head:pr-$1; }; pr"
 	cpr = !"cpr() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; cpr"
+	# Short-hand for "git pr ...; git mm ..."
+	mpr = !"mpr() { git fetch origin pull/$1/head && git mm FETCH_HEAD; }; mpr"
 
 	# Commit all the things!
 	cc = !"cc() { git add -A && git commit -av; }; cc"
@@ -92,6 +94,9 @@
 	# Get the count of authors and commiters from a range-ish.
 	lla = !"lla() { git log --pretty=format:'%aN <%ae>' $1 | sort | uniq -c | sort -k1 -nr; }; lla"
 	llc = !"llc() { git log --pretty=format:'%cN <%ce>' $1 | sort | uniq -c | sort -k1 -nr; }; llc"
+
+	# Get more information in git-show.
+	sf = !"sf() { git show --format=full --show-signature $1; }; sf"
 
 	# Email wrapper.
 	se = "send-email --no-format-patch --no-chain-reply-to"
