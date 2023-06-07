@@ -19,16 +19,23 @@ set -Eeuo pipefail
 
 echo "[*] Updating mpvacious."
 pushd "$HOME/.config/mpv/scripts/"
-MPVACIOUS_VERSION="v0.19"
+MPVACIOUS_VERSION="$(curl -sSL https://api.github.com/repos/Ajatt-Tools/mpvacious/releases/latest | jq -rM .tag_name )"
+echo "[-] Installing mpvacious $MPVACIOUS_VERSION"
 [[ -d "mpvacious" ]] || git clone https://github.com/Ajatt-Tools/mpvacious.git
 pushd "mpvacious"
 git fetch origin
+git reset --hard HEAD
 git checkout "$MPVACIOUS_VERSION"
 popd
 
 echo "[*] Updating youtube-dl (yt-dlp)."
-YTDL_VERSION="2021.12.01"
-pushd "$HOME/.local/bin"
-curl -SLo yt-dlp "https://github.com/yt-dlp/yt-dlp/releases/download/$YTDL_VERSION/yt-dlp"
-chmod +x yt-dlp
-popd
+if ! ( command yt-dlp --version &>/dev/null ); then
+	YTDL_VERSION="$(curl -sSL https://api.github.com/repos/yt-dlp/yt-dlp/releases/latest | jq -rM .tag_name )"
+	echo "[-] Installing yt-dlp $YTDL_VERSION."
+	pushd "$HOME/.local/bin"
+	curl -SLo yt-dlp "https://github.com/yt-dlp/yt-dlp/releases/download/$YTDL_VERSION/yt-dlp"
+	chmod +x yt-dlp
+	popd
+else
+	yt-dlp -U
+fi
