@@ -1,0 +1,68 @@
+#!/bin/zsh
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2023 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# kernel-git-send-email-helper is a very small wrapper around
+# scripts/get_maintainer.pl to handle cover letters (send them to everyone at
+# least one of the patches gets addressed to) and handle both --to-cmd and
+# --cc-cmd slightly differently.
+
+set -Eeuo pipefail
+
+function bail() {
+	echo "$@" >&2
+	exit 1
+}
+
+function usage() {
+	bail "usage: $0 [-tc] <1234-foo.patch>..."
+}
+
+[ -x ./scripts/get_maintainer.pl ] || bail "kernel-git-send-email-helper must be run in linux source tree root"
+
+args=("--no-rolestats")
+while getopts "tc" o; do
+	case "$o" in
+		t)
+			# --to-cmd
+			args+=("--no-l" "--m" "--r")
+			;;
+		c)
+			# --cc-cmd
+			args+=("--l" "--no-m" "--no-r" "--no-git" "--no-git-fallback")
+			;;
+		*)
+			usage
+			;;
+	esac
+done
+shift $((OPTIND-1))
+
+[ "$#" -gt 0 ] || usage
+
+if [ "$#" -eq 1 ] && [[ "$(basename $1)" =~ ^(.*-)?0000-cover-letter.patch$ ]]
+then
+	# This is a cover-letter -- collect all of the people who will be sent a
+	# mail by the other .patch files in the same series (we assume there are no
+	# stale patches and all of the relevant patches in the patchset -- and
+	# nothing else -- has the same prefix).
+	coverletter="$1"
+	patch_dir="$(dirname "$coverletter")"
+	patch_prefix="$(sed -E 's/^(.*)0000-cover-letter.patch$/\1/' <<<"$(basename "$coverletter")")"
+	./scripts/get_maintainer.pl "${args[@]}" "$patch_dir/$patch_prefix"*.patch 2>/dev/null
+else
+	./scripts/get_maintainer.pl "${args[@]}" "$@"
+fi

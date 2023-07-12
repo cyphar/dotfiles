@@ -148,11 +148,13 @@
 	whitespace = fix
 
 [sendemail]
-	identity = cyphar
+	identity = linux
 
-[sendemail.cyphar]
+[sendemail.linux]
 	smtpDomain = "[redacted]"
 	smtpUser = cyphar@cyphar.com
 	smtpServer = smtp.mailbox.org
 	smtpServerPort = 465
 	smtpEncryption = ssl
+	toCmd = "kernel-git-send-email-helper -t"
+	ccCmd = "kernel-git-send-email-helper -c"
