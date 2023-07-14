@@ -158,3 +158,8 @@
 	smtpEncryption = ssl
 	toCmd = "kernel-git-send-email-helper -t"
 	ccCmd = "kernel-git-send-email-helper -c"
+
+[credential "smtp://smtp.mailbox.org:465"]
+	# TODO: I should really replace this with something better that actually
+	#       reads the credential request and is a proper credential helper.
+	helper = !"f() { echo username=cyphar@cyphar.com; echo password=$(keepassxc-helper '/Shared/Email/Mailbox'); }; f"
