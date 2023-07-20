@@ -17,6 +17,8 @@
 
 set -Eeuo pipefail
 
+echo ">> disable dynamic netconfig-based dns (always use 1.1.1.1)"
+
 # Disable auto-configuring DNS with netconfig and always use CloudFlare DNS
 # plus the home DNS setup for dot.cyphar.com.
 sudo sed -i 's|^NETCONFIG_DNS_POLICY=.*|NETCONFIG_DNS_POLICY="STATIC_FALLBACK"|g' /etc/sysconfig/network/config
