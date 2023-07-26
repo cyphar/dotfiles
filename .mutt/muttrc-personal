@@ -20,7 +20,8 @@ set my_profile="personal"
 set pgp_default_key="C9C370B246B09F6DBCFC744C34401015D1D2D386"
 source $HOME/.mutt/muttrc
 
-set my_email="cyphar@cyphar.com"
+set hostname="cyphar.com"
+set my_email="cyphar@$hostname"
 set from=$my_email
 set my_login=$my_email
 
@@ -37,8 +38,7 @@ alternates '^cyphar@cyphar\.com$' \
 color status        color51         color235
 color indicator     brightcolor51   default
 
-# Configuration for inbox. There's no point in using offlineimap for mailbox,
-# because generally they have okay connectivity.
+# Configuration for inbox.
 set folder="$my_mailroot/$my_profile"
 set smtp_url="smtps://$my_login@smtp.mailbox.org:465"
 set spoolfile="+inbox"

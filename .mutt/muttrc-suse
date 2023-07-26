@@ -20,7 +20,8 @@ set my_profile="suse"
 set pgp_default_key="5F36C6C61B5460124A75F5A69E18AA267DDB8DB4"
 source $HOME/.mutt/muttrc
 
-set my_email="asarai@suse.de"
+set hostname="suse.de"
+set my_email="asarai@$hostname"
 set from=$my_email
 set my_login="`keepassxc-helper -a UserName '/Shared/Email/SUSE'`"
 
@@ -32,8 +33,7 @@ alternates '^asarai@suse\.com$'
 color status        color46         color235
 color indicator     brightcolor46   default
 
-# Configuration for inbox. There's no point in using offlineimap for mailbox,
-# because generally they have okay connectivity.
+# Configuration for inbox.
 set folder="$my_mailroot/$my_profile"
 set smtp_url="smtp://$my_login@imap.suse.de:587"
 set spoolfile="+inbox"

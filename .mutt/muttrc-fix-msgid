@@ -1,0 +1,10 @@
+# NOTE: This file is source'd through send-hook in order to make sure you get a
+#       different Message-ID each time.
+
+# According to the upstream issue tracker (neomutt/neomutt#1262), this
+# shouldn't be necessary but the substitution of $hostname doesn't work
+# otherwise so....
+setenv hostname $hostname
+#ifdef message_id_format set message_id_format="`$HOME/.local/bin/generate-msgid $hostname`"
+my_hdr Message-ID: <`$HOME/.local/bin/mail-generate-msgid $hostname`>
+unsetenv hostname

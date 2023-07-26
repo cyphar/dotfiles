@@ -70,6 +70,16 @@ set index_format="%Z %{$my_date_format} %-20.20n (%?l?%4l&%4c?) %s"
 set status_chars="-*%A"
 set status_format=" %r$my_profile%r > %f >%?u? %u(%n+%o)?%?d? -%d?%?p? ^%p?%?t? *%t? > %>  < %s/%S < %P %?M?%M/?%m <  "
 
+# Header formatting in mail viewer.
+ignore *
+unignore date from subject to cc bcc
+unignore message-id: x-mailing-list:
+
+# Make Message-ID sane (to make it nicer when dealing with LKML messages).
+# Ideally $hostname needs to be set by the actual muttrc we use. We need to do
+# "source" here so we get a different Message-ID each time.
+send-hook . "source $HOME/.mutt/muttrc-fix-msgid"
+
 # Include my default colour scheme. Accents (status and indicator) will be
 # overridden by the individual muttrc-$box configurations.
 source $HOME/.mutt/muttrc-colours
