@@ -21,4 +21,4 @@ else
 	# ... otherwise just use some random garbage.
 	unique="$(rand 27)"
 fi
-echo -n "$(date '+%Y%m%d.%H%M%S')-$unique@$hostname"
+echo "$(date -u '+%Y%m%d.%H%M%S')-$unique@$hostname"
