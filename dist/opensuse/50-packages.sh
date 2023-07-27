@@ -42,7 +42,7 @@ packages=(
 	"neovim" "tmux" "zsh" "git" "gcc" "go" "keychain" "figlet" "gpg2" "python3"
 	"mosh" "rsync" "ranger" "alsa-utils" "weechat" "make" "exfat-utils"
 	"fuse-exfat" "xfsprogs" "autoconf" "automake" "libtool" "bpftrace"
-	"moreutils" "qpdf"
+	"moreutils" "qpdf" "python3"
 	# Container-related packages.
 	"skopeo" "umoci" "runc" "docker" "lxc" "lxd"
 	# Basic graphics stack and environment.
@@ -73,3 +73,7 @@ sudo zypper install "${packages[@]}"
 # <https://github.com/rust-lang/rustup/issues/2028>.
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 "$HOME/.cargo/bin/rustup" toolchain install nightly
+
+# Install diceware for Message-ID generation.
+sudo python3 -m ensurepip
+sudo pip3 install diceware
