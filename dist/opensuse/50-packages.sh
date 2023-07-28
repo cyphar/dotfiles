@@ -74,6 +74,6 @@ sudo zypper install "${packages[@]}"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 "$HOME/.cargo/bin/rustup" toolchain install nightly
 
-# Install diceware for Message-ID generation.
+# Install diceware, patatt and b4 for kernel development.
 sudo python3 -m ensurepip
-sudo pip3 install diceware
+sudo pip3 install diceware patatt b4
