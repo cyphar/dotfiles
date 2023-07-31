@@ -50,22 +50,41 @@ function __generate_prompt() {
 		function __find_git() {
 			local current="$1"
 
-			# Search up the directory tree for '.git'.
-			while [[ "${current}" != "/" ]]; do
-				if [[ -d "${current}/.git" ]]; then
-					echo "${current}/.git"
-					return 0
+			while true; do
+				gitdir="${current}/.git"
+				if [[ -e "$gitdir" ]]; then
+					gitdir_type="$(stat -c "%F" "$gitdir")"
+					case "$gitdir_type" in
+					directory)
+						# If we have a .git directory, and it contains
+						# .git/index, it's probably the right one.
+						if [[ -f "$gitdir/index" ]]; then
+							echo "$gitdir"
+							return 0
+						fi
+						;;
+					"regular file")
+						# If .git is a regular file, then we should be in a
+						# worktree -- meaning it should contain a string like
+						#
+						#   gitdir: some/dir/.git/worktrees/foobar
+						#
+						# This directory contains a HEAD file that matches what
+						# we need for our prompt generation, so we can return
+						# that.
+						if ( grep "^gitdir: " "$gitdir" &>/dev/null ); then
+							echo "$(sed -E "s|gitdir: (.*)|\1|" <"$gitdir")"
+							return 0
+						fi
+						;;
+					*)
+						echo "WARNING: .git directory is unhandled type $gitdir_type"
+						;;
+					esac
 				fi
-
+				[[ "${current}" != "/" ]] || break
 				current="$(dirname -- "${current}")"
 			done
-
-			# Check for '/.git'.
-			if [[ -d "${current}/.git" ]]; then
-				echo "${current}/.git"
-				return 0
-			fi
-
 			return 1
 		}
 
