@@ -147,9 +147,6 @@ bar {
 	}
 }
 
-# Background is handled by feh.
-exec_always --no-startup-id "feh --bg-scale /usr/share/wallpapers/default.jpg"
-
 # Tile colours.
 # class                 border  backgr. text    indicator
 client.focused          #333333 #3f3f3f #dcdccc #2e9ef4
@@ -159,9 +156,6 @@ client.urgent           #2f343a #900000 #ffffff #900000
 
 # Hide borders.
 hide_edge_borders both
-
-# Use compton / picom as the compositor.
-exec_always "compton -cCGb -o0"
 
 # Run redshiftd.
 exec_always "$bin/redshiftd"
