@@ -1,6 +1,6 @@
 #!/bin/bash
 # dotfiles: collection of my personal dotfiles
-# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2023 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ pip install autorandr
 echo ">> install autorandr udev wrapper script"
 cat >/usr/local/sbin/autorandr-udev.sh <<EOF
 #!/bin/zsh
-# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2023 Aleksa Sarai <cyphar@cyphar.com>
 # License: GPL-3.0-or-later
 
 set -Eeuo pipefail
