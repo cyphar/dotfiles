@@ -162,3 +162,6 @@ exec_always "$bin/redshiftd"
 
 # Start ibus-damon.
 exec_always "ibus-daemon -drx"
+
+# Configure my keyboards. For some reason .xprofile doesn't work.
+exec_always "$bin/configure-keyboards"

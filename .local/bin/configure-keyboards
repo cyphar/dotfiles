@@ -1,0 +1,44 @@
+#!/bin/bash
+# Copyright (C) 2012-2019 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# setxkbmap_name <keyboard name> [<setxkbmap options>...]
+function setxkbmap_name() {
+	device_name="keyboard:$1"
+	shift
+	device_id="$(xinput list --id-only "$device_name" ||:)"
+	if [ -n "$device_id" ]
+	then
+		setxkbmap -device "$device_id" "$@"
+	fi
+}
+
+# NOTE: For now, I've disabled the per-keyboard configurations here. For some
+# reason, some aspect of the multi-layout configuration makes it such that you
+# cannot configure both multi-layout keyboards and single-layout keyboards...
+
+# Set up us<->jp keymap switching for the default keyboard. It turns out that
+# configuring this using xorg.conf.d has been broken for more than a decade[1]
+# and so it's much simpler to just do it manually.
+#
+# [1]: https://gitlab.freedesktop.org/xorg/xserver/-/issues/291
+#setxkbmap_name "AT Translated Set 2 keyboard" -layout us,jp -model thinkpad,microsoftpro -option grp:ralt_rshift_toggle
+# As a fallback, set the master keyboard...
+setxkbmap -layout us,jp -model thinkpad,microsoftpro -option grp:ralt_rshift_toggle
+
+# Configure my Japanese keyboards to just use a Japanese layout. As with layout
+# switching, trying to do this in xorg.conf.d didn't work at all.
+#setxkbmap_name "Logitech ERGO K860" -layout jp -model microsoftpro
+#setxkbmap_name "MOBO K2TF83J Keyboard" -layout jp
