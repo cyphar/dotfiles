@@ -53,7 +53,7 @@ function __generate_prompt() {
 			while true; do
 				gitdir="${current}/.git"
 				if [[ -e "$gitdir" ]]; then
-					gitdir_type="$(stat -c "%F" "$gitdir")"
+					gitdir_type="$(LC_ALL=C stat -c "%F" "$gitdir")"
 					case "$gitdir_type" in
 					directory)
 						# If we have a .git directory, and it contains
