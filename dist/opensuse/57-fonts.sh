@@ -22,12 +22,12 @@ trap "rm -rf '$TMP_FONTDIR'" EXIT
 
 # Install Cozette.
 # TODO: Switch to using the latest version rather than a hard-coded one.
-FONT_URL="https://github.com/slavfox/Cozette/releases/download/v.1.9.3/CozetteFonts.zip"
+FONT_URL="https://github.com/slavfox/Cozette/releases/download/v.1.23.2/CozetteFonts-v-1-23-2.zip"
 curl -L "$FONT_URL" -o "$TMP_FONTDIR/CozetteFonts.zip"
 (
 	cd "$TMP_FONTDIR"
 	unzip CozetteFonts.zip
-	sudo install -m0644 -t /usr/share/fonts/truetype CozetteFonts/*.{ttf,otf,otb}
+	install -m0644 -t "$HOME/.local/share/fonts" CozetteFonts/*.{ttf,otf,otb}
 )
 fc-cache -fv
 

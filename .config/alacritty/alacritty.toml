@@ -34,14 +34,14 @@ blinking = "Off"
 shape = "Block"
 
 [font]
-size = 4.5
+size = 8
 
 [font.bold]
-family = "terminal"
+family = "Japanese Cozette"
 style = "Bold"
 
 [font.normal]
-family = "terminal"
+family = "Japanese Cozette"
 style = "Regular"
 
 [window]
