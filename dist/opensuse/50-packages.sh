@@ -52,7 +52,7 @@ packages=(
 	"xbacklight" "xclip" "scrot"
 	# Graphical programs.
 	"keepassxc" "firefox" "vlc" "mpv" "alacritty" "redshift" "libreoffice"
-	"zathura" "evince"
+	"zathura" "evince" "element-desktop"
 	# To make my phone work...
 	"android-tools"
 	# Networking.
@@ -60,7 +60,7 @@ packages=(
 	# Good-to-haves.
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
-	"neomutt" "zenity" "isync" "secret-tool" "notmuch"
+	"neomutt" "zenity" "isync" "secret-tool" "notmuch" "cyrus-sasl-plain"
 	# openSUSE
 	"osc"
 	# Japanese input and packages.
