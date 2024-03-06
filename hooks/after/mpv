@@ -18,6 +18,7 @@
 set -Eeuo pipefail
 
 echo "[*] Updating mpvacious."
+mkdir -p "$HOME/.config/mpv/scripts/"
 pushd "$HOME/.config/mpv/scripts/"
 MPVACIOUS_VERSION="$(curl -sSL https://api.github.com/repos/Ajatt-Tools/mpvacious/releases/latest | jq -rM .tag_name )"
 echo "[-] Installing mpvacious $MPVACIOUS_VERSION"
