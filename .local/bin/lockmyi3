@@ -15,10 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set -e -o pipefail
+set -Eeuo pipefail
 
-lockimg="$(mktemp --tmpdir lockymi3-img.XXXXXX.png)"
-trap "rm -f $lockimg" EXIT
+screenshot="$(mktemp --tmpdir lockymi3-screenshot.XXXXXX.png)"
+lockimg="$(mktemp --tmpdir lockymi3-lockscreen.XXXXXX.png)"
+trap "rm -f '$screenshot' '$lockimg'" EXIT
 
 # Output help page.
 function _help() {
@@ -81,12 +82,12 @@ local __reduced_y="$((__screen_y/__block_size))"
 
 # Actually do the locking. Since `convert -scale` doesn't do blurring, scaling
 # down and then back up is an efficient method of producing a pixelated image.
-import -screen -window root -silent png:- | \
-	convert png:- \
-		-scale '!'"${__reduced_x}x${__reduced_y}" \
-		-scale '!'"${__screen_x}x${__screen_y}" \
-		"png:$lockimg"
-i3lock $* -i "$lockimg"
+import -screen -window root -silent "png:$screenshot"
+convert "png:$screenshot" \
+	-scale '!'"${__reduced_x}x${__reduced_y}" \
+	-scale '!'"${__screen_x}x${__screen_y}" \
+	"png:$lockimg"
+i3lock "$@" -i "$lockimg"
 
 # Switch greeters if we have been asked to. There isn't really a nice way of
 # doing this that is agnostic to DM (since gdmflexiserver is GNOME specific).
