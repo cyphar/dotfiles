@@ -1,0 +1,35 @@
+output DP-1
+off
+output DP-2
+off
+output DP-3
+off
+output DP-4
+off
+output DP-5
+off
+output DP-6
+off
+output DP-7
+off
+output DP-8
+off
+output DP-9
+off
+output DP-10
+off
+output DP-11
+off
+output eDP-1
+crtc 0
+mode 2256x1504
+pos 0x0
+primary
+rate 60.00
+x-prop-colorspace Default
+x-prop-max_bpc 16
+x-prop-non_desktop 0
+x-prop-scaling_mode None
+x-prop-underscan off
+x-prop-underscan_hborder 0
+x-prop-underscan_vborder 0
