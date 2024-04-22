@@ -80,6 +80,11 @@ unignore message-id: x-mailing-list:
 # "source" here so we get a different Message-ID each time.
 send-hook . "source $HOME/.mutt/muttrc-fix-msgid"
 
+# Display HTML messages (using lynx).
+set mailcap_path="$HOME/.mutt/mailcap"
+alternative_order text/plain text/html
+auto_view text/html
+
 # Include my default colour scheme. Accents (status and indicator) will be
 # overridden by the individual muttrc-$box configurations.
 source $HOME/.mutt/muttrc-colours

@@ -61,6 +61,7 @@ packages=(
 	"torbrowser-launcher" "tor" "sshfs"
 	# Mutt and related packages.
 	"neomutt" "zenity" "isync" "secret-tool" "notmuch" "cyrus-sasl-plain"
+	"lynx"
 	# openSUSE
 	"osc"
 	# Japanese input and packages.

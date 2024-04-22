@@ -1,0 +1,23 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2023 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Dump a formatted version of HTML emails into the mutt pager. For extra
+# paranoia points, apply as many restrictions as possible.
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -cookies=off -restrictions=all -dump %s; nametemplate=%s.html; copiousoutput;
+
+# zathura is missing a bunch of features (such as dealing with PDF fields) but
+# for minimal viewing it's pretty nice.
+application/pdf; zathura %s;
