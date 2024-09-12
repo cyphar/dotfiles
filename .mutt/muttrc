@@ -62,6 +62,11 @@ set sort=threads
 # Sort by the *sent* date.
 set sort_aux=last-date
 
+# Don't wrap text, and don't put the "+" marker for lines wrapped due to
+# terminal width (which breaks long links).
+set wrap=0
+unset markers
+
 # Formatting of menus.
 set date_format=$my_date_format
 set compose_format=" [$my_profile] > Compose %> < %l <  "
