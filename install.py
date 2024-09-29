@@ -40,7 +40,7 @@ OPTIONS = {
 	"bin":       (YES, [".local/bin/"]),
 	"dunst":     (YES, [".config/dunst/"]),
 	"fonts":     (YES, [".config/fontconfig/"]),
-	"git":       (YES, [".gitconfig"]),
+	"git":       (YES, [".gitconfig", ".config/git"]),
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
 	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
