@@ -165,3 +165,7 @@ exec_always "ibus-daemon -drx"
 
 # Configure my keyboards. For some reason .xprofile doesn't work.
 exec_always "$bin/configure-keyboards"
+
+# Set background and transparency.
+exec --no-startup-id picom
+exec --no-startup-id feh --bg-scale .local/share/wallpapers/wallpaper.jpg
