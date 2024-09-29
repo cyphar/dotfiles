@@ -78,6 +78,9 @@ endif
 " Dark-As-My-Soul colourscheme.
 set background=dark
 colorscheme solarizeddark
+" Make sure the background is transparent.
+hi NonText ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 
 " Rebind the mapleader.
 let mapleader = "?"

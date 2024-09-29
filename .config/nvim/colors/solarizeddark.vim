@@ -27,6 +27,11 @@ endif
 set t_Co=256
 let g:colors_name = "solarizeddark"
 
+" nvim changed their colourscheme in 0.10, making old colourschemes break.
+" Load the "legacy" colour scheme to keep the old scheme working until I
+" rewrite it.
+colorscheme vim
+
 hi IncSearch guifg=#cb4b16 guibg=NONE guisp=NONE gui=NONE ctermfg=166 ctermbg=NONE cterm=NONE
 hi WildMenu guifg=#eee8d5 guibg=#073642 guisp=#073642 gui=NONE ctermfg=230 ctermbg=23 cterm=NONE
 hi SignColumn guifg=#839496 guibg=#bebebe guisp=#bebebe gui=NONE ctermfg=66 ctermbg=7 cterm=NONE
