@@ -169,3 +169,7 @@
 	# TODO: I should really replace this with something better that actually
 	#       reads the credential request and is a proper credential helper.
 	helper = !"f() { echo username=cyphar@cyphar.com; echo password=$(keepassxc-helper '/Shared/Email/Mailbox'); }; f"
+
+[blame]
+	# This file is fairly standard, so just use it for all repos.
+	ignoreRevsFile = .git-blame-ignore-revs
