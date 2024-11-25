@@ -25,31 +25,31 @@ Host imap.mailbox.org
 Port 993
 User "cyphar@cyphar.com"
 PassCmd +"keepassxc-helper '/Shared/Email/Mailbox'"
-SSLType IMAPS
-SSLVersions TLSv1.2
+TLSType IMAPS
+TLSVersions +1.2 +1.3
 
 IMAPStore mailbox-remote
 Account mailbox
 
 Channel personal-inbox
-Master :mailbox-remote:
-Slave :personal-local:
+Far :mailbox-remote:
+Near :personal-local:
 Sync All
 Expunge Both
 Create Both
 CopyArrivalDate yes
 
 Channel personal-sent
-Master :mailbox-remote:Sent
-Slave :personal-local:sent
+Far :mailbox-remote:Sent
+Near :personal-local:sent
 Sync All
 Expunge Both
 Create Both
 CopyArrivalDate yes
 
 Channel personal-archives
-Master :mailbox-remote:
-Slave :personal-local:
+Far :mailbox-remote:
+Near :personal-local:
 Pattern Archives/*
 Sync All
 Expunge Both
