@@ -124,3 +124,54 @@ function _mutt_wrapper() {
 }
 alias pmutt="_mutt_wrapper personal"
 alias smutt="_mutt_wrapper suse"
+
+# Save me from my own stupidity.
+function rm() {
+	# We need to do some very dumb argument parsing to figure out which
+	# arguments are paths. The key thing is that we want to scan for any
+	# arguments that don't start with "-" *or* any argument after the first
+	# "--".
+	local original_args=("$@")
+	local file_args=()
+	while (( $# > 0 ))
+	do
+		case "$1" in
+			--)
+				# We hit a "--". Every subseqent argument must be treated as a
+				# file argument.
+				shift
+				file_args+=("$@")
+				break
+				;;
+			-*)
+				# Skip this argument.
+				;;
+			*)
+				file_args+=("$1")
+				;;
+		esac
+		shift
+	done
+
+	# A sample of paths we obviously would never want to remove. $HOME is here
+	# because I managed to nuke my $HOME by typing "rm -rf ~" without thinking.
+	local BAD_PATHS=(
+		"/" "/etc" "/boot"
+		"/bin" "/usr/bin" "/sbin" "/usr/sbin"
+		"/usr/lib" "/usr/lib64"
+		"$HOME"
+	)
+
+	local file
+	for file in "${file_args[@]}"
+	do
+		file="$(readlink -f -- "$file")"
+		if printf "%s\0" "${BAD_PATHS[@]}" | grep -Fxqz -- "$file"; then
+			echo "rm: refusing to delete $file" >&2
+			echo "rm: think before you type!!" >&2
+			return 1
+		fi
+	done
+
+	command rm "${original_args[@]}"
+}
