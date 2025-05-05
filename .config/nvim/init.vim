@@ -144,7 +144,7 @@ if !has('gui_running')
 endif
 
 " Paste-related stuff.
-set pastetoggle=<F10>
+"set pastetoggle=<F10>
 set clipboard+=unnamedplus
 autocmd InsertLeave * set nopaste
 
