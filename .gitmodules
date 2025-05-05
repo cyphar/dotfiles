@@ -32,6 +32,7 @@
 [submodule ".config/nvim/bundle/supertab"]
 	path = .config/nvim/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
+	branch = main
 [submodule ".config/nvim/bundle/go"]
 	path = .config/nvim/bundle/go
 	url = https://github.com/fatih/vim-go.git
