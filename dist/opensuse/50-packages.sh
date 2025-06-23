@@ -65,7 +65,7 @@ packages=(
 	# openSUSE
 	"osc"
 	# Japanese input and packages.
-	"qolibri" ibus{,-gtk{,3},-mozc{,-candidate-window}}
+	"qolibri" fcitx5{,-mozc,-qt6}
 )
 sudo zypper install "${packages[@]}"
 

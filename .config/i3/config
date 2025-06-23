@@ -160,8 +160,8 @@ hide_edge_borders both
 # Run redshiftd.
 exec_always "$bin/redshiftd"
 
-# Start ibus-damon.
-exec_always "ibus-daemon -drx"
+# Start fcitx.
+exec_always "fcitx5 -rd"
 
 # Configure my keyboards. For some reason .xprofile doesn't work.
 exec_always "$bin/configure-keyboards"

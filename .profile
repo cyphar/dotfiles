@@ -24,7 +24,7 @@ if [ -n "${ZSH_VERSION}" ]; then
 	fi
 fi
 
-# enable ibus support
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+# enable fcitx support
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
