@@ -14,10 +14,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Note that when running external programs using mail as input, we run the
+# scripts inside a basic sandbox (userns as a non-root user + netns with no
+# network devices added -- see .local/bin/sandpit) which should restrict
+# exfiltration-based attacks. Ideally we would also mask away /home, but some
+# programs probably won't like that.
+
 # Dump a formatted version of HTML emails into the mutt pager. For extra
 # paranoia points, apply as many restrictions as possible.
-text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -cookies=off -restrictions=all -dump %s; nametemplate=%s.html; copiousoutput;
+text/html; sandpit lynx -assume_charset=%{charset} -display_charset=utf-8 -collapse_br_tags -cookies=off -restrictions=all -dump %s; nametemplate=%s.html; copiousoutput;
 
 # zathura is missing a bunch of features (such as dealing with PDF fields) but
 # for minimal viewing it's pretty nice.
-application/pdf; zathura %s;
+application/pdf; sandpit zathura %s;
