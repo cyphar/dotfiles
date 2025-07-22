@@ -5,20 +5,21 @@
 set -Eeuo pipefail
 
 function rand() {
-	# Technically all of the characters in standard base64 are allowed
-	# according to RFC 5322, but it seems possible that some MTA would have an
-	# issue with "/" in a Message-ID, so best to just stick to standard things
-	# people have in their Message-ID.
-	openssl rand -base64 "$1" | tr -dc "a-zA-Z0-9"
+	# Technically any URL-safe characters are allowed in Message-ID according
+	# to RFC 5322, but it seems possible that some MTA would have an issue with
+	# "/" in a Message-ID, so it's best to just stick with alphanumeric.
+	#
+	# NOTE: Because of pipefail, we cannot just use "cat /dev/urandom"...
+	head -c "$(($1 * 100))" /dev/urandom | tr -dc "a-zA-Z0-9" | head -c "$1"
 }
 
 hostname="${1:-cyphar}"
 if ( diceware &>/dev/null ) ; then
 	# Try to use some unique words to make it slightly easier to differentiate
 	# Message-IDs.
-	unique="$(diceware --no-caps -d. -n2 -w en_adjectives en_nouns)-$(rand 9)"
+	unique="$(diceware --no-caps -d- -n3 -w en_adjectives en_nouns)-$(rand 6)"
 else
 	# ... otherwise just use some random garbage.
-	unique="$(rand 27)"
+	unique="$(rand 16)"
 fi
-echo "$(date -u '+%Y%m%d.%H%M%S')-$unique@$hostname"
+echo "$(date -u '+%Y-%m-%d.%s')-$unique@$hostname"
