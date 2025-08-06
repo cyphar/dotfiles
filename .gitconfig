@@ -173,3 +173,7 @@
 [blame]
 	# This file is fairly standard, so just use it for all repos.
 	ignoreRevsFile = .git-blame-ignore-revs
+
+[diff "man"]
+	# For man-pages submissions.
+	xfuncname = ^\\.S[SHsh] .*$
