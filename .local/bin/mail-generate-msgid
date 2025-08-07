@@ -17,7 +17,7 @@ hostname="${1:-cyphar}"
 if ( diceware &>/dev/null ) ; then
 	# Try to use some unique words to make it slightly easier to differentiate
 	# Message-IDs.
-	unique="$(diceware --no-caps -d- -n3 -w en_adjectives en_nouns)-$(rand 6)"
+	unique="$(diceware --no-caps -d- -n1 -w en_adjectives en_adjectives en_nouns en_nouns)-$(rand 6)"
 else
 	# ... otherwise just use some random garbage.
 	unique="$(rand 16)"
