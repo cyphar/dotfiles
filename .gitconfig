@@ -164,6 +164,7 @@
 
 [b4]
 	sendemail-identity = linux
+	prep-cover-template = ~/.mutt/b4/prep-cover-template
 
 [credential "smtp://smtp.mailbox.org:465"]
 	# TODO: I should really replace this with something better that actually
