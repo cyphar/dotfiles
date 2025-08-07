@@ -107,7 +107,7 @@ def path_copy(source, target, clobber=True):
 	"""
 
 	# Stat the source.
-	st_src = os.stat(source)
+	st_src = os.lstat(source)
 
 	# Generate target path.
 	basename = safe_basename(source)
@@ -116,6 +116,7 @@ def path_copy(source, target, clobber=True):
 	# Check if we are about to clobber the destination.
 	if path_exists(target_path) and not clobber:
 		warn_user("Target path '%s' already exists! Skipping." % (target_path,))
+		return
 
 	# Directories are a magic case.
 	if stat.S_ISDIR(st_src.st_mode):
@@ -127,14 +128,23 @@ def path_copy(source, target, clobber=True):
 		for child in os.listdir(source):
 			child = os.path.join(source, child)
 			path_copy(child, target_path)
-
-	# Regular files (and symlinks).
 	else:
-		fsrc = open(source, "rb")
-		fdst = open(target_path, "wb")
-
-		shutil.copyfileobj(fsrc, fdst)
-		shutil.copymode(source, target_path)
+		if path_exists(target_path):
+			try:
+				os.unlink(target_path)
+			except IsADirectoryError:
+				os.rmdir(target_path)
+		# Symlinks.
+		if stat.S_ISLNK(st_src.st_mode):
+			link_target = os.readlink(source)
+			os.symlink(link_target, target_path)
+		# Regular files.
+		elif stat.S_ISREG(st_src.st_mode):
+			with open(source, "rb") as fsrc, open(target_path, "wb") as fdst:
+				shutil.copyfileobj(fsrc, fdst)
+				shutil.copymode(source, target_path)
+		else:
+			raise RuntimeError("unsupported filetype %x for source %s" % (stat.S_IFMT(st_src.st_mode), source))
 
 
 # Main install script and helpers.
