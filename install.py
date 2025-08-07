@@ -45,7 +45,7 @@ OPTIONS = {
 	"keepassxc": (YES, [".config/keepassxc/"]),
 	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-suse"]),
 	"mpv":       (YES, [".config/mpv/"]),
-	"mutt":      (YES, [".mutt/"]),
+	"mutt":      (YES, [".mutt/", ".signature"]),
 	"neovim":    (YES, [".config/nvim/"]),
 	"notmuch":   (YES, [".notmuch-config"]),
 	"python":    (YES, [".pythonrc.py"]),
