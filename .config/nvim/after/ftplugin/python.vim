@@ -14,7 +14,7 @@
 " You should have received a copy of the GNU General Public License
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-" We are using hard tabs, like Cthulu intended.
+" Screw it, just use soft tabs like PEP-8 suggests...
 setlocal tabstop=4
 setlocal shiftwidth=4
-setlocal noexpandtab
+setlocal expandtab
