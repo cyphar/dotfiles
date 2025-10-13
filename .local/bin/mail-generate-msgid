@@ -22,4 +22,4 @@ else
 	# ... otherwise just use some random garbage.
 	unique="$(rand 16)"
 fi
-echo "$(date -u '+%Y-%m-%d.%s')-$unique@$hostname"
+echo "$(date -u '+%Y-%m-%d')-$unique@$hostname"
