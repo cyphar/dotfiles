@@ -67,6 +67,12 @@ set sort_aux=last-date
 set wrap=0
 unset markers
 
+# Don't forget attachments!
+set abort_noattach = ask-yes
+# English: attach, attached, attachment, attachments
+# Japanese: 添付
+set abort_noattach_regex = "\\<(attach(|ed|ments?)|添付)\\>"
+
 # Formatting of menus.
 set date_format=$my_date_format
 set compose_format=" [$my_profile] > Compose %> < %l <  "
