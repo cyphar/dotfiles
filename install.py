@@ -39,6 +39,7 @@ OPTIONS = {
 	"alacritty": (YES, [".config/alacritty/"]),
 	"bin":       (YES, [".local/bin/"]),
 	"dunst":     (YES, [".config/dunst/"]),
+	"fish":      (YES, [".config/fish/"]),
 	"fonts":     (YES, [".config/fontconfig/"]),
 	"git":       (YES, [".gitconfig", ".config/git"]),
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
