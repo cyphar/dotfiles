@@ -27,7 +27,8 @@ set my_login=$my_email
 
 # I have quite a few aliases. These are all (mostly) public so I'll just keep
 # them in this config.
-alternates '^cyphar@cyphar\.com$' \
+alternates '^.*@cyphar\.com$' \
+           '^.*@aleksasarai\.com$' \
            '^cyphar@mailbox\.org$'
 
 # Change the major colour scheme to blue to differentiate it.
