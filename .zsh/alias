@@ -101,7 +101,6 @@ function nano() {
 alias make="time make"
 
 # For OBS.
-alias iosc="osc -A https://api.suse.de"
 alias eosc="osc -A https://api.opensuse.org"
 
 # Nice relative jumps.
@@ -123,7 +122,6 @@ function _mutt_wrapper() {
 	kill -9 "$(cat "$HOME/.mbsyncrc-$box.lock")"
 }
 alias pmutt="_mutt_wrapper personal"
-alias smutt="_mutt_wrapper suse"
 
 # Save me from my own stupidity.
 function rm() {
