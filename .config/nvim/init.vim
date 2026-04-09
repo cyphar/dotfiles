@@ -189,9 +189,9 @@ function! AppendLine(text)
 endfunction
 
 " Some helpful macros while dealing with LKML.
-map <leader>Ks :call AppendLine("Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
-map <leader>Ka :call      AppendLine("Acked-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
-map <leader>Kr :call   AppendLine("Reviewed-by: Aleksa Sarai <cyphar@cyphar.com>")<cr>
+map <leader>Ks :call AppendLine("Signed-off-by: Aleksa Sarai <aleksa@amutable.com>")<cr>
+map <leader>Ka :call      AppendLine("Acked-by: Aleksa Sarai <aleksa@amutable.com>")<cr>
+map <leader>Kr :call   AppendLine("Reviewed-by: Aleksa Sarai <aleksa@amutable.com>")<cr>
 
 " Easier tab management.
 map <leader>n :tabprev<cr>
