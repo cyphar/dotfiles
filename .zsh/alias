@@ -98,7 +98,9 @@ function nano() {
 
 # Add `time` to `make`, so that we get automagical build script timing
 # information, even if you forget to add `time`.
-alias make="time make"
+function make() {
+	time command make "$@"
+}
 
 # For OBS.
 alias eosc="osc -A https://api.opensuse.org"
