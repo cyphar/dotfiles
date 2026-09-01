@@ -34,7 +34,7 @@ blinking = "Off"
 shape = "Block"
 
 [font]
-size = 8
+size = 4.5
 
 [font.bold]
 family = "Japanese Cozette"
