@@ -73,7 +73,9 @@ function __generate_prompt() {
 						# we need for our prompt generation, so we can return
 						# that.
 						if ( grep "^gitdir: " "$gitdir" &>/dev/null ); then
-							echo "$current/$(sed -E "s|gitdir: (.*)|\1|" <"$gitdir")"
+							local dir="$(sed -E "s|gitdir: (.*)|\1|" <"$gitdir")"
+							[[ "$dir" == /* ]] || dir="$current/$dir"
+							echo "$dir"
 							return 0
 						fi
 						;;
