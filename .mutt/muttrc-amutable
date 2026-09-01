@@ -1,5 +1,5 @@
 # dotfiles: collection of my personal dotfiles
-# Copyright (C) 2012-2023 Aleksa Sarai <cyphar@cyphar.com>
+# Copyright (C) 2012-2026 Aleksa Sarai <cyphar@cyphar.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,30 +14,27 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# muttrc-personal -- configuration for <cyphar@cyphar.com> with alias pmutt.
+# muttrc-amutable -- configuration for <aleksa@amutable.com> with alias amutt.
 
-set my_profile="personal"
-set pgp_default_key="C9C370B246B09F6DBCFC744C34401015D1D2D386"
+set my_profile="amutable"
 source $HOME/.mutt/muttrc
+# TODO: aleksa@amutable.com doesn't have a PGP key yet...
+#set pgp_default_key="C9C370B246B09F6DBCFC744C34401015D1D2D386"
+set nocrypt_autosign
+set nopgp_self_encrypt
 
-set hostname="cyphar.com"
-set my_email="cyphar@$hostname"
+set hostname="amutable.com"
+set my_email="aleksa@$hostname"
 set from=$my_email
 set my_login=$my_email
 
-# I have quite a few aliases. These are all (mostly) public so I'll just keep
-# them in this config.
-alternates '^.*@cyphar\.com$' \
-           '^.*@aleksasarai\.com$' \
-           '^cyphar@mailbox\.org$'
-
 # Change the major colour scheme to blue to differentiate it.
-color status        color13         color235
-color indicator     brightcolor13   default
+color status        color26         color232
+color indicator     brightcolor26   default
 
 # Configuration for inbox.
 set folder="$my_mailroot/$my_profile"
-set smtp_url="smtps://$my_login@smtp.mailbox.org:465"
+set smtp_url="smtps://$my_login@smtp.gmail.com:465"
 set spoolfile="+inbox"
 set trash="+trash"
 # TODO: These are probably broken...
@@ -47,4 +44,4 @@ set postponed="+drafts"
 # I store my password information in KeePassXC (with a small wrapper so I can
 # support different versions, as well as fix up some of the issues with
 # KeePassXC's CLI interface).
-set smtp_pass="`keepassxc-helper "/Shared/Email/Mailbox"`"
+set smtp_pass="`keepassxc-helper "/Shared/Email/Amutable"`"

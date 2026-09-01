@@ -165,11 +165,17 @@
 [b4]
 	sendemail-identity = linux
 	prep-cover-template = ~/.mutt/b4/prep-cover-template
+	send-series-cc = "Aleksa Sarai <cyphar@cyphar.com>"
 
 [credential "smtp://smtp.mailbox.org:465"]
 	# TODO: I should really replace this with something better that actually
 	#       reads the credential request and is a proper credential helper.
 	helper = !"f() { echo username=cyphar@cyphar.com; echo password=$(keepassxc-helper '/Shared/Email/Mailbox'); }; f"
+
+[credential "smtp://smtp.gmail.com:465"]
+	# TODO: I should really replace this with something better that actually
+	#       reads the credential request and is a proper credential helper.
+	helper = !"f() { echo username=aleksa@amutable.com; echo password=$(keepassxc-helper '/Shared/Email/Amutable'); }; f"
 
 [blame]
 	# This file is fairly standard, so just use it for all repos.
@@ -178,3 +184,6 @@
 [diff "man"]
 	# For man-pages submissions.
 	xfuncname = ^\\.S[SHsh] .*$
+
+[url "git@github.com:amutable-systems/"]
+    insteadOf = https://github.com/amutable-systems/

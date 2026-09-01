@@ -43,7 +43,7 @@ OPTIONS = {
 	"git":       (YES, [".gitconfig", ".config/git"]),
 	"i3":        (YES, [".config/i3/", ".config/i3status/"]),
 	"keepassxc": (YES, [".config/keepassxc/"]),
-	"mbsync":    (YES, [".mbsyncrc-personal"]),
+	"mbsync":    (YES, [".mbsyncrc-personal", ".mbsyncrc-amutable"]),
 	"mpv":       (YES, [".config/mpv/"]),
 	"mutt":      (YES, [".mutt/", ".signature"]),
 	"neovim":    (YES, [".config/nvim/"]),

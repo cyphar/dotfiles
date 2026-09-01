@@ -1,0 +1,68 @@
+# dotfiles: collection of my personal dotfiles
+# Copyright (C) 2012-2026 Aleksa Sarai <cyphar@cyphar.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+MaildirStore amutable-local
+Subfolders Verbatim
+Path "~/mail/amutable/"
+Inbox "~/mail/amutable/inbox"
+Trash "trash"
+
+IMAPAccount gmail
+Host imap.gmail.com
+AuthMechs LOGIN
+User "aleksa@amutable.com"
+PassCmd +"keepassxc-helper '/Shared/Email/Amutable'"
+TLSType IMAPS
+TLSVersions +1.2 +1.3
+
+IMAPStore gmail-remote
+Account gmail
+
+Channel amutable-inbox
+Far :gmail-remote:INBOX
+Near :amutable-local:inbox
+Sync All
+Create Both
+Expunge Both
+CopyArrivalDate yes
+# The root IMAP directory is the Inbox, ignore all of the magic [Gmail] dirs.
+Patterns * !"[Gmail]/"*
+SyncState *
+
+Channel amutable-sent
+Far :gmail-remote:"[Gmail]/Sent Mail"
+Near :amutable-local:sent
+Sync All
+Create Both
+Expunge Both
+CopyArrivalDate yes
+Patterns *
+SyncState *
+
+Channel amutable-trash
+Far :gmail-remote:"[Gmail]/Trash"
+Near :amutable-local:trash
+Sync All
+Create Both
+Expunge Both
+CopyArrivalDate yes
+Patterns * #* !"[Gmail]/"* #!"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin"
+SyncState *
+
+#Patterns * !"[Gmail]/"* #!"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Starred" !"[Gmail]/Bin"
+
+Group amutable
+Channels amutable-inbox amutable-sent amutable-trash
